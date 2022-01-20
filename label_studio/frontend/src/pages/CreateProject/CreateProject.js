@@ -11,20 +11,20 @@ import { ImportPage } from './Import/Import';
 import { useImportPage } from './Import/useImportPage';
 import { useDraftProject } from './utils/useDraftProject';
 
-
+// 项目名称板块视图
 const ProjectName = ({ name, setName, onSaveName, onSubmit, error, description, setDescription, show = true }) => !show ? null :(
   <form className={cn("project-name")} onSubmit={e => { e.preventDefault(); onSubmit(); }}>
     <div className="field field--wide">
-      <label htmlFor="project_name">Project Name</label>
+      <label htmlFor="project_name">项目名称</label>
       <input name="name" id="project_name" value={name} onChange={e => setName(e.target.value)} onBlur={onSaveName} />
       {error && <span className="error">{error}</span>}
     </div>
     <div className="field field--wide">
-      <label htmlFor="project_description">Description</label>
+      <label htmlFor="project_description">描述</label>
       <textarea
         name="description"
         id="project_description"
-        placeholder="Optional description of your project"
+        placeholder="可选：对你的项目的描述信息"
         rows="4"
         value={description}
         onChange={e => setDescription(e.target.value)}
@@ -52,24 +52,29 @@ export const CreateProject = ({ onClose }) => {
 
   const rootClass = cn("create-project");
   const tabClass = rootClass.elem("tab");
+  // 顶部 tab 步骤
   const steps = {
-    name: <span className={tabClass.mod({ disabled: !!error })}>Project Name</span>,
-    import: <span className={tabClass.mod({ disabled: uploadDisabled })}>Data Import</span>,
-    config: "Labeling Setup",
+    name: <span className={tabClass.mod({ disabled: !!error })}>项目名称</span>,
+    import: <span className={tabClass.mod({ disabled: uploadDisabled })}>导入数据</span>,
+    config: "标记设置",
   };
 
   // name intentionally skipped from deps:
   // this should trigger only once when we got project loaded
+  // 弹出弹窗时其实就已经创建的项目，所以这里会将当前项目的默认名称添加到输入框
   React.useEffect(() => project && !name && setName(project.title), [project]);
-
+  
+  // 项目内容，发送请求
   const projectBody = React.useMemo(() => ({
     title: name,
     description,
     label_config: config,
   }), [name, description, config]);
 
+  // 发送请求，创建项目
   const onCreate = React.useCallback(async () => {
     const imported = await finishUpload();
+
     if (!imported) return;
 
     setWaitingStatus(true);
@@ -79,6 +84,7 @@ export const CreateProject = ({ onClose }) => {
       },
       body: projectBody,
     });
+
     setWaitingStatus(false);
 
     if (response !== null) {
@@ -86,6 +92,7 @@ export const CreateProject = ({ onClose }) => {
     }
   }, [project, projectBody, finishUpload]);
 
+  // 保存 / 更新名称
   const onSaveName = async () => {
     if (error) return;
     const res = await api.callApi('updateProjectRaw', {
@@ -96,11 +103,14 @@ export const CreateProject = ({ onClose }) => {
         title: name,
       },
     });
+
     if (res.ok) return;
     const err = await res.json();
+
     setError(err.validation_errors?.title);
   };
 
+  // 取消 / 删除项目
   const onDelete = React.useCallback(async () => {
     setWaitingStatus(true);
     if (project) await api.callApi('deleteProject', {
@@ -117,12 +127,12 @@ export const CreateProject = ({ onClose }) => {
     <Modal onHide={onDelete} fullscreen visible bare closeOnClickOutside={false}>
       <div className={rootClass}>
         <Modal.Header>
-          <h1>Create Project</h1>
+          <h1>创建项目</h1>
           <ToggleItems items={steps} active={step} onSelect={setStep} />
 
           <Space>
-            <Button look="danger" size="compact" onClick={onDelete} waiting={waiting}>Delete</Button>
-            <Button look="primary" size="compact" onClick={onCreate} waiting={waiting || uploading} disabled={!project || uploadDisabled || error}>Save</Button>
+            <Button look="danger" size="compact" onClick={onDelete} waiting={waiting}>取消</Button>
+            <Button look="primary" size="compact" onClick={onCreate} waiting={waiting || uploading} disabled={!project || uploadDisabled || error}>创建</Button>
           </Space>
         </Modal.Header>
         <ProjectName

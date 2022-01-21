@@ -103,9 +103,12 @@ export const resolveRoutes = (routes, props) => {
       );
     } else {
       const routeProps = { key: fullPath, path: fullPath, modal: !!Component.modal };
-      return <Route {...routeProps} exact render={() => (
-        <Component {...(props ?? {})}/>
-      )} {...rest}/>;
+
+      return (
+        <Route {...routeProps} exact render={() => (
+          <Component {...(props ?? {})}/>
+        )} {...rest}/>
+      );
     }
   };
 

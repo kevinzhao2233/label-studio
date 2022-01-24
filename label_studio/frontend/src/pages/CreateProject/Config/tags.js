@@ -60,6 +60,9 @@ const OBJECTS = {
   Table: {
     type: 'Table',
   },
+  Video: {
+    type: 'Video',
+  },
 };
 
 const Labels = {
@@ -69,6 +72,7 @@ const Labels = {
       title: '标签位置:',
       type: ["bottom", "left", "right", "top"],
       control: true,
+      when: $tag => $tag.$object.tagName !== "Video",
       param: ($control, value) => {
         let $container = $control.parentNode;
         let $labels = $control;

@@ -64,6 +64,7 @@ const Footer = () => {
   );
 };
 
+// 拖拽上传
 const Upload = ({ children, sendFiles }) => {
   const [hovered, setHovered] = useState(false);
   const onHover = (e) => {
@@ -128,6 +129,7 @@ export const ImportPage = ({
   const [ids, _setIds] = useState([]);
   const api = useAPI();
 
+  // reducer，对不同 action 返回不同的 state
   const processFiles = (state, action) => {
     if (action.sending) {
       return { ...state, uploading: [...action.sending, ...state.uploading] };
@@ -153,6 +155,7 @@ export const ImportPage = ({
     onFileListUpdate?.(ids);
   };
 
+  // 通过文件 id 数组，获取文件列表
   const loadFilesList = useCallback(async (file_upload_ids) => {
     const query = {};
 
@@ -171,15 +174,18 @@ export const ImportPage = ({
     return files;
   }, [project]);
 
+  // 开始上传文件，设置一些状态
   const onStart = () => {
     setLoading(true);
     setError(null);
   };
+
+  // 上传文件报错的回调
   const onError = err => {
     console.error(err);
     // @todo workaround for error about input size in a wrong html format
     if (typeof err === "string" && err.includes("RequestDataTooBig")) {
-      const message = "Imported file is too big";
+      const message = "导入的文件过大";
       const extra = err.match(/"exception_value">(.*)<\/pre>/)?.[1];
 
       err = { message, extra };
@@ -188,6 +194,8 @@ export const ImportPage = ({
     setLoading(false);
     onWaiting?.(false);
   };
+
+  // 上传文件成功的回调
   const onFinish = useCallback(res => {
     const { could_be_tasks_list, data_columns, file_upload_ids } = res;
     const file_ids = [...ids, ...file_upload_ids];
@@ -200,6 +208,7 @@ export const ImportPage = ({
     return loadFilesList(file_ids).then(() => setLoading(false));
   }, [addColumns, loadFilesList, setIds, ids, setLoading]);
 
+  // 发送请求，将文件保存到服务器，得到保存后的文件信息
   const importFiles = useCallback(async (files, body) => {
     dispatch({ sending: files });
 
@@ -221,6 +230,7 @@ export const ImportPage = ({
     dispatch({ sent: files });
   }, [project, onFinish]);
 
+  // 将文件填充到 FormData，然后调用 importFiles，进行文件上传
   const sendFiles = useCallback(files => {
     onStart();
     onWaiting?.(true);
@@ -231,11 +241,13 @@ export const ImportPage = ({
     return importFiles(files, fd);
   }, [importFiles, onStart]);
 
+  // 输入框的文件改变了，需要上传了
   const onUpload = useCallback(e => {
     sendFiles(e.target.files);
     e.target.value = "";
   }, [sendFiles]);
 
+  // 数据集 URL 被提交时触发
   const onLoadURL = useCallback(e => {
     e.preventDefault();
     onStart();
@@ -252,6 +264,7 @@ export const ImportPage = ({
     importFiles([{ name: url }], body);
   }, [importFiles]);
 
+  // 项目、文件列表有变化时，执行一些副作用
   useEffect(() => {
     if (project?.id !== undefined) {
       loadFilesList().then(files => {
@@ -282,22 +295,23 @@ export const ImportPage = ({
 
       <header>
         <form className={importClass.elem("url-form") + " inline"} method="POST" onSubmit={onLoadURL}>
-          <input placeholder="Dataset URL" name="url" ref={urlRef} />
-          <button type="submit">Add URL</button>
+          <input placeholder="数据集 URL" name="url" ref={urlRef} />
+          <button type="submit">添加 URL</button>
         </form>
-        <span>or</span>
+        <span>或者</span>
         <button onClick={() => document.getElementById('file-input').click()} className={importClass.elem("upload-button")}>
           <IconUpload width="16" height="16" className={importClass.elem("upload-icon")} />
-          Upload {files.uploaded.length ? "More " : ""}Files
+          点击上传{files.uploaded.length ? "更多" : ""}文件
         </button>
+        {/* 如果上传的是 csv tsv 文件，展示一个选择框，选择应该如何看待该文件 */}
         <div className={importClass.elem("csv-handling").mod({ highlighted: highlightCsvHandling, hidden: !csvHandling })}>
-          <span>Treat CSV/TSV as</span>
-          <label><input {...csvProps} value="tasks" checked={csvHandling === "tasks"}/> List of tasks</label>
-          <label><input {...csvProps} value="ts" checked={csvHandling === "ts"}/> Time Series</label>
+          <span>选择 CSV/TSV 的类型</span>
+          <label><input {...csvProps} value="tasks" checked={csvHandling === "tasks"}/> 任务列表</label>
+          <label><input {...csvProps} value="ts" checked={csvHandling === "ts"}/> 时间序列</label>
         </div>
         <div className={importClass.elem("status")}>
           {files.uploaded.length
-            ? `${files.uploaded.length} files uploaded`
+            ? `${files.uploaded.length} 个文件已上传`
             : ""}
         </div>
       </header>
@@ -309,15 +323,15 @@ export const ImportPage = ({
           {!showList && (
             <label htmlFor="file-input">
               <div className={dropzoneClass.elem("content")}>
-                <header>Drag & drop files here<br/>or click to browse</header>
+                <header>拖拽文件到这里<br/>或者点击这里浏览文件</header>
                 <IconUpload height="64" className={dropzoneClass.elem("icon")} />
                 <dl>
-                  <dt>Text</dt><dd>txt</dd>
-                  <dt>Audio</dt><dd>wav, aiff, mp3, au, flac, m4a, ogg</dd>
-                  <dt>Images</dt><dd>jpg, png, gif, bmp, svg, webp</dd>
+                  <dt>文本</dt><dd>txt</dd>
+                  <dt>音频</dt><dd>wav, aiff, mp3, au, flac, m4a, ogg</dd>
+                  <dt>图片</dt><dd>jpg, png, gif, bmp, svg, webp</dd>
                   <dt>HTML</dt><dd>html, htm, xml</dd>
-                  <dt>Time Series</dt><dd>csv, tsv</dd>
-                  <dt>Common Formats</dt><dd>csv, tsv, txt, json</dd>
+                  <dt>时间序列</dt><dd>csv, tsv</dd>
+                  <dt>通用格式</dt><dd>csv, tsv, txt, json</dd>
                 </dl>
               </div>
             </label>

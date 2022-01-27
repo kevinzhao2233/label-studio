@@ -54,7 +54,7 @@ export const Inner = () => {
 
   return (
     <Modal
-      title="Import data"
+      title="导入数据"
       ref={modal}
       onHide={() => backToDM()}
       closeOnClickOutside={false}
@@ -63,12 +63,11 @@ export const Inner = () => {
       bare
     >
       <Modal.Header divided>
-        <Elem block="modal" name="title">Import Data</Elem>
-
+        <Elem block="modal" name="title">导入数据</Elem>
         <Space>
-          <Button waiting={waiting} onClick={onCancel}>Cancel</Button>
+          <Button waiting={waiting} onClick={onCancel}>取消</Button>
           <Button look="primary" onClick={onFinish} waiting={waiting || uploading} disabled={uploadDisabled}>
-            Import
+            导入
           </Button>
         </Space>
       </Modal.Header>

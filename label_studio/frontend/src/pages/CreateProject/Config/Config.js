@@ -38,12 +38,13 @@ const formatXML = (xml) => {
 const wizardClass = cn("wizard");
 const configClass = cn("configure");
 
+// 如果没有配置，则展示这些内容
 const EmptyConfigPlaceholder = () => (
   <div className={configClass.elem("empty-config")}>
-    <p>Your labeling configuration is empty. It is required to label your data.</p>
+    <p>你还没有标记配置，这在标记数据时需要</p>
     <p>
-      Start from one of our predefined templates or create your own config on the Code panel.
-      The labeling config is XML-based and you can <a href="https://labelstud.io/tags/" target="_blank">read about the available tags in our documentation</a>.
+      从某个预定义模板开始，或在代码面板上创建自己的配置。
+      标记配置基于 XML 语法，你可以<a href="https://labelstud.io/tags/" target="_blank">查阅文档</a>
     </p>
   </div>
 );

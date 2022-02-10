@@ -61,7 +61,7 @@ export const CreateProject = ({ onClose }) => {
 
   // name intentionally skipped from deps:
   // this should trigger only once when we got project loaded
-  // 弹出弹窗时其实就已经创建的项目，所以这里会将当前项目的默认名称添加到输入框
+  // 弹出弹窗时其实就已经创建了项目，所以这里会将当前项目的默认名称添加到输入框
   React.useEffect(() => project && !name && setName(project.title), [project]);
   
   // 项目内容，发送请求

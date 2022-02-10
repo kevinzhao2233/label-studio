@@ -12,13 +12,14 @@ ApiContext.displayName = 'ApiContext';
 
 let apiLocked = false;
 
+// 格式化错误信息
 const errorFormatter = (result) => {
-  const {response} = result;
+  const { response } = result;
   const isShutdown = String(response?.detail ?? result?.error) === 'Failed to fetch';
 
   return {
     isShutdown,
-    title: result.error ? "Runtime error" : "Server error",
+    title: result.error ? "运行时错误" : "服务器错误",
     message: response?.detail ?? result?.error,
     stacktrace: response?.exc_info ?? null,
     version: response?.version,
@@ -26,6 +27,7 @@ const errorFormatter = (result) => {
   };
 };
 
+// 弹窗，展示错误信息
 const handleError = async (response, showModal = true) => {
   let result = response;
 
@@ -38,7 +40,7 @@ const handleError = async (response, showModal = true) => {
     return;
   }
 
-  const {isShutdown, ...formattedError} = errorFormatter(result);
+  const { isShutdown, ...formattedError } = errorFormatter(result);
 
   if (showModal) {
 
@@ -47,8 +49,8 @@ const handleError = async (response, showModal = true) => {
       body: isShutdown ? (
         <ErrorWrapper
           possum={false}
-          title={"Connection refused"}
-          message={"Server not responding. Is it still running?"}
+          title={"无法连接"}
+          message={"服务器没有响应，请坚持服务器是否运行正常?"}
         />
       ) : (
         <ErrorWrapper {...formattedError}/>
@@ -61,7 +63,8 @@ const handleError = async (response, showModal = true) => {
   return isShutdown;
 };
 
-export const ApiProvider = forwardRef(({children}, ref) => {
+// forwardRef 是用来转发 refs 的
+export const ApiProvider = forwardRef(({ children }, ref) => {
   const [error, setError] = useState(null);
 
   const callApi = useCallback(async (method, { params = {}, errorFilter, ...rest } = {}) => {

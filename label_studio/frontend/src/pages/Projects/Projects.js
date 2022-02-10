@@ -32,6 +32,7 @@ export const ProjectsPage = () => {
   const openModal = setModal.bind(null, true);
   const closeModal = setModal.bind(null, false);
 
+  // 获取项目列表
   const fetchProjects = async (page  = currentPage, pageSize = defaultPageSize) => {
     setNetworkState('loading');
     const data = await api.callApi("projects", {
@@ -55,6 +56,7 @@ export const ProjectsPage = () => {
   React.useEffect(() => {
     // there is a nice page with Create button when list is empty
     // so don't show the context button in that case
+    // 在项目列表为空时，会有一个创建按钮，所以不需要上下文按钮
     setContextProps({ openModal, showButton: projectsList.length > 0 });
   }, [projectsList.length]);
 

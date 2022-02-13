@@ -166,7 +166,7 @@ export const DataManagerPage = ({ ...props }) => {
 };
 
 // 附加在组件上的参数，就像 props 一样
-DataManagerPage.path = "/data";
+DataManagerPage.path = "/data";   // 在面包屑上展示
 DataManagerPage.pages = {
   ExportPage,
   ImportModal,

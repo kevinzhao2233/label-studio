@@ -224,7 +224,7 @@ export const Menubar = ({
                   onClick={sidebarPin}
                   active={sidebarPinned}
                 >
-                  {sidebarPinned ?  "Unpin menu" : "Pin menu"}
+                  {sidebarPinned ?  "取消固定菜单" : "固定菜单"}
                 </Menu.Item>
 
               </Menu>

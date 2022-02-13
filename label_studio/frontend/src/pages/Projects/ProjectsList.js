@@ -63,7 +63,7 @@ const ProjectCard = ({ project }) => {
         <Elem name="header">
           <Elem name="title">
             <Elem name="title-text">
-              {project.title ?? "New project"}
+              {project.title ?? "新项目"}
             </Elem>
             {/*  卡片右下角，下拉菜单 */}
             <Elem name="menu" onClick={(e) => {
@@ -108,7 +108,7 @@ const ProjectCard = ({ project }) => {
         </Elem>
         <Elem name="info">
           <Elem name="created-date">
-            {format(new Date(project.created_at), "yy MMM dd, HH:mm")}
+            {format(new Date(project.created_at), "yy-MM-dd, HH:mm")}
           </Elem>
           <Elem name="created-by">
             <Userpic src="#" user={project.created_by} showUsername/>

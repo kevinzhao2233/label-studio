@@ -156,7 +156,7 @@ export const DataManagerPage = ({ ...props }) => {
       <Elem name="info">项目已被删除或尚未创建</Elem>
 
       <Button to="/projects">
-        返回项目
+        返回项目页
       </Button>
     </Block>
   ) : (

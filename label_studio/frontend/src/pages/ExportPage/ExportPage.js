@@ -235,8 +235,8 @@ const FormatInfo = ({ availableFormats, selected, onClick }) => {
       {/* <Elem name="feedback">
         没有你想要的格式？
         <br/>
-        Please let us know in <a className="no-go" href="http://slack.labelstud.io.s3-website-us-east-1.amazonaws.com?source=product-export">Slack</a> or submit an issue to the <a className="no-go" href="https://github.com/heartexlabs/label-studio-converter/issues">Repository</a>
-      </Elem> */}
+        Please let us know in <a className="no-go" href="https://slack.labelstudio.heartex.com/?source=product-export">Slack</a> or submit an issue to the <a className="no-go" href="https://github.com/heartexlabs/label-studio-converter/issues">Repository</a>
+      </Elem>*/}
     </Block>
   );
 };

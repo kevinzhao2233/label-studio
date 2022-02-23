@@ -27,10 +27,10 @@ const setTags = () => {
   const tags: Record<string, any> = {};
 
   if (APP_SETTINGS.user.email) {
-    Sentry.setUser({
-      email: APP_SETTINGS.user.email,
-      username: APP_SETTINGS.user.username,
-    });
+    // Sentry.setUser({
+    //   email: APP_SETTINGS.user.email,
+    //   username: APP_SETTINGS.user.username,
+    // });
   }
 
   if (APP_SETTINGS.version) {

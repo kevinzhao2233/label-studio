@@ -6,10 +6,10 @@ import { GeneralSettings } from './GeneralSettings';
 import { InstructionsSettings } from './InstructionsSettings';
 import { LabelingSettings } from './LabelingSettings';
 import { MachineLearningSettings } from './MachineLearningSettings/MachineLearningSettings';
-import { StorageSettings } from './StorageSettings/StorageSettings';
+// import { StorageSettings } from './StorageSettings/StorageSettings';
 
 
-export const MenuLayout = ({children, ...routeProps}) => {
+export const MenuLayout = ({ children, ...routeProps }) => {
   return (
     <SidebarMenu
       menuItems={[
@@ -17,7 +17,7 @@ export const MenuLayout = ({children, ...routeProps}) => {
         LabelingSettings,
         InstructionsSettings,
         MachineLearningSettings,
-        StorageSettings,
+        // StorageSettings,
         WebhookPage,
         DangerZone,
       ]}
@@ -28,7 +28,7 @@ export const MenuLayout = ({children, ...routeProps}) => {
 };
 
 export const SettingsPage = {
-  title: "Settings",
+  title: "设置",
   path: "/settings",
   exact: true,
   layout: MenuLayout,
@@ -37,7 +37,7 @@ export const SettingsPage = {
     InstructionsSettings,
     LabelingSettings,
     MachineLearningSettings,
-    StorageSettings,
+    // StorageSettings,
     WebhookPage,
     DangerZone,
   },

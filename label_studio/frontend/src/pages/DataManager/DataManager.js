@@ -18,7 +18,7 @@ import "./DataManager.styl";
 
 // 初始化 DM
 const initializeDataManager = async (root, props, params) => {
-  if (!window.LabelStudio) throw Error("Label Studio Frontend doesn't exist on the page");
+  if (!window.LabelStudio) throw Error("Label Studio Frontend 在 window 中不存在");
   if (!root && root.dataset.dmInitialized) return;
 
   root.dataset.dmInitialized = true;
@@ -56,6 +56,7 @@ const buildLink = (path, params) => {
   return generatePath(`/projects/:id${path}`, params);
 };
 
+// 路由匹配到 /data 的时候，这个组件就会初始化
 export const DataManagerPage = ({ ...props }) => {
   const root = useRef();
   const params = useParams();
@@ -165,8 +166,7 @@ export const DataManagerPage = ({ ...props }) => {
   );
 };
 
-// 附加在组件上的参数，就像 props 一样
-DataManagerPage.path = "/data";   // 在面包屑上展示
+DataManagerPage.path = "/data";
 DataManagerPage.pages = {
   ExportPage,
   ImportModal,
@@ -224,7 +224,7 @@ DataManagerPage.context = ({ dmRef }) => {
 
   // dm 的模式改变，目前有两种模式："explorer" | "labelstream"
   // explorer 模式指点击表格行，在抽屉里标注
-  // labelstream 模式指点击 “标记所有任务” 打开的全页面
+  // labelstream 模式指点击 “标注所有任务” 打开的全页面
   useEffect(() => {
     if (dmRef) {
       dmRef.on('modeChanged', onDMModeChanged);

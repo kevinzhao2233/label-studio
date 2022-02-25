@@ -46,10 +46,10 @@ const configClass = cn("configure");
 // 如果没有配置，则展示这些内容
 const EmptyConfigPlaceholder = () => (
   <div className={configClass.elem("empty-config")}>
-    <p>你还没有标记配置，这在标记数据时需要</p>
+    <p>你还没有标注配置，这在标注数据时需要</p>
     <p>
       从某个预定义模板开始，或在代码面板上创建自己的配置。
-      标记配置基于 XML 语法，你可以<a href="https://labelstud.io/tags/" target="_blank">查阅文档</a>
+      标注配置基于 XML 语法，你可以<a href="https://labelstud.io/tags/" target="_blank">查阅文档</a>
     </p>
   </div>
 );
@@ -100,12 +100,12 @@ const ConfigureControl = ({ control, template }) => {
   return (
     <div className={configClass.elem("labels")}>
       <form className={configClass.elem("add-labels")} action="">
-        <h4>{tagname === "Choices" ? "Add choices" : "Add label names"}</h4>
+        <h4>{tagname === "Choices" ? "添加选择" : "添加标签名称"}</h4>
         <textarea name="labels" id="" cols="30" rows="5" ref={refLabels} onKeyPress={onKeyPress}></textarea>
-        <input type="button" value="Add" onClick={onAddLabels} />
+        <input type="button" value="添加" onClick={onAddLabels} />
       </form>
       <div className={configClass.elem("current-labels")}>
-        <h3>{tagname === "Choices" ? "Choices" : "Labels"} ({control.children.length})</h3>
+        <h3>{tagname === "Choices" ? "选择" : "标签"} ({control.children.length})</h3>
         <ul>
           {Array.from(control.children).map(label => (
             <Label
@@ -194,7 +194,7 @@ const ConfigureSettings = ({ template }) => {
   return (
     <ul className={configClass.elem("settings")}>
       <li>
-        <h4>Configure settings</h4>
+        <h4>其他配置</h4>
         <ul className={configClass.elem("object-settings")}>
           {items}
         </ul>
@@ -215,21 +215,21 @@ const ConfigureColumns = ({ columns, template }) => {
 
   return (
     <div className={configClass.elem("object")}>
-      <h4>Configure data</h4>
+      <h4>配置数据</h4>
       {template.objects.length > 1 && columns?.length > 0 && columns.length < template.objects.length && (
-        <p className={configClass.elem("object-error")}>This template requires more data then you have for now</p>
+        <p className={configClass.elem("object-error")}>这个模板需要更多的数据</p>
       )}
       {columns?.length === 0 && (
         <p className={configClass.elem("object-error")}>
-          To select which field(s) to label you need to upload the data. Alternatively, you can provide it using Code mode.
+          选择要标注的字段，你需要上传数据。或者使用代码模式提供。
         </p>
       )}
       {template.objects.map(obj => (
         <p key={obj.getAttribute("name")}>
-          Use {obj.tagName.toLowerCase()}
+          {obj.tagName.toLowerCase()}
           {template.objects > 1 && ` for ${obj.getAttribute("name")}`}
-          {" from "}
-          {columns?.length > 0 && columns[0] !== DEFAULT_COLUMN && "field "}
+          {" 来自于"}
+          {columns?.length > 0 && columns[0] !== DEFAULT_COLUMN && "字段："}
           <select onChange={updateValue(obj)} value={obj.getAttribute("value")?.replace(/^\$/, "")}>
             {columns?.map(column => (
               <option key={column} value={column}>
@@ -328,8 +328,8 @@ const Configurator = ({ columns, config, project, template, setTemplate, onBrows
     <div className={configClass}>
       <div className={configClass.elem("container")}>
         <header>
-          <button onClick={onBrowse}>Browse Templates</button>
-          <ToggleItems items={{ code: "Code", visual: "Visual" }} active={configure} onSelect={onSelect} />
+          <button onClick={onBrowse}>浏览模板</button>
+          <ToggleItems items={{ code: "源代码", visual: "可视化" }} active={configure} onSelect={onSelect} />
         </header>
         <div className={configClass.elem('editor')}>
           {configure === "code" && (
@@ -356,7 +356,7 @@ const Configurator = ({ columns, config, project, template, setTemplate, onBrows
         {disableSaveButton !== true && onSaveClick && (
           <Form.Actions size="small" extra={configure === "code" && extra} valid>
             <Button look="primary" size="compact" style={{ width: 120 }} onClick={onSave} waiting={waiting}>
-              Save
+              保存
             </Button>
           </Form.Actions>
         )}

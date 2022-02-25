@@ -49,8 +49,8 @@ export const LabelingSettings = () => {
   const onSave = useCallback(async () => {
     if (essentialDataChanged && projectAlreadySetUp) {
       confirm({
-        title: "Config data changed",
-        body: "Labeling config has essential changes that affect data displaying. Saving the config may lead to deleting all tabs previously created in the Data Manager.",
+        title: "配置已更改",
+        body: "当前更改的配置会对数据展示产生影响，保存配置可能删除之前在数据管理器中创建的所有标签。",
         buttonLook: "destructive",
         onOk: () => saveConfig(),
         okText: "保存",
@@ -83,5 +83,5 @@ export const LabelingSettings = () => {
   );
 };
 
-LabelingSettings.title = "Labeling Interface";
+LabelingSettings.title = "标注界面";
 LabelingSettings.path = "/labeling";

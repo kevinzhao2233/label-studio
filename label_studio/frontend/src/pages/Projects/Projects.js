@@ -49,11 +49,11 @@ export const ProjectsPage = () => {
     await fetchProjects(page, pageSize);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchProjects();
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     // there is a nice page with Create button when list is empty
     // so don't show the context button in that case
     // 在项目列表为空时，会有一个创建按钮，所以不需要上下文按钮
@@ -88,6 +88,7 @@ export const ProjectsPage = () => {
 ProjectsPage.title = "项目";
 ProjectsPage.path = "/projects";
 ProjectsPage.exact = true;
+// 应该是定义子路由
 ProjectsPage.routes = ({ store }) => [
   {
     title: () => store.project?.title,

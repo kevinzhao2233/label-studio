@@ -152,10 +152,10 @@ actions = [
     {
         'entry_point': delete_tasks_annotations,
         'permission': all_permissions.tasks_delete,
-        'title': '删除标注信息',
+        'title': '删除标注结果',
         'order': 101,
         'dialog': {
-            'text': '你将从所选任务中删除所有标注信息。是否确认？',
+            'text': '你将从所选任务中删除所有标注结果。是否确认？',
             'type': 'confirm'
         }
     },

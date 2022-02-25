@@ -39,9 +39,9 @@ export default class ErrorBoundary extends Component {
         <Modal onHide={() => location.reload()} style={{ width: "60vw" }} visible bare>
           <div style={{ padding: 40 }}>
             <ErrorWrapper
-              title="Runtime error"
+              title="运行时错误"
               message={error}
-              stacktrace={`${errorInfo ? `Component Stack: ${errorInfo}` : ''}\n\n${this.state.error?.stack ?? ''}`}
+              stacktrace={`${errorInfo ? `组件栈: ${errorInfo}` : ''}\n\n${this.state.error?.stack ?? ''}`}
               onGoBack={goBack}
               onReload={() => location.reload()}
             />

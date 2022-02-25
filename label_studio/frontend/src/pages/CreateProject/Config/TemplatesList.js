@@ -21,6 +21,7 @@ const TemplatesInGroup = ({ templates, group, onSelectRecipe }) => {
     .filter(recipe => recipe.group === group)
     // templates without `order` go to the end of the list
     .sort((a, b) => (a.order ?? Infinity) - (b.order ?? Infinity));
+
   return (
     <ul>
       {picked.map(recipe => (
@@ -44,8 +45,10 @@ export const TemplatesList = ({ selectedGroup, selectedRecipe, onCustomTemplate,
 
   React.useEffect(async () => {
     const res = await api.callApi('configTemplates');
+
     if (!res) return;
     const { templates, groups } = res;
+
     setTemplates(templates);
     setGroups(groups);
   }, []);
@@ -70,7 +73,7 @@ export const TemplatesList = ({ selectedGroup, selectedRecipe, onCustomTemplate,
             </li>
           ))}
         </ul>
-        <button type="button" onClick={onCustomTemplate} className={listClass.elem("custom-template")}>Custom template</button>
+        <button type="button" onClick={onCustomTemplate} className={listClass.elem("custom-template")}>自定义模板</button>
       </aside>
       <main>
         {!templates && <Spinner style={{ width: "100%", height: 200 }} />}

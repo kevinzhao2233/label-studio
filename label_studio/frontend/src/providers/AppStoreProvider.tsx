@@ -1,7 +1,7 @@
 import React from 'react';
 
 type Store = {
-  project: unknown,
+  project: unknown,   // 这里存放的就是 GET:api/projects/projectId 获取的项目信息
 }
 type Context = {
   store: Store,

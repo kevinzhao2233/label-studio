@@ -56,7 +56,7 @@ export const CreateProject = ({ onClose }) => {
   const steps = {
     name: <span className={tabClass.mod({ disabled: !!error })}>项目名称</span>,
     import: <span className={tabClass.mod({ disabled: uploadDisabled })}>导入数据</span>,
-    config: "标记设置",
+    config: "标注设置",
   };
 
   // name intentionally skipped from deps:

@@ -37,8 +37,8 @@ export const EmptyProjectsList = ({ openModal }) => {
   return (
     <Block name="empty-projects-page">
       <Elem name="heidi" tag="img" src={absoluteURL("/static/images/opossum_looking.png")} />
-      <Elem name="header" tag="h1">暂无项目</Elem>
-      <p>创建一个项目，并开始标记您的数据</p>
+      <Elem name="header" tag="h1">你还没有项目</Elem>
+      <p>创建一个项目，并开始标注您的数据</p>
       <Elem name="action" tag={Button} onClick={openModal} look="primary">创建项目</Elem>
     </Block>
   );
@@ -73,7 +73,7 @@ const ProjectCard = ({ project }) => {
               <Dropdown.Trigger content={(
                 <Menu>
                   <Menu.Item href={`/projects/${project.id}/settings`}>设置</Menu.Item>
-                  <Menu.Item href={`/projects/${project.id}/data?labeling=1`}>标记</Menu.Item>
+                  <Menu.Item href={`/projects/${project.id}/data?labeling=1`}>开始标注</Menu.Item>
                 </Menu>
               )}>
                 <Button size="small" type="text" icon={<LsEllipsis/>}/>

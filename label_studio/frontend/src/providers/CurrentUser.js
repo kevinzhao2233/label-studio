@@ -3,7 +3,7 @@ import { useAPI } from "./ApiProvider";
 
 const CurrentUserContext = createContext();
 
-export const CurrentUserProvider = ({children}) => {
+export const CurrentUserProvider = ({ children }) => {
   const api = useAPI();
   const [user, setUser] = useState();
 
@@ -18,7 +18,7 @@ export const CurrentUserProvider = ({children}) => {
   }, [fetch]);
 
   return (
-    <CurrentUserContext.Provider value={{user, fetch}}>
+    <CurrentUserContext.Provider value={{ user, fetch }}>
       {children}
     </CurrentUserContext.Provider>
   );

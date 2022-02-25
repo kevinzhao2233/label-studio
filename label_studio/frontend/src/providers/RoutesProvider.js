@@ -156,8 +156,6 @@ export const useContextComponent = () => {
 export const useFixedLocation = () => {
   const location = useLocation();
 
-  location;
-
   const result = useMemo(() => {
     return location.location ?? location;
   }, [location]);

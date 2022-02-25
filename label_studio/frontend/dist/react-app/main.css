@@ -2180,6 +2180,7 @@ span.CodeMirror-selectedtext { background: none; }
   display: grid;
   height: 100%;
   grid-template: 1fr auto/224px auto;
+  overflow-y: auto;
 }
 .ls-templates-list__sidebar {
   padding: 16px 8px 16px 32px;
@@ -2229,7 +2230,6 @@ span.CodeMirror-selectedtext { background: none; }
 .ls-templates-list main {
   position: relative;
   flex-grow: 1;
-  overflow-y: auto;
   height: 100%;
 }
 .ls-templates-list main ul {

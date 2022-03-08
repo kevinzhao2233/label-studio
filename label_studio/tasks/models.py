@@ -234,7 +234,7 @@ class Task(TaskMixin, models.Model):
     def completed_annotations(self):
         """Annotations that we take into account when set completed status to the task"""
         if self.project.skip_queue == self.project.SkipQueue.IGNORE_SKIPPED:
-            return self.annotations.filter(Q(ground_truth=False))
+            return self.annotations
         else:
             return self.annotations.filter(Q_finished_annotations)
 
@@ -425,7 +425,7 @@ class Prediction(models.Model):
         elif isinstance(result, dict):
             # "value" from result
             # TODO: validate value fields according to project.label_config
-            for tag, tag_info in project.get_control_tags_from_config().items():
+            for tag, tag_info in project.get_parsed_config().items():
                 tag_type = tag_info['type'].lower()
                 if tag_type in result:
                     return [{
@@ -437,7 +437,7 @@ class Prediction(models.Model):
 
         elif isinstance(result, (str, numbers.Integral)):
             # If result is of integral type, it could be a representation of data from single-valued control tags (e.g. Choices, Rating, etc.)  # noqa
-            for tag, tag_info in project.get_control_tags_from_config().items():
+            for tag, tag_info in project.get_parsed_config().items():
                 tag_type = tag_info['type'].lower()
                 if tag_type in SINGLE_VALUED_TAGS and isinstance(result, SINGLE_VALUED_TAGS[tag_type]):
                     return [{

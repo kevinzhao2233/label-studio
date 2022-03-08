@@ -8,15 +8,28 @@ meta_title: Available Helm values for Label Studio Enterprise Kubernetes deploym
 meta_description: For cases when you want to customize your Label Studio Enterprise Kubernetes deployment, review these available Helm values that you can set in your Helm chart.
 ---
 
-<!-- fix first column for long helm values in tables -->
+<!-- Fix for long values in table cells -->
 <style>
-  td:last-child {
-    max-width: 150px;
+  td:first-child {
+    max-width: 350px;
   }
   td:first-child code {
     white-space: normal;
-    word-wrap: break-word; 
-    max-width: 200px;
+    word-break: break-word;
+    margin-left: 0;
+    padding-left: 3px;
+  }
+  td:nth-child(3) {
+    white-space: normal;
+    word-break: break-word;
+    max-width: 130px;
+  }
+  td:last-child {
+    max-width: 150px;
+  }
+  td:last-child code {
+    white-space: normal;
+    word-break: break-all;
   }
 </style>
 
@@ -81,6 +94,7 @@ Global parameters for the Helm chart.
 | `global.persistence.config.gcs.bucket`                                      | string | ""                                  | GCS bucket name                                                                                     |
 | `global.persistence.config.gcs.folder`                                      | string | ""                                  | GCS folder name                                                                                     |
 | `global.persistence.config.gcs.urlExpirationSecs`                           | string | 86400                               | The number of seconds that a presigned URL is valid for                                             |
+| `featureFlags`                                                              | map    | {}                                  | Key/value map of Feature Flags                                                                      |
 
 ## App parameters
 Parameters specific to the `app` portion of the Label Studio Enterprise deployment.
@@ -197,7 +211,7 @@ Parameters specific to the `rqworkers` service of your Label Studio Enterprise d
 
 ## Deprecated parameters
 
-Deprecated paramters no longer in use or supported by Label Studio Enterprise Helm charts. 
+Deprecated parameters no longer in use or supported by Label Studio Enterprise Helm charts. 
 
 | Key                               | Type   | Default Value | Description               |
 |-----------------------------------|--------|---------------|---------------------------|

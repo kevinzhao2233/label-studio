@@ -24,7 +24,7 @@ const ProjectName = ({ name, setName, onSaveName, onSubmit, error, description, 
       <textarea
         name="description"
         id="project_description"
-        placeholder="可选：对你的项目的描述信息"
+        placeholder="可选：项目的描述信息"
         rows="4"
         value={description}
         onChange={e => setDescription(e.target.value)}

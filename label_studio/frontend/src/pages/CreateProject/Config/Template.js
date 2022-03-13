@@ -72,6 +72,7 @@ export class Template {
   }
 
   // fix `value` of object tags according to current columns from data
+  // 根据当前数据的 columns，修复 object tags 的 `value`
   fixColumns(columns) {
     if (columns.length === 1 && columns[0] === DEFAULT_COLUMN) return;
     const existing = this.objects.map(obj => obj.getAttribute("value").replace(/^\$/, ''));
@@ -86,6 +87,7 @@ export class Template {
     this.render();
   }
 
+  // 添加标签
   addLabels(control, labels) {
     if (!labels) return;
     if (!Array.isArray(labels)) {
@@ -109,6 +111,7 @@ export class Template {
     this.render();
   }
 
+  // 删除标签
   removeLabel($label) {
     $label.parentNode.removeChild($label);
     this.render();

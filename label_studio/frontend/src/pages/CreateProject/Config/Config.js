@@ -48,12 +48,13 @@ const EmptyConfigPlaceholder = () => (
   <div className={configClass.elem("empty-config")}>
     <p>你还没有标注配置，这在标注数据时需要</p>
     <p>
-      从某个预定义模板开始，或在代码面板上创建自己的配置。
-      标注配置基于 XML 语法，你可以<a href="https://labelstud.io/tags/" target="_blank">查阅文档</a>
+      从某个预定义模板开始，或在源代码面板上创建自己的配置。
+      标注配置基于 XML 语法，你可以在<a href="https://labelstud.io/tags/" target="_blank">查阅文档</a>
     </p>
   </div>
 );
 
+// 标签组件
 const Label = ({ label, template, color }) => {
   const value = label.getAttribute("value");
 
@@ -78,8 +79,9 @@ const Label = ({ label, template, color }) => {
   );
 };
 
+// 配置标签
 const ConfigureControl = ({ control, template }) => {
-  const refLabels = React.useRef();
+  const refLabels = React.useRef(); // 保存 textarea 中的内容
   const tagname = control.tagName;
 
   if (tagname !== "Choices" && !tagname.endsWith("Labels")) return null;
@@ -121,6 +123,7 @@ const ConfigureControl = ({ control, template }) => {
   );
 };
 
+// 设置项，比如框的宽度、十字线等等
 const ConfigureSettings = ({ template }) => {
   const { settings } = template;
 
@@ -203,6 +206,7 @@ const ConfigureSettings = ({ template }) => {
   );
 };
 
+// 配置要标注的字段
 const ConfigureColumns = ({ columns, template }) => {
   const updateValue = obj => e => {
     const attrName = e.target.value.replace(/^\$/, "");
@@ -221,7 +225,7 @@ const ConfigureColumns = ({ columns, template }) => {
       )}
       {columns?.length === 0 && (
         <p className={configClass.elem("object-error")}>
-          选择要标注的字段，你需要上传数据。或者使用代码模式提供。
+          选择要标注的字段，你需要上传数据，或者使用代码模式提供。
         </p>
       )}
       {template.objects.map(obj => (
@@ -258,6 +262,7 @@ const Configurator = ({ columns, config, project, template, setTemplate, onBrows
 
   React.useEffect(() => {
     // config may change during init, so wait for that, but for a very short time only
+    // 在初始化过程中，配置可能会改变
     debounceTimer.current = window.setTimeout(() => setConfigToCheck(config), configToCheck ? 500 : 30);
     return () => window.clearTimeout(debounceTimer.current);
   }, [config]);
@@ -299,11 +304,13 @@ const Configurator = ({ columns, config, project, template, setTemplate, onBrows
   // code should be reloaded on every render because of uncontrolled codemirror
   // visuals should be always rendered after first render
   // so load it on the first access, then just show/hide
+  // 选择【源代码】【可视化】时触发
   const onSelect = value => {
     setConfigure(value);
     if (value === "visual") loadVisual(true);
   };
 
+  // 保存
   const onSave = async () => {
     setError(null);
     setWaiting(true);
@@ -317,9 +324,9 @@ const Configurator = ({ columns, config, project, template, setTemplate, onBrows
 
   const extra = (
     <p className={configClass.elem('tags-link')}>
-      Configure the labeling interface with tags.
+      配置标注界面的标签。
       <br/>
-      <a href="https://labelstud.io/tags/" target="_blank">See all available tags</a>
+      <a href="https://labelstud.io/tags/" target="_blank">查看所有可用标签</a>
       .
     </p>
   );
@@ -368,10 +375,10 @@ const Configurator = ({ columns, config, project, template, setTemplate, onBrows
 
 export const ConfigPage = ({ config: initialConfig = "", columns: externalColumns, project, onUpdate, onSaveClick, onValidate, disableSaveButton, show = true }) => {
   const [config, _setConfig] = React.useState("");
-  const [mode, setMode] = React.useState("list"); // view | list
-  const [selectedGroup, setSelectedGroup] = React.useState(null);
-  const [selectedRecipe, setSelectedRecipe] = React.useState(null);
-  const [template, setCurrentTemplate] = React.useState(null);
+  const [mode, setMode] = React.useState("list"); // view：配置其他信息的页面 | list：模板列表页
+  const [selectedGroup, setSelectedGroup] = React.useState(null); // 模板所属的组或者类型，比如 CV、NLP
+  const [selectedRecipe, setSelectedRecipe] = React.useState(null); // 所选的模板
+  const [template, setCurrentTemplate] = React.useState(null);  // 当前模板的 Template 对象。./Template.js 中 Template 类的实例
   const api = useAPI();
 
   const setConfig = React.useCallback(config => {
@@ -387,8 +394,10 @@ export const ConfigPage = ({ config: initialConfig = "", columns: externalColumn
     setCurrentTemplate(tpl);
   }, [setConfig, setCurrentTemplate]);
 
+  // columns 应该是要标注的字段
   const [columns, setColumns] = React.useState();
-
+  
+  // 给 columns 赋初始值，即 props 传来的 columns
   React.useEffect(() => { if (externalColumns?.length) setColumns(externalColumns); }, [externalColumns]);
 
   React.useEffect(async () => {
@@ -410,6 +419,7 @@ export const ConfigPage = ({ config: initialConfig = "", columns: externalColumn
     }
   }, [columns, template]);
 
+  // 选择模板
   const onSelectRecipe = React.useCallback(recipe => {
     if (!recipe) {
       setSelectedRecipe(null);
@@ -421,6 +431,7 @@ export const ConfigPage = ({ config: initialConfig = "", columns: externalColumn
     setMode("view");
   });
 
+  // 自定义模板
   const onCustomTemplate = React.useCallback(() => {
     setTemplate(EMPTY_CONFIG);
     setMode("view");

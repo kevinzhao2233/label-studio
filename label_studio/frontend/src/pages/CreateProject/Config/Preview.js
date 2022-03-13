@@ -12,6 +12,7 @@ export const Preview = ({ config, data, error }) => {
   const lsfRoot = useRef();
   const lsf = useRef();
 
+  // 配置、数据改变的时候都要重新渲染
   useEffect(() => {
     if (!LabelStudio) return;
     if (!lsfRoot.current) return;

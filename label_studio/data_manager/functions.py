@@ -222,6 +222,28 @@ def get_all_columns(project, *_):
                 'explore': False,
                 'labeling': False
             }
+        },
+        {
+            'id': 'updated_at',
+            'title': 'Updated at',
+            'type': 'Datetime',
+            'target': 'tasks',
+            'help': 'Task update time',
+            'visibility_defaults': {
+                'explore': False,
+                'labeling': False
+            }
+        },
+        {
+            'id': 'avg_lead_time',
+            'title': "Lead Time",
+            'type': 'Number',
+            'help': 'Average lead time over all annotations (seconds)',
+            'target': 'tasks',
+            'visibility_defaults': {
+                'explore': False,
+                'labeling': False
+            }
         }
     ]
 

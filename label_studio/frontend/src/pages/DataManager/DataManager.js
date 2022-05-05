@@ -44,6 +44,12 @@ const initializeDataManager = async (root, props, params) => {
     labelStudio: {
       keymap: window.APP_SETTINGS.editor_keymap,
     },
+    instruments: {
+      'review-button': () => {
+        return () => <Button style={{ width: 105 }}>审查</Button>;
+      },
+    },
+
     ...props,
     ...settings,
   };

@@ -7,7 +7,6 @@ import { Button, Dropdown, Menu, Pagination, Userpic } from '../../components';
 import { Block, Elem } from '../../utils/bem';
 import { absoluteURL } from '../../utils/helpers';
 
-// 项目列表
 export const ProjectsList = ({ projects, currentPage, totalItems, loadNextPage, pageSize }) => {
   return (
     <>
@@ -32,19 +31,17 @@ export const ProjectsList = ({ projects, currentPage, totalItems, loadNextPage, 
   );
 };
 
-// 空项目列表
 export const EmptyProjectsList = ({ openModal }) => {
   return (
     <Block name="empty-projects-page">
       <Elem name="heidi" tag="img" src={absoluteURL("/static/images/opossum_looking.png")} />
-      <Elem name="header" tag="h1">你还没有项目</Elem>
-      <p>创建一个项目，并开始标注您的数据</p>
-      <Elem name="action" tag={Button} onClick={openModal} look="primary">创建项目</Elem>
+      <Elem name="header" tag="h1">Heidi doesn’t see any projects here</Elem>
+      <p>Create one and start labeling your data</p>
+      <Elem name="action" tag={Button} onClick={openModal} look="primary">Create Project</Elem>
     </Block>
   );
 };
 
-// 项目卡片
 const ProjectCard = ({ project }) => {
   const color = useMemo(() => {
     return project.color === '#FFFFFF' ? null : project.color;
@@ -63,24 +60,23 @@ const ProjectCard = ({ project }) => {
         <Elem name="header">
           <Elem name="title">
             <Elem name="title-text">
-              {project.title ?? "新项目"}
+              {project.title ?? "New project"}
             </Elem>
-            {/*  卡片右下角，下拉菜单 */}
+
             <Elem name="menu" onClick={(e) => {
               e.stopPropagation();
               e.preventDefault();
             }}>
               <Dropdown.Trigger content={(
                 <Menu>
-                  <Menu.Item href={`/projects/${project.id}/settings`}>设置</Menu.Item>
-                  <Menu.Item href={`/projects/${project.id}/data?labeling=1`}>开始标注</Menu.Item>
+                  <Menu.Item href={`/projects/${project.id}/settings`}>Settings</Menu.Item>
+                  <Menu.Item href={`/projects/${project.id}/data?labeling=1`}>Label</Menu.Item>
                 </Menu>
               )}>
                 <Button size="small" type="text" icon={<LsEllipsis/>}/>
               </Dropdown.Trigger>
             </Elem>
           </Elem>
-          {/* 标注数据，已经完成、取消、预测的数据 */}
           <Elem name="summary">
             <Elem name="annotation">
               <Elem name="total">
@@ -108,7 +104,7 @@ const ProjectCard = ({ project }) => {
         </Elem>
         <Elem name="info">
           <Elem name="created-date">
-            {format(new Date(project.created_at), "yy-MM-dd, HH:mm")}
+            {format(new Date(project.created_at), "dd MMM ’yy, HH:mm")}
           </Elem>
           <Elem name="created-by">
             <Userpic src="#" user={project.created_by} showUsername/>

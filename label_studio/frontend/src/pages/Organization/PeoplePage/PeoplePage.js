@@ -24,7 +24,7 @@ const InvitationModal = ({ link }) => {
       />
 
       <Description style={{ width: '70%', marginTop: 16 }}>
-        邀请人们加入您的 Label Studio 实例。您邀请的人可以完全访问您的所有项目。 <a href="https://labelstud.io/guide/signup.html">阅读更多</a>.
+        Invite people to join your Label Studio instance. People that you invite have full access to all of your projects. <a href="https://labelstud.io/guide/signup.html">Learn more</a>.
       </Description>
     </Block>
   );
@@ -56,9 +56,8 @@ export const PeoplePage = () => {
     });
   }, [setInviteLink]);
 
-  // 邀请成员
   const inviteModalProps = useCallback((link) => ({
-    title: "邀请成员",
+    title: "Invite people",
     style: { width: 640, height: 472 },
     body: () => (
       <InvitationModal link={link}/>
@@ -76,12 +75,12 @@ export const PeoplePage = () => {
         <Space spread>
           <Space>
             <Button style={{ width: 170 }} onClick={() => updateLink()}>
-              重置链接
+              Reset Link
             </Button>
           </Space>
           <Space>
             <Button primary style={{ width: 170 }} onClick={copyLink}>
-              {copied ? "已复制!" : "复制链接"}
+              {copied ? "Copied!" : "Copy link"}
             </Button>
           </Space>
         </Space>
@@ -116,7 +115,7 @@ export const PeoplePage = () => {
 
           <Space>
             <Button icon={<LsPlus/>} primary onClick={showInvitationModal}>
-              添加成员
+              Add People
             </Button>
           </Space>
         </Space>

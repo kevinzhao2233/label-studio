@@ -6,9 +6,9 @@ import { WebhookPage } from '../WebhookPage/WebhookPage';
 
 const ALLOW_ORGANIZATION_WEBHOOKS = window.APP_SETTINGS.flags?.allow_organization_webhooks;
 
+
 const MenuLayout = ({ children, ...routeProps }) => {
   let menuItems = [PeoplePage];
-
   if (ALLOW_ORGANIZATION_WEBHOOKS){
     menuItems.push(
       WebhookPage,
@@ -24,7 +24,6 @@ const MenuLayout = ({ children, ...routeProps }) => {
 };
 
 const organizationPages = {};
-
 if (ALLOW_ORGANIZATION_WEBHOOKS){
   organizationPages[WebhookPage] = WebhookPage;
 }

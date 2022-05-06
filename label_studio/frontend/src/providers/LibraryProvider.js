@@ -5,11 +5,10 @@ const libraryQueue = new Map;
 const libRequest = new Map;
 
 const requestLabelStudio = (libraries) => async (library) => {
-  const { scriptSrc, cssSrc, checkAvailability } = libraries[library];
+  const {scriptSrc, cssSrc, checkAvailability} = libraries[library];
   const availableLibrary = checkAvailability();
 
   const queueSet = libraryQueue.get(library) ?? new Set();
-
   libraryQueue.set(library, queueSet);
 
   if (availableLibrary) return availableLibrary;
@@ -29,7 +28,6 @@ const requestLabelStudio = (libraries) => async (library) => {
       if (scriptSrc) {
         assets.push(new Promise((resolve) => {
           const script = document.createElement('script');
-
           script.type = 'text/javascript';
           script.onload = () => {
             resolve();
@@ -43,7 +41,6 @@ const requestLabelStudio = (libraries) => async (library) => {
       if (cssSrc) {
         assets.push(new Promise((resolve) => {
           const link = document.createElement('link');
-
           link.rel = "stylesheet";
           link.type = "text/css";
           link.onload = () => {
@@ -66,7 +63,7 @@ const requestLabelStudio = (libraries) => async (library) => {
 
 export const LibraryContext = createContext({});
 
-export const LibraryProvider = ({ libraries, children }) => {
+export const LibraryProvider = ({libraries, children}) => {
   const requestLibrary = useMemo(() => {
     return requestLabelStudio(libraries);
   }, [libraries]);

@@ -15,6 +15,8 @@ export const PeopleList = ({ onSelect, selectedUser, defaultSelected }) => {
   const [currentPageSize] = usePageSize('page_size', 30);
   const [totalItems, setTotalItems] = useState(0);
 
+  console.log({ currentPage, currentPageSize });
+
   const fetchUsers = useCallback(async (page, pageSize) => {
     const response = await api.callApi('memberships', {
       params: {
@@ -60,9 +62,9 @@ export const PeopleList = ({ onSelect, selectedUser, defaultSelected }) => {
             <Elem name="users">
               <Elem name="header">
                 <Elem name="column" mix="avatar"/>
-                <Elem name="column" mix="email">邮箱</Elem>
-                <Elem name="column" mix="name">姓名</Elem>
-                <Elem name="column" mix="last-activity">最近活动</Elem>
+                <Elem name="column" mix="email">Email</Elem>
+                <Elem name="column" mix="name">Name</Elem>
+                <Elem name="column" mix="last-activity">Last Activity</Elem>
               </Elem>
               <Elem name="body">
                 {usersList.map(({ user }) => {

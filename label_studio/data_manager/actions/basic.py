@@ -143,31 +143,31 @@ actions = [
     {
         'entry_point': delete_tasks,
         'permission': all_permissions.tasks_delete,
-        'title': '删除任务',
+        'title': 'Delete Tasks',
         'order': 100,
         'reload': True,
         'dialog': {
-            'text': '你将删除选定的任务。是否确认？',
+            'text': 'You are going to delete the selected tasks. Please confirm your action.',
             'type': 'confirm'
         }
     },
     {
         'entry_point': delete_tasks_annotations,
         'permission': all_permissions.tasks_delete,
-        'title': '删除标注结果',
+        'title': 'Delete Annotations',
         'order': 101,
         'dialog': {
-            'text': '你将从所选任务中删除所有标注结果。是否确认？',
+            'text': 'You are going to delete all annotations from the selected tasks. Please confirm your action.',
             'type': 'confirm'
         }
     },
     {
         'entry_point': delete_tasks_predictions,
         'permission': all_permissions.predictions_any,
-        'title': '删除预测',
+        'title': 'Delete Predictions',
         'order': 102,
         'dialog': {
-            'text': '你将从所选任务中删除所有预测信息。是否确认？',
+            'text': 'You are going to delete all predictions from the selected tasks. Please confirm your action.',
             'type': 'confirm'
         }
     }

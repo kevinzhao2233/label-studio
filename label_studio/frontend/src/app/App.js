@@ -4,7 +4,7 @@ import { createBrowserHistory } from 'history';
 import React from 'react';
 import { render } from 'react-dom';
 import { Router } from 'react-router-dom';
-// import { initSentry } from "../config/Sentry";
+import { initSentry } from "../config/Sentry";
 import { ApiProvider } from '../providers/ApiProvider';
 import { AppStoreProvider } from '../providers/AppStoreProvider';
 import { ConfigProvider } from '../providers/ConfigProvider';
@@ -19,16 +19,15 @@ import { RootPage } from './RootPage';
 
 const baseURL = new URL(APP_SETTINGS.hostname || location.origin);
 
-// 创建 BrowserHistory，就是可以操作路由的对象，比如 push、replace 等东西
 const browserHistory = createBrowserHistory({
   basename: baseURL.pathname || "/",
 });
 
 window.LSH = browserHistory;
 
-// initSentry(browserHistory);
+initSentry(browserHistory);
 
-const App = ({ content }) => {
+const App = ({content}) => {
   const libraries = {
     lsf: {
       scriptSrc: window.EDITOR_JS,

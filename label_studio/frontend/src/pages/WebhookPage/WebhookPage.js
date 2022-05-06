@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useState, useCallback, useEffect, useMemo } from 'react';
 
 import { useAPI } from '../../providers/ApiProvider';
 import "./WebhookPage.styl";
@@ -36,7 +36,6 @@ const Webhook = () => {
       return undefined;
     }
   }, [project, history]);
-
   console.log(projectId, history.location.pathname);
   const fetchWebhooks = useCallback(async () => {
     if (projectId === null) {
@@ -44,7 +43,6 @@ const Webhook = () => {
       return;
     }
     let params = {};
-
     if (projectId !== undefined){
       params['project'] = projectId;
     } else {
@@ -53,7 +51,6 @@ const Webhook = () => {
     const webhooks = await api.callApi('webhooks', {
       params,
     });
-
     if (webhooks) setWebhooks(webhooks);
   }, [api, projectId]);
 
@@ -63,7 +60,6 @@ const Webhook = () => {
       return;
     }
     let params = {};
-
     if (projectId !== undefined){
       params['organization-only'] = false;
     }
@@ -73,7 +69,6 @@ const Webhook = () => {
         params,
       },
     );
-
     if (info) setWebhooksInfo(info);
   }, [api, projectId]);
 
@@ -86,54 +81,45 @@ const Webhook = () => {
     return null;
   }
   let content = null;
-
   if (activeWebhook==='new') {
-    content = (
-      <WebhookDetail
-        onSelectActive={setActiveWebhook}
-        onBack={() => setActiveWebhook(null)}
-        webhook={null}
-        fetchWebhooks={fetchWebhooks}
-        webhooksInfo={webhooksInfo} />
-    );  
+    content = <WebhookDetail
+      onSelectActive={setActiveWebhook}
+      onBack={() => setActiveWebhook(null)}
+      webhook={null}
+      fetchWebhooks={fetchWebhooks}
+      webhooksInfo={webhooksInfo} />;  
   } else if (activeWebhook === null) {
-    content = (
-      <WebhookList
-        onSelectActive={setActiveWebhook}
-        onAddWebhook={()=>{setActiveWebhook('new');}}
-        fetchWebhooks={fetchWebhooks}
-        webhooks={webhooks}       
-      />
-    );
+    content = <WebhookList
+      onSelectActive={setActiveWebhook}
+      onAddWebhook={()=>{setActiveWebhook('new');}}
+      fetchWebhooks={fetchWebhooks}
+      webhooks={webhooks}       
+    />;
   } else {
-    content = (
-      <WebhookDetail
-        onSelectActive={setActiveWebhook}
-        onBack={() => setActiveWebhook(null)}
-        webhook={webhooks[webhooks.findIndex((x) => x.id === activeWebhook)]}
-        fetchWebhooks={fetchWebhooks}
-        webhooksInfo={webhooksInfo} />
-    );
+    content = <WebhookDetail
+      onSelectActive={setActiveWebhook}
+      onBack={() => setActiveWebhook(null)}
+      webhook={webhooks[webhooks.findIndex((x) => x.id === activeWebhook)]}
+      fetchWebhooks={fetchWebhooks}
+      webhooksInfo={webhooksInfo} />;
   }
-  return (
-    <Block name='webhook-wrap'>
-      {content}
-      <Elem name="footer">
-        <Elem name='footer-icon'>
-          <IconInfo width='28' height='28'/>
-        </Elem>
-        <Elem name='footer-text'>
-          <p>
+  return <Block name='webhook-wrap'>
+    {content}
+    <Elem name="footer">
+      <Elem name='footer-icon'>
+        <IconInfo width='28' height='28'/>
+      </Elem>
+      <Elem name='footer-text'>
+        <p>
         Webhooks allow external services to be notified when certain events happen. 
         When the specified events occur, a POST request is sent to each of the URLs you provide. 
-          </p>
-          <p>
-            <a href="https://labelstud.io/guide/webhooks.html">Read more in the documentation</a>.
-          </p>
-        </Elem>
+        </p>
+        <p>
+          <a href="https://labelstud.io/guide/webhooks.html">Read more in the documentation</a>.
+        </p>
       </Elem>
-    </Block>
-  );
+    </Elem>
+  </Block>;
 };
 
 export const WebhookPage = {

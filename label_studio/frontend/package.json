@@ -4,7 +4,6 @@
   "description": "",
   "main": "get-build.js",
   "scripts": {
-    "dev": "npx webpack --watch",
     "start": "npx webpack --watch",
     "test": "CSS_PREFIX='ls-' jest",
     "build": "npx webpack",

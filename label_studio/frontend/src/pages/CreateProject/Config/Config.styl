@@ -48,7 +48,6 @@ styled_scroll()
   display: grid
   height: 100%
   grid-template: 1fr auto / 224px auto
-  overflow-y: auto
 
   &__sidebar
     padding: 16px 8px 16px 32px
@@ -92,6 +91,7 @@ styled_scroll()
   main
     position: relative
     flex-grow: 1
+    overflow-y: auto
     height: 100%
     ul
       display grid

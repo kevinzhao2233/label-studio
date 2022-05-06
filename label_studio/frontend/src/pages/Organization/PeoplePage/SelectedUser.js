@@ -5,7 +5,7 @@ import { Button, Userpic } from "../../../components";
 import { Block, Elem } from "../../../utils/bem";
 import "./SelectedUser.styl";
 
-const UserProjectsLinks = ({ projects }) => {
+const UserProjectsLinks = ({projects}) => {
   return (
     <Elem name="links-list">
       {projects.map((project) => (
@@ -27,7 +27,7 @@ export const SelectedUser = ({ user, onClose }) => {
       <Elem name="header">
         <Userpic
           user={user}
-          style={{ width: 64, height: 64, fontSize: 28 }}
+          style={{width: 64, height: 64, fontSize: 28}}
         />
 
         {fullName && (
@@ -60,7 +60,7 @@ export const SelectedUser = ({ user, onClose }) => {
       )}
 
       <Elem tag="p" name="last-active">
-        最近活动: {format(new Date(user.last_activity), 'yyyy-MM-dd, KK:mm a')}
+        Last activity on: {format(new Date(user.last_activity), 'dd MMM yyyy, KK:mm a')}
       </Elem>
     </Block>
   );

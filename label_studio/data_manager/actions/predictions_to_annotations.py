@@ -2,8 +2,10 @@
 """
 import logging
 
+from django.utils.timezone import now
+
 from core.permissions import AllPermissions
-from tasks.models import Prediction, Annotation
+from tasks.models import Prediction, Annotation, Task
 from tasks.serializers import TaskSerializerBulk
 from webhooks.models import WebhookAction
 from webhooks.utils import emit_webhooks_for_instance
@@ -32,7 +34,9 @@ def predictions_to_annotations(project, queryset, **kwargs):
 
     # prepare annotations
     annotations = []
+    tasks_ids = []
     for result, model_version, task_id, prediction_id in predictions_values:
+        tasks_ids.append(task_id)
         annotations.append({
             'result': result,
             'completed_by_id': user.pk,

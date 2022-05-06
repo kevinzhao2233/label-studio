@@ -6,7 +6,7 @@ import { ProjectContext } from '../../providers/ProjectProvider';
 import { Block } from '../../utils/bem';
 
 export const GeneralSettings = () => {
-  const { project, fetchProject } = useContext(ProjectContext);
+  const {project, fetchProject} = useContext(ProjectContext);
 
   const updateProject = useCallback(() => {
     if (project.id) fetchProject(project.id, true);
@@ -24,46 +24,46 @@ export const GeneralSettings = () => {
   ];
 
   const samplings = [
-    { value: "Sequential", label: "顺序", description: "任务按照数据管理页进行排序" },
-    { value: "Uniform", label: "随机", description: "任务是均匀随机的" },
+    {value: "Sequential", label: "Sequential", description: "Tasks are ordered by Data manager ordering"},
+    {value: "Uniform", label: "Random", description: "Tasks are chosen with uniform random"},
   ];
 
   return (
-    <div style={{ width: 480 }}>
+    <div style={{width: 480}}>
       <Form
         action="updateProject"
-        formData={{ ...project }}
-        params={{ pk: project.id }}
+        formData={{...project}}
+        params={{pk: project.id}}
         onSubmit={updateProject}
       >
         <Form.Row columnCount={1} rowGap="32px">
           <Input
             name="title"
-            label="项目名"
-            labelProps={{ large: true }}
+            label="Project Name"
+            labelProps={{large: true}}
           />
 
           <TextArea
             name="description"
-            label="描述"
-            labelProps={{ large: true }}
-            style={{ minHeight: 128 }}
+            label="Description"
+            labelProps={{large: true}}
+            style={{minHeight: 128}}
           />
 
-          <RadioGroup name="color" label="颜色" size="large" labelProps={{ size: "large" }}>
+          <RadioGroup name="color" label="Color" size="large" labelProps={{size: "large"}}>
             {colors.map(color => (
               <RadioGroup.Button key={color} value={color}>
-                <Block name="color" style={{ '--background': color }}/>
+                <Block name="color" style={{'--background': color}}/>
               </RadioGroup.Button>
             ))}
           </RadioGroup>
 
-          <RadioGroup label="任务采样方式" labelProps={{ size: "large" }} name="sampling" simple>
-            {samplings.map(({ value, label, description }) => (
+          <RadioGroup label="Task Sampling" labelProps={{size: "large"}} name="sampling" simple>
+            {samplings.map(({value, label, description}) => (
               <RadioGroup.Button
                 key={value}
-                value={`${value}采样`}
-                label={`${label}采样`}
+                value={`${value} sampling`}
+                label={`${label} sampling`}
                 description={description}
               />
             ))}
@@ -72,15 +72,15 @@ export const GeneralSettings = () => {
 
         <Form.Actions>
           <Form.Indicator>
-            <span case="success">保存成功！</span>
+            <span case="success">Saved!</span>
           </Form.Indicator>
-          <Button type="submit" look="primary" style={{ width: 120 }}>保存</Button>
+          <Button type="submit" look="primary" style={{width: 120}}>Save</Button>
         </Form.Actions>
       </Form>
     </div>
   );
 };
 
-GeneralSettings.menuItem = "常用设置";
+GeneralSettings.menuItem = "General";
 GeneralSettings.path = "/";
 GeneralSettings.exact = true;

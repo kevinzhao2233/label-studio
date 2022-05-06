@@ -22,12 +22,10 @@ const formatXML = (xml) => {
   }
 
   let depth = 0;
-
   try {
     return xml.replace(/<(\/)?.*?(\/)?>[\s\n]*/g, (tag, close1, close2) => {
       if (!close1) {
         const res = "  ".repeat(depth) + tag.trim() + "\n";
-
         if (!close2) depth++;
         return res;
       } else {
@@ -43,13 +41,12 @@ const formatXML = (xml) => {
 const wizardClass = cn("wizard");
 const configClass = cn("configure");
 
-// 如果没有配置，则展示这些内容
 const EmptyConfigPlaceholder = () => (
   <div className={configClass.elem("empty-config")}>
-    <p>你还没有标注配置，这在标注数据时需要</p>
+    <p>Your labeling configuration is empty. It is required to label your data.</p>
     <p>
-      从某个预定义模板开始，或在代码面板上创建自己的配置。
-      标注配置基于 XML 语法，你可以<a href="https://labelstud.io/tags/" target="_blank">查阅文档</a>
+      Start from one of our predefined templates or create your own config on the Code panel.
+      The labeling config is XML-based and you can <a href="https://labelstud.io/tags/" target="_blank">read about the available tags in our documentation</a>.
     </p>
   </div>
 );
@@ -81,7 +78,6 @@ const Label = ({ label, template, color }) => {
 const ConfigureControl = ({ control, template }) => {
   const refLabels = React.useRef();
   const tagname = control.tagName;
-
   if (tagname !== "Choices" && !tagname.endsWith("Labels")) return null;
   const palette = Palette();
 
@@ -100,12 +96,12 @@ const ConfigureControl = ({ control, template }) => {
   return (
     <div className={configClass.elem("labels")}>
       <form className={configClass.elem("add-labels")} action="">
-        <h4>{tagname === "Choices" ? "添加选择" : "添加标签名称"}</h4>
+        <h4>{tagname === "Choices" ? "Add choices" : "Add label names"}</h4>
         <textarea name="labels" id="" cols="30" rows="5" ref={refLabels} onKeyPress={onKeyPress}></textarea>
-        <input type="button" value="添加" onClick={onAddLabels} />
+        <input type="button" value="Add" onClick={onAddLabels} />
       </form>
       <div className={configClass.elem("current-labels")}>
-        <h3>{tagname === "Choices" ? "选择" : "标签"} ({control.children.length})</h3>
+        <h3>{tagname === "Choices" ? "Choices" : "Labels"} ({control.children.length})</h3>
         <ul>
           {Array.from(control.children).map(label => (
             <Label
@@ -123,7 +119,6 @@ const ConfigureControl = ({ control, template }) => {
 
 const ConfigureSettings = ({ template }) => {
   const { settings } = template;
-
   if (!settings) return null;
   const keys = Object.keys(settings);
 
@@ -135,14 +130,12 @@ const ConfigureSettings = ({ template }) => {
     if (!$tag) return null;
     if (options.when && !options.when($tag)) return;
     let value = false;
-
     if (options.value) value = options.value($tag);
     else if (typeof options.param === "string") value = $tag.getAttribute(options.param);
     if (value === "true") value = true;
     if (value === "false") value = false;
     let onChange;
     let size;
-
     switch (type) {
       case Array:
         onChange = e => {
@@ -193,7 +186,7 @@ const ConfigureSettings = ({ template }) => {
   return (
     <ul className={configClass.elem("settings")}>
       <li>
-        <h4>其他配置</h4>
+        <h4>Configure settings</h4>
         <ul className={configClass.elem("object-settings")}>
           {items}
         </ul>
@@ -205,7 +198,6 @@ const ConfigureSettings = ({ template }) => {
 const ConfigureColumns = ({ columns, template }) => {
   const updateValue = obj => e => {
     const attrName = e.target.value.replace(/^\$/, "");
-
     obj.setAttribute("value", "$" + attrName);
     template.render();
   };
@@ -214,21 +206,21 @@ const ConfigureColumns = ({ columns, template }) => {
 
   return (
     <div className={configClass.elem("object")}>
-      <h4>配置数据</h4>
+      <h4>Configure data</h4>
       {template.objects.length > 1 && columns?.length > 0 && columns.length < template.objects.length && (
-        <p className={configClass.elem("object-error")}>这个模板需要更多的数据</p>
+        <p className={configClass.elem("object-error")}>This template requires more data then you have for now</p>
       )}
       {columns?.length === 0 && (
         <p className={configClass.elem("object-error")}>
-          选择要标注的字段，你需要上传数据。或者使用代码模式提供。
+          To select which field(s) to label you need to upload the data. Alternatively, you can provide it using Code mode.
         </p>
       )}
       {template.objects.map(obj => (
         <p key={obj.getAttribute("name")}>
-          {obj.tagName.toLowerCase()}
+          Use {obj.tagName.toLowerCase()}
           {template.objects > 1 && ` for ${obj.getAttribute("name")}`}
-          {" 来自于"}
-          {columns?.length > 0 && columns[0] !== DEFAULT_COLUMN && "字段："}
+          {" from "}
+          {columns?.length > 0 && columns[0] !== DEFAULT_COLUMN && "field "}
           <select onChange={updateValue(obj)} value={obj.getAttribute("value")?.replace(/^\$/, "")}>
             {columns?.map(column => (
               <option key={column} value={column}>
@@ -279,7 +271,7 @@ const Configurator = ({ columns, config, project, template, setTemplate, onBrows
     onValidate?.(validation);
 
     const sample = await api.callApi("createSampleTask", {
-      params: { pk: project.id },
+      params: {pk: project.id },
       body: { label_config: configToCheck },
       errorFilter: () => true,
     });
@@ -307,7 +299,6 @@ const Configurator = ({ columns, config, project, template, setTemplate, onBrows
     setError(null);
     setWaiting(true);
     const res = await onSaveClick();
-
     setWaiting(false);
     if (res !== true) {
       setError(res);
@@ -327,8 +318,8 @@ const Configurator = ({ columns, config, project, template, setTemplate, onBrows
     <div className={configClass}>
       <div className={configClass.elem("container")}>
         <header>
-          <button onClick={onBrowse}>浏览模板</button>
-          <ToggleItems items={{ code: "源代码", visual: "可视化" }} active={configure} onSelect={onSelect} />
+          <button onClick={onBrowse}>Browse Templates</button>
+          <ToggleItems items={{ code: "Code", visual: "Visual" }} active={configure} onSelect={onSelect} />
         </header>
         <div className={configClass.elem('editor')}>
           {configure === "code" && (
@@ -354,8 +345,8 @@ const Configurator = ({ columns, config, project, template, setTemplate, onBrows
         </div>
         {disableSaveButton !== true && onSaveClick && (
           <Form.Actions size="small" extra={configure === "code" && extra} valid>
-            <Button look="primary" size="compact" style={{ width: 120 }} onClick={onSave} waiting={waiting}>
-              保存
+            <Button look="primary" size="compact" style={{width: 120}} onClick={onSave} waiting={waiting}>
+              Save
             </Button>
           </Form.Actions>
         )}
@@ -380,14 +371,12 @@ export const ConfigPage = ({ config: initialConfig = "", columns: externalColumn
 
   const setTemplate = React.useCallback(config => {
     const tpl = new Template({ config });
-
     tpl.onConfigUpdate = setConfig;
     setConfig(config);
     setCurrentTemplate(tpl);
   }, [setConfig, setCurrentTemplate]);
 
   const [columns, setColumns] = React.useState();
-
   React.useEffect(() => { if (externalColumns?.length) setColumns(externalColumns); }, [externalColumns]);
 
   React.useEffect(async () => {
@@ -397,7 +386,6 @@ export const ConfigPage = ({ config: initialConfig = "", columns: externalColumn
       // 404 is ok, and errors here don't matter
       errorFilter: () => true,
     });
-
     if (res?.common_data_columns) {
       setColumns(res.common_data_columns);
     }

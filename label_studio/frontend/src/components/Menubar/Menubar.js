@@ -17,15 +17,15 @@ import './MenuSidebar.styl';
 
 export const MenubarContext = createContext();
 
-const LeftContextMenu = ({ className }) => (
+const LeftContextMenu = ({className}) => (
   <StaticContent
     id="context-menu-left"
     className={className}
   >{(template) => <Breadcrumbs fromTemplate={template} />}</StaticContent>
 );
 
-const RightContextMenu = ({ className, ...props }) => {
-  const { ContextComponent, contextProps } = useContextComponent();
+const RightContextMenu = ({className, ...props}) => {
+  const {ContextComponent, contextProps} = useContextComponent();
 
   return ContextComponent ? (
     <div className={className}>
@@ -69,14 +69,12 @@ export const Menubar = ({
     e.preventDefault();
 
     const newState = !sidebarPinned;
-
     setSidebarPinned(newState);
     onSidebarPin?.(newState);
   }, [sidebarPinned]);
 
   const sidebarToggle = useCallback((visible) => {
     const newState = visible;
-
     setSidebarOpened(newState);
     onSidebarToggle?.(newState);
   }, [sidebarOpened]);
@@ -117,7 +115,6 @@ export const Menubar = ({
   return (
     <div className={contentClass}>
       {enabled && (
-        // 页面头部，包括左边 logo、中间 context、右边头像
         <div className={menubarClass}>
           <Dropdown.Trigger
             dropdown={menuDropdownRef}
@@ -129,25 +126,24 @@ export const Menubar = ({
             </div>
           </Dropdown.Trigger>
 
-          {/* 中间部分 */}
           <div className={menubarContext}>
-            <LeftContextMenu className={contextItem.mod({ left: true })}/>
+            <LeftContextMenu className={contextItem.mod({left: true})}/>
 
-            <RightContextMenu className={contextItem.mod({ right: true })}/>
+            <RightContextMenu className={contextItem.mod({right: true})}/>
           </div>
 
           <Dropdown.Trigger ref={useMenuRef} align="right" content={(
             <Menu>
               <Menu.Item
                 icon={<LsSettings/>}
-                label="账户和设置"
+                label="Account & Settings"
                 href="/user/account"
                 data-external
               />
               {/* <Menu.Item label="Dark Mode"/> */}
               <Menu.Item
                 icon={<LsDoor/>}
-                label="退出登录"
+                label="Log Out"
                 href={absoluteURL("/logout")}
                 data-external
               />
@@ -161,28 +157,26 @@ export const Menubar = ({
       )}
 
       <VersionProvider>
-        {/* 主体部分 */}
         <div className={contentClass.elem('body')}>
           {enabled && (
-            // 侧边栏
             <Dropdown
               ref={menuDropdownRef}
               onToggle={sidebarToggle}
               onVisibilityChanged={() => window.dispatchEvent(new Event('resize'))}
               visible={sidebarOpened}
-              className={[sidebarClass, sidebarClass.mod({ floating: !sidebarPinned })].join(" ")}
-              style={{ width: 240 }}
+              className={[sidebarClass, sidebarClass.mod({floating: !sidebarPinned})].join(" ")}
+              style={{width: 240}}
             >
               <Menu>
                 <Menu.Item
-                  label="项目"
+                  label="Projects"
                   to="/projects"
                   icon={<IconFolder/>}
                   data-external
                   exact
                 />
                 <Menu.Item
-                  label="组织"
+                  label="Organization"
                   to="/organization"
                   icon={<IconPersonInCircle/>}
                   data-external
@@ -228,15 +222,15 @@ export const Menubar = ({
                   onClick={sidebarPin}
                   active={sidebarPinned}
                 >
-                  {sidebarPinned ?  "取消固定菜单" : "固定菜单"}
+                  {sidebarPinned ?  "Unpin menu" : "Pin menu"}
                 </Menu.Item>
 
               </Menu>
             </Dropdown>
           )}
-          {/* 主内容部分 */}
+
           <MenubarContext.Provider value={providerValue}>
-            <div className={contentClass.elem('content').mod({ withSidebar: sidebarPinned && sidebarOpened })}>
+            <div className={contentClass.elem('content').mod({withSidebar: sidebarPinned && sidebarOpened})}>
               {children}
             </div>
           </MenubarContext.Provider>

@@ -16,9 +16,8 @@ import { ExportPage } from '../ExportPage/ExportPage';
 import { APIConfig } from './api-config';
 import "./DataManager.styl";
 
-// 初始化 DM
 const initializeDataManager = async (root, props, params) => {
-  if (!window.LabelStudio) throw Error("Label Studio Frontend 在 window 中不存在");
+  if (!window.LabelStudio) throw Error("Label Studio Frontend doesn't exist on the page");
   if (!root && root.dataset.dmInitialized) return;
 
   root.dataset.dmInitialized = true;
@@ -26,7 +25,7 @@ const initializeDataManager = async (root, props, params) => {
   const { ...settings } = root.dataset;
 
   const dmConfig = {
-    root,   // 渲染 DataManager 的根节点
+    root,
     projectId: params.id,
     apiGateway: `${window.APP_SETTINGS.hostname}/api/dm`,
     apiVersion: 2,
@@ -40,7 +39,6 @@ const initializeDataManager = async (root, props, params) => {
       labelingHeader: false,
       autoAnnotation: params.autoAnnotation,
     },
-    // 以下参数将传递给 lsf
     labelStudio: {
       keymap: window.APP_SETTINGS.editor_keymap,
     },
@@ -48,7 +46,6 @@ const initializeDataManager = async (root, props, params) => {
     ...settings,
   };
 
-  // 文档 https://github.com/heartexlabs/dm2#initialize
   return new window.DataManager(dmConfig);
 };
 
@@ -56,7 +53,6 @@ const buildLink = (path, params) => {
   return generatePath(`/projects/:id${path}`, params);
 };
 
-// 路由匹配到 /data 的时候，这个组件就会初始化
 export const DataManagerPage = ({ ...props }) => {
   const root = useRef();
   const params = useParams();
@@ -154,14 +150,13 @@ export const DataManagerPage = ({ ...props }) => {
 
   return crashed ? (
     <Block name="crash">
-      <Elem name="info">项目已被删除或尚未创建</Elem>
+      <Elem name="info">Project was deleted or not yet created</Elem>
 
       <Button to="/projects">
-        返回项目页
+        Back to projects
       </Button>
     </Block>
   ) : (
-    // 渲染 DataManager 的根节点
     <Block ref={root} name="datamanager"/>
   );
 };
@@ -177,10 +172,9 @@ DataManagerPage.context = ({ dmRef }) => {
   const [mode, setMode] = useState(dmRef?.mode ?? "explorer");
 
   const links = {
-    '/settings': '设置',
+    '/settings': 'Settings',
   };
 
-  // 更新面包屑，在项目名称后面增加 /标注 或者去掉
   const updateCrumbs = (currentMode) => {
     const isExplorer = currentMode === 'explorer';
     const dmPath = location.pathname.replace(DataManagerPage.path, '');
@@ -196,35 +190,30 @@ DataManagerPage.context = ({ dmRef }) => {
       });
       addCrumb({
         key: "dm-crumb",
-        title: "标注",
+        title: "Labeling",
       });
     }
   };
 
-  // 展示标注说明
   const showLabelingInstruction = (currentMode) => {
     const isLabelStream = currentMode === 'labelstream';
     const { expert_instruction, show_instruction } = project;
 
     if (isLabelStream && show_instruction && expert_instruction) {
       modal({
-        title: "标注说明",
+        title: "Labeling Instructions",
         body: <div dangerouslySetInnerHTML={{ __html: expert_instruction }}/>,
         style: { width: 680 },
       });
     }
   };
 
-  // 监听 dm 的模式改变
   const onDMModeChanged = (currentMode) => {
     setMode(currentMode);
     updateCrumbs(currentMode);
     showLabelingInstruction(currentMode);
   };
 
-  // dm 的模式改变，目前有两种模式："explorer" | "labelstream"
-  // explorer 模式指点击表格行，在抽屉里标注
-  // labelstream 模式指点击 “标注所有任务” 打开的全页面
   useEffect(() => {
     if (dmRef) {
       dmRef.on('modeChanged', onDMModeChanged);
@@ -240,11 +229,11 @@ DataManagerPage.context = ({ dmRef }) => {
       {(project.expert_instruction && mode !== 'explorer') && (
         <Button size="compact" onClick={() => {
           modal({
-            title: "说明",
+            title: "Instructions",
             body: () => <div dangerouslySetInnerHTML={{ __html: project.expert_instruction }}/>,
           });
         }}>
-          说明
+          Instructions
         </Button>
       )}
 

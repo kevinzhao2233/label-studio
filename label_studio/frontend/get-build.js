@@ -3,9 +3,6 @@
  * This script automatically takes the latest build from given repo and branch
  * and places it to label_studio/static/<REPO>
 */
-/**
- * 这个脚本用来从指定的仓库和分支获取最新的构架版本，并将其放到 label_studio/static/<REPO>
- */
 const fetch = require('node-fetch');
 
 const fs = require('fs');
@@ -36,7 +33,6 @@ async function get(projectName, ref = 'master') {
 
   if (!REPO) {
     const repos = Object.entries(PROJECTS).map(a => "\t" + a.join("\t")).join("\n");
-
     console.error(`\n${RED}Cannot fetch from repo ${REPO}.${NC}\nOnly available:\n${repos}`);
     return;
   }
@@ -47,57 +43,49 @@ async function get(projectName, ref = 'master') {
 
   if (ref.length < 30 || ref.indexOf("/") > -1) {
     const commitUrl = `https://api.github.com/repos/${REPO}/git/ref/heads/${ref}`;
-
     console.info(`Fetching ${commitUrl}`);
-    res = await fetch(commitUrl, { headers: { Authorization: `token ${TOKEN}` } });
+    res = await fetch(commitUrl, { headers: { Authorization: `token ${TOKEN}` }});
     json = await res.json();
 
     if (!json || !json.object) {
-      console.log(`\n${RED}Wrong response from GitHub. 请检查您是否使用了正确的GITHUB_TOKEN，以及给定的分支是否已成功构建.${NC}`);
+      console.log(`\n${RED}Wrong response from GitHub. Check that you use correct GITHUB_TOKEN and given branch was successfully built.${NC}`);
       console.log(json);
       return;
     }
 
     sha = json.object.sha;
-    console.info(`最后一次 commit 在 ${ref}:`, sha);
+    console.info(`Last commit in ${ref}:`, sha);
     branch = ref;
   } else {
     sha = ref;
   }
 
   const artifactsUrl = `https://api.github.com/repos/${REPO}/actions/artifacts`;
-
-  res = await fetch(artifactsUrl, { headers: { Authorization: `token ${TOKEN}` } });
+  res = await fetch(artifactsUrl, { headers: { Authorization: `token ${TOKEN}` }});
   json = await res.json();
   const artifact = json.artifacts.find(art => art.name.match(sha) !== null);
-
   if (!artifact) throw new Error(`Artifact for commit ${sha} was not found. Build failed?`);
   const buildUrl = artifact.archive_download_url;
-
   console.info('Found an artifact:', buildUrl);
 
-  res = await fetch(buildUrl, { headers: { Authorization: `token ${TOKEN}` } });
+  res = await fetch(buildUrl, { headers: { Authorization: `token ${TOKEN}` }});
 
   const filename = `${dir}/${sha}.zip`;
-
-  console.info('创建写入流:', filename);
+  console.info('Create write stream:', filename);
   const fileStream = fs.createWriteStream(filename);
-
   await new Promise((resolve, reject) => {
     res.body.pipe(fileStream);
     fileStream.on('error', reject);
     fileStream.on('finish', () => {
       console.info('Downloaded:', filename);
       const unzip = spawn('unzip', ['-d', dir, '-o', filename]);
-
       unzip.stderr.on('data', reject);
       unzip.on('close', resolve);
     });
   }).then(() => console.log('Build unpacked'));
 
   const commitInfoUrl = `https://api.github.com/repos/${REPO}/git/commits/${sha}`;
-
-  res = await fetch(commitInfoUrl, { headers: { Authorization: `token ${TOKEN}` } });
+  res = await fetch(commitInfoUrl, { headers: { Authorization: `token ${TOKEN}` }});
   json = await res.json();
   const info = {
     message: json.message,
@@ -105,9 +93,8 @@ async function get(projectName, ref = 'master') {
     branch,
     date: (json.author && json.author.date) || (json.committer && json.committer.date),
   };
-
   fs.writeFileSync(`${dir}/static/version.json`, JSON.stringify(info, null, 2));
-  console.info('版本信息已写入 static/version.json');
+  console.info('Version info written to static/version.json');
 
   // move build to target folder
   var oldPath = path.join(dir, 'static');
@@ -117,11 +104,11 @@ async function get(projectName, ref = 'master') {
   fs.rmdirSync(newPath, { recursive: true });
   fs.mkdirSync(newPath, { recursive: true });
 
-  fs.rename(oldPath, newPath, function(err) {
+  fs.rename(oldPath, newPath, function (err) {
     if (err) throw err;
-    console.log(`成功重命名 - AKA moved into ${newPath}`);
-    fs.rmdirSync(dir, { recursive: true });
-    console.log(`已经清理 tmp 目录 [${dir}]`);
+    console.log(`Successfully renamed - AKA moved into ${newPath}`);
+    fs.rmdirSync(dir, {recursive: true});
+    console.log(`Cleaned up tmp directory [${dir}]`);
   });
 }
 

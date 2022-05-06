@@ -3,30 +3,25 @@ const OBJECTS = {
     type: 'Image',
     settings: {
       strokeWidth: {
-        title: '框选区域的宽度',
+        title: 'Width of region borders',
         type: Number,
         param: ($obj, value) => $obj.$controls.forEach($control => $control.setAttribute('strokeWidth', value)),
         value: $obj => $obj.$controls[0]?.getAttribute('strokeWidth') ?? 1,
       },
       zoom: {
-        title: '允许图片缩放 (ctrl+鼠标滚轮)',
+        title: 'Allow image zoom (ctrl+wheel)',
         type: Boolean,
         param: 'zoom',
       },
       zoomControl: {
-        title: '展示放大缩小控件',
+        title: 'Show controls to zoom in and out',
         type: Boolean,
         param: 'zoomControl',
       },
       rotateControl: {
-        title: '展示图片旋转控件',
+        title: 'Show controls to rotate image',
         type: Boolean,
         param: 'rotateControl',
-      },
-      crosshair: {
-        title: '展示十字线',
-        type: Boolean,
-        param: 'crosshair',
       },
     },
   },
@@ -34,7 +29,7 @@ const OBJECTS = {
     type: 'Text',
     settings: {
       granularity: {
-        title: '按照词选择文本',
+        title: 'Select text by words',
         type: Boolean,
         param: ($obj, value) => value ? $obj.setAttribute('granularity', 'word') : $obj.removeAttribute('granularity'),
         value: $obj => $obj.getAttribute('granularity') === 'word',
@@ -69,7 +64,7 @@ const Labels = {
   type: 'Labels',
   settings: {
     placeLabelsLeft: {
-      title: '标签位置:',
+      title: 'Display labels:',
       type: ["bottom", "left", "right", "top"],
       control: true,
       when: $tag => $tag.$object.tagName !== "Video",
@@ -115,7 +110,7 @@ const Labels = {
       },
     },
     filter: {
-      title: '在标签列表上添加过滤器',
+      title: 'Add filter for long list of labels',
       type: Boolean,
       control: true,
       param: ($obj, value) => {

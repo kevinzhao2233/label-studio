@@ -34,7 +34,6 @@ export const ProjectProvider: React.FunctionComponent = ({children}) => {
       setProjectData({...projectCache.get(finalProjectId)!});
     }
 
-    // 获取项目数据
     const result = await api.callApi<APIProject>('project', {
       params: { pk: finalProjectId },
       errorFilter: () => false,
@@ -67,7 +66,6 @@ export const ProjectProvider: React.FunctionComponent = ({children}) => {
     return result;
   }, [projectData, setProjectData, updateStore]);
 
-  // 依赖项是 params，也就是说页面 URL 的 params 改变了，就会调用 fetchProject 重新加载数据
   useEffect(() => {
     if (+params.id !== projectData?.id) {
       setProjectData({});

@@ -16,7 +16,7 @@ export const Inner = () => {
   const location = useFixedLocation();
   const modal = useRef();
   const refresh = useRefresh();
-  const { project } = useProject();
+  const {project} = useProject();
   const [waiting, setWaitingStatus] = useState(false);
   const api = useAPI();
 
@@ -47,14 +47,13 @@ export const Inner = () => {
 
   const onFinish = useCallback(async () => {
     const imported = await finishUpload();
-
     if (!imported) return;
     backToDM();
   }, [backToDM, finishUpload]);
 
   return (
     <Modal
-      title="导入数据"
+      title="Import data"
       ref={modal}
       onHide={() => backToDM()}
       closeOnClickOutside={false}
@@ -63,11 +62,12 @@ export const Inner = () => {
       bare
     >
       <Modal.Header divided>
-        <Elem block="modal" name="title">导入数据</Elem>
+        <Elem block="modal" name="title">Import Data</Elem>
+
         <Space>
-          <Button waiting={waiting} onClick={onCancel}>取消</Button>
+          <Button waiting={waiting} onClick={onCancel}>Cancel</Button>
           <Button look="primary" onClick={onFinish} waiting={waiting || uploading} disabled={uploadDisabled}>
-            导入
+            Import
           </Button>
         </Space>
       </Modal.Header>

@@ -63,7 +63,7 @@ export const MachineLearningSettings = () => {
 
     console.log({ backend });
     const modalProps = {
-      title: `${backend ? '编辑' : '添加'}模型`,
+      title: `${backend ? 'Edit' : 'Add'} model`,
       style: { width: 760 },
       closeOnClickOutside: false,
       body: (
@@ -81,24 +81,24 @@ export const MachineLearningSettings = () => {
           <Input type="hidden" name="project" value={project.id}/>
 
           <Form.Row columnCount={2}>
-            <Input name="title" label="名称" placeholder="ML Model"/>
+            <Input name="title" label="Title" placeholder="ML Model"/>
             <Input name="url" label="URL" required/>
           </Form.Row>
 
           <Form.Row columnCount={1}>
-            <TextArea name="description" label="描述" style={{ minHeight: 120 }}/>
+            <TextArea name="description" label="Description" style={{ minHeight: 120 }}/>
           </Form.Row>
 
           <Form.Row columnCount={1}>
             <Toggle
               name="is_interactive"
-              label="用于交互式的预标注"
+              label="Use for interactive preannotations"
             />
           </Form.Row>
 
           <Form.Actions>
             <Button type="submit" look="primary" onClick={() => setMLError(null)}>
-              验证并保存
+              Validate and Save
             </Button>
           </Form.Actions>
 
@@ -107,7 +107,7 @@ export const MachineLearningSettings = () => {
               {response.error_message && (
                 <ErrorWrapper error={{
                   response: {
-                    detail: `${backend ? '保存' : '新建'}机器学习模型失败`,
+                    detail: `Failed to ${backend ? 'save' : 'add new'} ML backend.`,
                     exc_info: response.error_message,
                   },
                 }}/>
@@ -141,7 +141,7 @@ export const MachineLearningSettings = () => {
         </a>.
       </Description>
       <Button onClick={() => showMLFormModal()}>
-        添加模型
+        Add Model
       </Button>
 
       <Divider height={32}/>
@@ -153,25 +153,25 @@ export const MachineLearningSettings = () => {
         autosubmit
       >
         <Form.Row columnCount={1}>
-          <Label text="机器学习辅助标注" large/>
+          <Label text="ML-Assisted Labeling" large/>
 
           <div style={{ paddingLeft: 16 }}>
             <Toggle
-              label="提交或更新任意标注结果后，都开始模型训练"
+              label="Start model training after any annotations are submitted or updated"
               name="start_training_on_annotation_update"
             />
           </div>
 
           <div style={{ paddingLeft: 16 }}>
             <Toggle
-              label="加载任务时自动检索预测信息"
+              label="Retrieve predictions when loading a task automatically"
               name="evaluate_predictions_automatically"
             />
           </div>
 
           <div style={{ paddingLeft: 16 }}>
             <Toggle
-              label="在标注界面向标注人员显示预测信息"
+              label="Show predictions to annotators in the Label Stream and Quick View"
               name="show_collab_predictions"
             />
           </div>
@@ -180,8 +180,8 @@ export const MachineLearningSettings = () => {
         {versions.length > 1 && (
           <Form.Row columnCount={1}>
             <Label
-              text="模型版本"
-              description="模型版本允许你指定向标注人员显示哪个预测信息。"
+              text="Model Version"
+              description="Model version allows you to specify which prediction will be shown to the annotators."
               style={{ marginTop: 16 }}
               large
             />
@@ -194,12 +194,12 @@ export const MachineLearningSettings = () => {
                   options={[
                     ...versions,
                   ]}
-                  placeholder="没有选择模型版本"
+                  placeholder="No model version selected"
                 />
               </div>
 
               <Button onClick={resetMLVersion}>
-                重置
+                Reset
               </Button>
             </div>
 
@@ -216,5 +216,5 @@ export const MachineLearningSettings = () => {
   );
 };
 
-MachineLearningSettings.title = "机器学习";
+MachineLearningSettings.title = "Machine Learning";
 MachineLearningSettings.path = "/ml";

@@ -8,12 +8,12 @@ import { Space } from "../../../components/Space/Space";
 import { useAPI } from "../../../providers/ApiProvider";
 import { useConfig } from "../../../providers/ConfigProvider";
 import { Block, Elem } from "../../../utils/bem";
-import { FF_LSDV_E_297, isFF } from "../../../utils/feature-flags";
-import "./PeopleInvitation.scss";
+import { FF_AUTH_TOKENS, FF_LSDV_E_297, isFF } from "../../../utils/feature-flags";
 import { PeopleList } from "./PeopleList";
-import "./PeoplePage.scss";
 import { SelectedUser } from "./SelectedUser";
 import { InviteLink } from "./InviteLink";
+import "./PeopleInvitation.scss";
+import "./PeoplePage.scss";
 
 const InvitationModal = ({ link }) => {
   return (
@@ -55,6 +55,11 @@ export const PeoplePage = () => {
     [setSelectedUser],
   );
 
+  const showApiTokenSettingsModal = useCallback(() => {
+    inviteModal.current = modal(apiTokensSettingsModalProps);
+    __lsa("organization.token_settings");
+  }, [inviteModalProps, link]);
+
   const defaultSelected = useMemo(() => {
     return localStorage.getItem("selectedUser");
   }, []);
@@ -63,9 +68,8 @@ export const PeoplePage = () => {
     <Block name="people">
       <Elem name="controls">
         <Space spread>
-          <Space />
-
           <Space>
+            {isFF(FF_AUTH_TOKENS) && <Button onClick={showApiTokenSettingsModal}>API Tokens Settings</Button>}
             <Button icon={<LsPlus />} primary onClick={() => setInvitationOpen(true)}>
               Add People
             </Button>

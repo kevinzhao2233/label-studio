@@ -7,3 +7,7 @@ export { ReactComponent as IconLsLabeling } from "./ls-labeling.svg";
 export { ReactComponent as IconLsReview } from "./ls-review.svg";
 export { ReactComponent as IconUserAdd } from "./user-add.svg";
 export { ReactComponent as IconHumanSignal } from "./humansignal.svg";
+export { ReactComponent as IconUpload } from "./upload.svg";
+export { ReactComponent as IconLaunch } from "./launch.svg";
+export { ReactComponent as IconFileCopy } from "./file-copy.svg";
+export { ReactComponent as IconWarning } from "./warning.svg";

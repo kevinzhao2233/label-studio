@@ -2188,7 +2188,7 @@ python-versions = ">=3.9,<4"
 groups = ["main"]
 markers = "python_version >= \"3.12\" or python_version <= \"3.11\""
 files = [
-    {file = "8760106bf5b7eca48970e39e2eca1f05fc3eb549.zip", hash = "sha256:62ea8042693567ac7d46e357a51c73803402a57015cdb7ec590b6bc92c69579d"},
+    {file = "fe052c28e8aa874b203b3d6ba4dc67271f955978.zip", hash = "sha256:e927e50a455d9e837ea7df4daf75429bc251ac45b1a8720f518b7b3e98ff96ac"},
 ]
 
 [package.dependencies]
@@ -2205,6 +2205,7 @@ pandas = ">=0.24.0"
 Pillow = ">=10.0.1"
 pydantic = ">=1.9.2"
 pydantic-core = ">=2.18.2,<3.0.0"
+pyjwt = ">=2.10.1,<3.0.0"
 requests = ">=2.22.0"
 requests-mock = "1.12.1"
 typing_extensions = ">=4.0.0"
@@ -2213,7 +2214,7 @@ xmljson = "0.2.1"
 
 [package.source]
 type = "url"
-url = "https://github.com/HumanSignal/label-studio-sdk/archive/8760106bf5b7eca48970e39e2eca1f05fc3eb549.zip"
+url = "https://github.com/HumanSignal/label-studio-sdk/archive/fe052c28e8aa874b203b3d6ba4dc67271f955978.zip"
 
 [[package]]
 name = "launchdarkly-server-sdk"
@@ -3448,21 +3449,21 @@ plugins = ["importlib-metadata"]
 
 [[package]]
 name = "pyjwt"
-version = "2.8.0"
+version = "2.10.1"
 description = "JSON Web Token implementation in Python"
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.9"
 groups = ["main", "test"]
 markers = "python_version >= \"3.12\" or python_version <= \"3.11\""
 files = [
-    {file = "PyJWT-2.8.0-py3-none-any.whl", hash = "sha256:59127c392cc44c2da5bb3192169a91f429924e17aff6534d70fdc02ab3e04320"},
-    {file = "PyJWT-2.8.0.tar.gz", hash = "sha256:57e28d156e3d5c10088e0c68abb90bfac3df82b40a71bd0daa20c65ccd5c23de"},
+    {file = "PyJWT-2.10.1-py3-none-any.whl", hash = "sha256:dcdd193e30abefd5debf142f9adfcdd2b58004e644f25406ffaebd50bd98dacb"},
+    {file = "pyjwt-2.10.1.tar.gz", hash = "sha256:3cc5772eb20009233caf06e9d8a0577824723b44e6648ee0a2aedb6cf9381953"},
 ]
 
 [package.extras]
 crypto = ["cryptography (>=3.4.0)"]
-dev = ["coverage[toml] (==5.0.4)", "cryptography (>=3.4.0)", "pre-commit", "pytest (>=6.0.0,<7.0.0)", "sphinx (>=4.5.0,<5.0.0)", "sphinx-rtd-theme", "zope.interface"]
-docs = ["sphinx (>=4.5.0,<5.0.0)", "sphinx-rtd-theme", "zope.interface"]
+dev = ["coverage[toml] (==5.0.4)", "cryptography (>=3.4.0)", "pre-commit", "pytest (>=6.0.0,<7.0.0)", "sphinx", "sphinx-rtd-theme", "zope.interface"]
+docs = ["sphinx", "sphinx-rtd-theme", "zope.interface"]
 tests = ["coverage[toml] (==5.0.4)", "pytest (>=6.0.0,<7.0.0)"]
 
 [[package]]
@@ -5108,4 +5109,4 @@ uwsgi = ["pyuwsgi", "uwsgitop"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10,<4"
-content-hash = "526f8972956f1025ae3fb79d465b95ef2da56f4c0f15f3af9192434417b06b09"
+content-hash = "d3dfe187612a45a709619dd6e536bfcff07ca95aaa4f320920d395109e8f3cf1"

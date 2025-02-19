@@ -11,9 +11,7 @@ class TestProjectCountsListAPI(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.project_1 = ProjectFactory()
-        cls.organization = cls.project_1.organization
-        cls.user = cls.project_1.created_by
-        cls.project_2 = ProjectFactory(organization=cls.organization)
+        cls.project_2 = ProjectFactory(organization=cls.project_1.organization)
         Task.objects.create(project=cls.project_1, data={'text': 'Task 1'})
         Task.objects.create(project=cls.project_1, data={'text': 'Task 2'})
         Task.objects.create(project=cls.project_2, data={'text': 'Task 3'})
@@ -22,10 +20,8 @@ class TestProjectCountsListAPI(TestCase):
         return f'{reverse("projects:api:project-counts-list")}?{urlencode(params)}'
 
     def test_get_counts(self):
-        assert False
-
         client = APIClient()
-        client.force_authenticate(user=self.user)
+        client.force_authenticate(user=self.project_1.created_by)
         response = client.get(self.get_url(include='id,task_number,finished_task_number,total_predictions_number'))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['count'], 2)

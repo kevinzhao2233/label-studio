@@ -40,5 +40,3 @@ def test_project_all_members(business_client):
 
     assert isinstance(members, QuerySet)
     assert isinstance(members.first(), User)
-
-

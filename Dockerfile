@@ -90,8 +90,6 @@ COPY pyproject.toml poetry.lock README.md ./
 # Set a default build argument for including dev dependencies
 ARG INCLUDE_DEV=false
 
-RUN echo "INCLUDE_DEV: $INCLUDE_DEV"
-
 # Install dependencies without dev packages
 RUN --mount=type=cache,target=$POETRY_CACHE_DIR,sharing=locked \
     poetry check --lock && \

@@ -1,6 +1,6 @@
 {
-  "message": "feat: OPTIC-1553: Add URL-based region visibility, hiding all but the specified region on load (#6880)",
-  "commit": "b02dfd4f7c12d2bbb39976c49ee999e9559725da",
-  "date": "2025-02-13T16:11:37.000Z",
+  "message": "feat: block sentry in frontend side (#6615)",
+  "commit": "560e33091fa392bec906ca43f082afb1657b11a7",
+  "date": "2025-02-13T23:13:39.000Z",
   "branch": "develop"
 }

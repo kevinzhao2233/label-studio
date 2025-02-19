@@ -93,7 +93,6 @@ export const PersonalInfo = () => {
     async (e: FormEvent, isDelete = false) => {
       e.preventDefault();
       e.stopPropagation();
-      console.log("submitting");
       if (!user) return;
 
       const body = new FormData(e.currentTarget as HTMLFormElement);

@@ -763,6 +763,7 @@ class ProjectTaskListAPI(GetParentObjectMixin, generics.ListCreateAPIView, gener
         project = generics.get_object_or_404(Project.objects.for_user(self.request.user), pk=self.kwargs['pk'])
         task_ids = list(Task.objects.filter(project=project).values('id'))
         Task.delete_tasks_without_signals(Task.objects.filter(project=project))
+        logger.info(f'calling reset project_id={project.id} ProjectTaskListAPI.delete()')
         project.summary.reset()
         emit_webhooks_for_instance(request.user.active_organization, None, WebhookAction.TASKS_DELETED, task_ids)
         return Response(status=204)
@@ -788,28 +789,34 @@ class ProjectTaskListAPI(GetParentObjectMixin, generics.ListCreateAPIView, gener
         return instance
 
 
+def read_templates_and_groups():
+    annotation_templates_dir = find_dir('annotation_templates')
+    configs = []
+    for config_file in pathlib.Path(annotation_templates_dir).glob('**/*.yml'):
+        config = read_yaml(config_file)
+        if settings.VERSION_EDITION == 'Community':
+            if settings.VERSION_EDITION.lower() != config.get('type', 'community'):
+                continue
+        if config.get('image', '').startswith('/static') and settings.HOSTNAME:
+            # if hostname set manually, create full image urls
+            config['image'] = settings.HOSTNAME + config['image']
+        configs.append(config)
+    template_groups_file = find_file(os.path.join('annotation_templates', 'groups.txt'))
+    with open(template_groups_file, encoding='utf-8') as f:
+        groups = f.read().splitlines()
+    logger.debug(f'{len(configs)} templates found.')
+    return {'templates': configs, 'groups': groups}
+
+
 class TemplateListAPI(generics.ListAPIView):
     parser_classes = (JSONParser, FormParser, MultiPartParser)
     permission_required = all_permissions.projects_view
     swagger_schema = None
+    # load this once in memory for performance
+    templates_and_groups = read_templates_and_groups()
 
     def list(self, request, *args, **kwargs):
-        annotation_templates_dir = find_dir('annotation_templates')
-        configs = []
-        for config_file in pathlib.Path(annotation_templates_dir).glob('**/*.yml'):
-            config = read_yaml(config_file)
-            if settings.VERSION_EDITION == 'Community':
-                if settings.VERSION_EDITION.lower() != config.get('type', 'community'):
-                    continue
-            if config.get('image', '').startswith('/static') and settings.HOSTNAME:
-                # if hostname set manually, create full image urls
-                config['image'] = settings.HOSTNAME + config['image']
-            configs.append(config)
-        template_groups_file = find_file(os.path.join('annotation_templates', 'groups.txt'))
-        with open(template_groups_file, encoding='utf-8') as f:
-            groups = f.read().splitlines()
-        logger.debug(f'{len(configs)} templates found.')
-        return Response({'templates': configs, 'groups': groups})
+        return Response(self.templates_and_groups)
 
 
 class ProjectSampleTask(generics.RetrieveAPIView):

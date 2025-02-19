@@ -528,6 +528,12 @@
         "decorators": ""
     },
     {
+        "url": "/api/current-user/product-tour",
+        "module": "users.product_tours.api.ProductTourAPI",
+        "name": "product-tour",
+        "decorators": ""
+    },
+    {
         "url": "/data/avatars/<path>",
         "module": "django.views.static.serve",
         "name": "",
@@ -1749,6 +1755,30 @@
         "url": "/api-auth/logout/",
         "module": "django.contrib.auth.views.LogoutView",
         "name": "rest_framework:logout",
+        "decorators": ""
+    },
+    {
+        "url": "/api/jwt/settings",
+        "module": "jwt_auth.views.JWTSettingsAPI",
+        "name": "jwt_auth:api-jwt-settings",
+        "decorators": ""
+    },
+    {
+        "url": "/api/token/",
+        "module": "jwt_auth.views.LSAPITokenView",
+        "name": "jwt_auth:token_manage",
+        "decorators": ""
+    },
+    {
+        "url": "/api/token/refresh/",
+        "module": "jwt_auth.views.DecoratedTokenRefreshView",
+        "name": "jwt_auth:token_refresh",
+        "decorators": ""
+    },
+    {
+        "url": "/api/token/blacklist/",
+        "module": "jwt_auth.views.LSTokenBlacklistView",
+        "name": "jwt_auth:token_blacklist",
         "decorators": ""
     }
 ]

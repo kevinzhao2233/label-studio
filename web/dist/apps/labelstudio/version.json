@@ -1,6 +1,6 @@
 {
-  "message": "feat: LEAP-1753: Add shortcut for toggling bulk sidebar minimization (#6857)",
-  "commit": "3fef4105ab3a30bdbd9e2328d835e524a9b3612d",
-  "date": "2025-01-10T14:25:19.000Z",
+  "message": "feat: block sentry in frontend side (#6615)",
+  "commit": "560e33091fa392bec906ca43f082afb1657b11a7",
+  "date": "2025-02-13T23:13:39.000Z",
   "branch": "develop"
 }

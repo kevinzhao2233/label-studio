@@ -1,15 +1,20 @@
-import { type FormEvent, type FormEventHandler, useCallback, useEffect, useRef, useState } from "react";
+import { type FormEventHandler, useCallback, useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import { InputFile, ToastType, useToast } from "@humansignal/ui";
-import { Input } from "/apps/labelstudio/src/components/Form/Elements";
-import { Userpic } from "/apps/labelstudio/src/components/Userpic/Userpic";
-import { Button } from "/apps/labelstudio/src/components/Button/Button";
 import { API, useAPI } from "apps/labelstudio/src/providers/ApiProvider";
 import styles from "../AccountSettings.module.scss";
 import { useCurrentUserAtom } from "@humansignal/core/lib/hooks/useCurrentUser";
 import { atomWithMutation } from "jotai-tanstack-query";
 import { useAtomValue } from "jotai";
 import type { APIUser } from "@humansignal/core/types/user";
+
+/**
+ * FIXME: This is legacy imports. We're not supposed to use such statements
+ * each one of these eventually has to be migrated to core or ui
+ */
+import { Input } from "/apps/labelstudio/src/components/Form/Elements";
+import { Userpic } from "/apps/labelstudio/src/components/Userpic/Userpic";
+import { Button } from "/apps/labelstudio/src/components/Button/Button";
 
 const updateUserAtom = atomWithMutation(() => ({
   mutationKey: ["update-user"],
@@ -59,7 +64,6 @@ export const PersonalInfo = () => {
   const updateUserAvatar = useAtomValue(updateUserAvatarAtom);
   const { user, fetch: refetchUser, isInProgress: userInProgress } = useCurrentUserAtom();
   const [isInProgress, setIsInProgress] = useState(false);
-  const userAvatarForm = useRef<HTMLFormElement>();
   const avatarRef = useRef<HTMLInputElement>();
   const fileChangeHandler: FormEventHandler<HTMLInputElement> = useCallback(
     async (e) => {
@@ -89,28 +93,6 @@ export const PersonalInfo = () => {
     refetchUser();
   };
 
-  const avatarFormSubmitHandler = useCallback(
-    async (e: FormEvent, isDelete = false) => {
-      e.preventDefault();
-      e.stopPropagation();
-      if (!user) return;
-
-      const body = new FormData(e.currentTarget as HTMLFormElement);
-      const response = await updateUserAvatar.mutateAsync({
-        body,
-        userId: user.id,
-      });
-
-      if (!isDelete && !response.$meta.ok) {
-        toast.show({ message: response?.response?.detail ?? "Error updating avatar", type: "error" });
-      } else {
-        refetchUser();
-      }
-      userAvatarForm.current?.reset();
-    },
-    [user?.id, fetch],
-  );
-
   const userFormSubmitHandler: FormEventHandler = useCallback(
     async (e) => {
       e.preventDefault();
@@ -133,7 +115,7 @@ export const PersonalInfo = () => {
       <div className={styles.sectionContent}>
         <div className={styles.flexRow}>
           <Userpic user={user} isInProgress={userInProgress} size={92} style={{ flex: "none" }} />
-          <form ref={userAvatarForm} className={styles.flex1}>
+          <form className={styles.flex1}>
             <InputFile
               name="avatar"
               onChange={fileChangeHandler}

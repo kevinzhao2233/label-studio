@@ -155,42 +155,51 @@ export const AnnotationButton = observer(
       const isDraft = !isDefined(entity.pk);
       const showGroundTruth = capabilities.groundTruthEnabled && !isPrediction && !isDraft;
       const showDuplicateAnnotation = capabilities.enableCreateAnnotation && !isDraft;
-      const actions = useMemo<ContextMenuAction[]>(() => [
-        {
-          label: `${isGroundTruth ? "Unset " : "Set "} as Ground Truth`,
-          onClick: setGroundTruth,
-          icon: isGroundTruth ? (
-            <LsStar color="#FFC53D" width={iconSize} height={iconSize} />
-          ) : (
-            <LsStarOutline width={iconSize} height={iconSize} />
-          ),
-          enabled: showGroundTruth,
-        },
-        {
-          label: "Duplicate Annotation",
-          onClick: duplicateAnnotation,
-          icon: <IconDuplicate width={16} height={20} />,
-          enabled: showDuplicateAnnotation,
-        },
-        {
-          label: "Copy Annotation Link",
-          onClick: linkAnnotation,
-          icon: <IconLink width={24} height={24} />,
-          enabled: !isDraft,
-        },
-        {
-          label: "Delete Annotation",
-          onClick: deleteAnnotation,
-          icon: <IconTrashRect width={14} height={18} />,
-          separator: true,
-          danger: true,
-          enabled: capabilities.enableAnnotationDelete && !isPrediction,
-        },
-      ], [entity, isGroundTruth, isPrediction, isDraft, capabilities.enableAnnotationDelete, capabilities.enableCreateAnnotation, capabilities.groundTruthEnabled]);
-
-      return (
-        <ContextMenu actions={actions} />
+      const actions = useMemo<ContextMenuAction[]>(
+        () => [
+          {
+            label: `${isGroundTruth ? "Unset " : "Set "} as Ground Truth`,
+            onClick: setGroundTruth,
+            icon: isGroundTruth ? (
+              <LsStar color="#FFC53D" width={iconSize} height={iconSize} />
+            ) : (
+              <LsStarOutline width={iconSize} height={iconSize} />
+            ),
+            enabled: showGroundTruth,
+          },
+          {
+            label: "Duplicate Annotation",
+            onClick: duplicateAnnotation,
+            icon: <IconDuplicate width={16} height={20} />,
+            enabled: showDuplicateAnnotation,
+          },
+          {
+            label: "Copy Annotation Link",
+            onClick: linkAnnotation,
+            icon: <IconLink width={24} height={24} />,
+            enabled: !isDraft,
+          },
+          {
+            label: "Delete Annotation",
+            onClick: deleteAnnotation,
+            icon: <IconTrashRect width={14} height={18} />,
+            separator: true,
+            danger: true,
+            enabled: capabilities.enableAnnotationDelete && !isPrediction,
+          },
+        ],
+        [
+          entity,
+          isGroundTruth,
+          isPrediction,
+          isDraft,
+          capabilities.enableAnnotationDelete,
+          capabilities.enableCreateAnnotation,
+          capabilities.groundTruthEnabled,
+        ],
       );
+
+      return <ContextMenu actions={actions} />;
     };
 
     return (
@@ -278,7 +287,13 @@ export const AnnotationButton = observer(
         </Elem>
         <ContextMenuTrigger
           className="lsf-annotation-button__trigger"
-          content={<AnnotationButtonContextMenu entity={entity} capabilities={capabilities} annotationStore={annotationStore} />}
+          content={
+            <AnnotationButtonContextMenu
+              entity={entity}
+              capabilities={capabilities}
+              annotationStore={annotationStore}
+            />
+          }
         />
       </Block>
     );

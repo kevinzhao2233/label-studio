@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import clsx from "clsx";
 import { Dropdown } from "../../common/Dropdown/Dropdown";
@@ -34,17 +33,25 @@ export interface ContextMenuTriggerProps {
 export const ContextMenu: React.FC<ContextMenuProps> = ({ actions, className }) => {
   const dropdown = useDropdown();
 
-  return <div className={clsx(styles.contextMenu, className)}>
-    {actions.map((action, index) => action.enabled !== false && (
-      <React.Fragment key={action.key ?? index}>
-        {action.separator && <div className={styles.seperator} />}
-        <div className={clsx(styles.option, action.danger && styles.danger)} onClick={(e) => action.onClick(e, { dropdown })}>
-            {action.icon && <span className={clsx(styles.icon, action.iconClassName)}>{action.icon}</span>}
-            {action.label}
-          </div>
-      </React.Fragment>
-    ))}
-  </div>;
+  return (
+    <div className={clsx(styles.contextMenu, className)}>
+      {actions.map(
+        (action, index) =>
+          action.enabled !== false && (
+            <React.Fragment key={action.key ?? index}>
+              {action.separator && <div className={styles.seperator} />}
+              <div
+                className={clsx(styles.option, action.danger && styles.danger)}
+                onClick={(e) => action.onClick(e, { dropdown })}
+              >
+                {action.icon && <span className={clsx(styles.icon, action.iconClassName)}>{action.icon}</span>}
+                {action.label}
+              </div>
+            </React.Fragment>
+          ),
+      )}
+    </div>
+  );
 };
 
 export const ContextMenuTrigger: React.FC<ContextMenuTriggerProps> = ({ children, content, onToggle, className }) => {

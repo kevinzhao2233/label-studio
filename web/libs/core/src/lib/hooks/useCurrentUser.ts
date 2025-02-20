@@ -41,6 +41,7 @@ export function useCurrentUserAtom() {
 
   const commonResponse = {
     isInProgress: user.isFetching || updateUser.isPending,
+    isUpdating: updateUser.isPending,
     loaded: user.isSuccess,
     fetch: refetch,
     update,

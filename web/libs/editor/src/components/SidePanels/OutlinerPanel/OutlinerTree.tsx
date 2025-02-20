@@ -13,7 +13,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { IconWarning, LsSparks } from "../../../assets/icons";
+import { IconLink, IconWarning, LsSparks, IconEllipsis } from "../../../assets/icons";
 import { IconChevronLeft, IconEyeClosed, IconEyeOpened } from "../../../assets/icons/timeline";
 import { IconArrow } from "../../../assets/icons/tree";
 import { Tooltip } from "../../../common/Tooltip/Tooltip";
@@ -29,6 +29,10 @@ import "./TreeView.scss";
 import ResizeObserver from "../../../utils/resize-observer";
 import type { EventDataNode, Key } from "rc-tree/es/interface";
 import { RegionLabel } from "./RegionLabel";
+import { useCopyText } from "@humansignal/core/lib/hooks/useCopyText";
+import { ToastType, useToast } from "@humansignal/ui/lib/Toast/Toast";
+import { ContextMenu, type ContextMenuAction, ContextMenuTrigger, type MenuActionOnClick } from "../../ContextMenu";
+import { Button } from "libs/editor/src/common/Button/Button";
 
 const { localStorage } = window;
 const localStoreName = "collapsed-label-pos";
@@ -452,6 +456,51 @@ const RootTitle: FC<any> = observer(
   },
 );
 
+const RegionContextMenu: FC<{ item: any }> = observer(({ item }: {item: any}) => {
+  const [open, setOpen] = useState(false);
+  const regionLink = useMemo(() => {
+    const url = new URL(window.location.href);
+    if (item.annotation.pk) {
+        url.searchParams.set("annotation", item.annotation.pk);
+      }
+      if (item.id) {
+        url.searchParams.set("region", item.id.split("#")[0]);
+      }
+      return url.toString();
+    }, [item]);
+    const [copyLink] = useCopyText(regionLink);
+    const toast = useToast();
+
+    const onCopyLink = useCallback<MenuActionOnClick>((_, ctx) => {
+      copyLink();
+      ctx.dropdown?.close();
+      toast.show({
+        message: "Region link copied to clipboard",
+        type: ToastType.info,
+      });
+    }, [copyLink]);
+
+    const actions = useMemo<ContextMenuAction[]>(() => [
+      {
+        label: "Copy Region Link",
+        onClick: onCopyLink,
+        icon: <IconLink />,
+      },
+    ], [onCopyLink]);
+
+  return (
+    <ContextMenuTrigger
+      className="lsf-region-context-menu"
+      content={<ContextMenu actions={actions} />}
+      onToggle={(isOpen) => setOpen(isOpen)}
+    >
+      <Button type="text" style={{ padding: 0, width: 24, height: 24, ...(open ? ({ display: "flex !important" }) : null)}}>
+        <IconEllipsis />
+      </Button>
+    </ContextMenuTrigger>
+  );
+});
+
 interface RegionControlsProps {
   item: any;
   entity?: any;
@@ -525,6 +574,9 @@ const RegionControls: FC<RegionControlsProps> = observer(
           </>
         )}
         <Elem name={"wrapper"}>
+          <Elem name="control" mod={{ type: "menu" }}>
+            <RegionContextMenu item={item} />
+          </Elem>
           <Elem name="control" mod={{ type: "lock" }}>
             <LockButton
               item={item}

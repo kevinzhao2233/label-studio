@@ -21,10 +21,6 @@
   }
 }
 
-.iconNoMargin {
-  margin-inline: 0;
-}
-
 .option {
   display: flex;
   margin: 8px;
@@ -59,5 +55,6 @@
   &.open {
     background-color: var(--grape_0);
     color: var(--grape_500);
+    border-radius: 4px;
   }
 }

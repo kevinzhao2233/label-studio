@@ -57,7 +57,7 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({ actions, className }) 
 export const ContextMenuTrigger: React.FC<ContextMenuTriggerProps> = ({ children, content, onToggle, className }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className={clsx(styles.trigger, isOpen && styles.open, className)}>
+    <div className={clsx(styles.trigger, isOpen && styles.open, className)} onClick={(e) => e.stopPropagation()}>
       <Dropdown.Trigger
         content={content || undefined}
         onToggle={(isOpen) => {

@@ -78,6 +78,7 @@ export const PeoplePage = () => {
     api.callApi("resetInviteLink").then(({ invite_url }) => {
       setInviteLink(invite_url);
     });
+    __lsa("organization.add_people.reset_link");
   }, [setInviteLink]);
 
   const inviteModalProps = useCallback(
@@ -111,6 +112,7 @@ export const PeoplePage = () => {
         );
       },
       bareFooter: true,
+      onHidden: () => __lsa("organization.add_people.close"),
     }),
     [],
   );

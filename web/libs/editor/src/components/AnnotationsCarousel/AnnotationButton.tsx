@@ -5,7 +5,7 @@ import {
   IconAnnotationSkipped2,
   IconDraftCreated2,
   IconDuplicate,
-  IconEllipsis,
+  IconLink,
   IconTrashRect,
   LsCommentResolved,
   LsCommentUnresolved,
@@ -16,8 +16,7 @@ import {
 import { userDisplayName } from "../../utils/utilities";
 import { TimeAgo } from "../../common/TimeAgo/TimeAgo";
 import "./AnnotationButton.scss";
-import { useCallback, useEffect, useState } from "react";
-import { Dropdown } from "../../common/Dropdown/Dropdown";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDropdown } from "../../common/Dropdown/DropdownTrigger";
 import { isDefined } from "../../utils/utilities";
 import { Tooltip } from "./../../common/Tooltip/Tooltip";
@@ -26,6 +25,7 @@ import { Tooltip } from "./../../common/Tooltip/Tooltip";
 // @ts-ignore
 import { confirm } from "../../common/Modal/Modal";
 import { observer } from "mobx-react";
+import { type ContextMenuAction, ContextMenu, ContextMenuTrigger, type MenuActionOnClick, contextMenuStyles } from "../ContextMenu";
 
 interface AnnotationButtonInterface {
   entity?: any;
@@ -58,7 +58,7 @@ const renderCommentTooltip = (ent: any) => {
 
 export const AnnotationButton = observer(
   ({ entity, capabilities, annotationStore, onAnnotationChange }: AnnotationButtonInterface) => {
-    const iconSize = 37;
+    const iconSize = 32;
     const isPrediction = entity.type === "prediction";
     const username = userDisplayName(
       entity.user ?? {
@@ -66,7 +66,6 @@ export const AnnotationButton = observer(
       },
     );
     const [isGroundTruth, setIsGroundTruth] = useState<boolean>();
-    const [isContextMenuOpen, setIsContextMenuOpen] = useState<boolean>(false);
     const infoIsHidden = annotationStore.store?.hasInterface("annotations:hide-info");
     let hiddenUser = null;
 
@@ -96,23 +95,28 @@ export const AnnotationButton = observer(
         }
       }
     }, [entity]);
-    const ContextMenu = ({ entity, capabilities }: AnnotationButtonInterface) => {
+
+    const AnnotationButtonContextMenu = ({ entity, capabilities }: AnnotationButtonInterface) => {
       const dropdown = useDropdown();
       const clickHandler = () => {
         onAnnotationChange?.();
         dropdown?.close();
       };
-      const setGroundTruth = useCallback(() => {
+      const setGroundTruth = useCallback<MenuActionOnClick>(() => {
         entity.setGroundTruth(!isGroundTruth);
         clickHandler();
       }, [entity]);
-      const duplicateAnnotation = useCallback(() => {
+      const duplicateAnnotation = useCallback<MenuActionOnClick>(() => {
         const c = annotationStore.addAnnotationFromPrediction(entity);
 
         window.setTimeout(() => {
           annotationStore.selectAnnotation(c.id);
           clickHandler();
         });
+      }, [entity]);
+      const linkAnnotation = useCallback<MenuActionOnClick>(() => {
+        console.log("linkAnnotation");
+        dropdown?.close();
       }, [entity]);
       const deleteAnnotation = useCallback(() => {
         clickHandler();
@@ -136,49 +140,45 @@ export const AnnotationButton = observer(
       const isDraft = !isDefined(entity.pk);
       const showGroundTruth = capabilities.groundTruthEnabled && !isPrediction && !isDraft;
       const showDuplicateAnnotation = capabilities.enableCreateAnnotation && !isDraft;
+      const actions = useMemo<ContextMenuAction[]>(() => [
+        {
+          label: `${isGroundTruth ? "Unset " : "Set "} as Ground Truth`,
+          onClick: setGroundTruth,
+          icon: isGroundTruth ? (
+            <LsStar color="#FFC53D" width={iconSize} height={iconSize} />
+          ) : (
+            <LsStarOutline width={iconSize} height={iconSize} />
+          ),
+          enabled: showGroundTruth,
+        },
+        {
+          label: "Duplicate Annotation",
+          onClick: duplicateAnnotation,
+          icon: <IconDuplicate width={16} height={20} />,
+          enabled: showDuplicateAnnotation,
+        },
+        {
+          label: "Copy Annotation Link",
+          onClick: linkAnnotation,
+          icon: <IconLink width={24} height={24} />,
+        },
+        {
+          label: "Delete Annotation",
+          onClick: deleteAnnotation,
+          icon: <IconTrashRect width={14} height={18} />,
+          separator: true,
+          danger: true,
+          enabled: capabilities.enableAnnotationDelete && !isPrediction,
+        },
+      ], [entity, isGroundTruth, isPrediction, capabilities.enableAnnotationDelete, capabilities.enableCreateAnnotation, capabilities.groundTruthEnabled]);
 
       return (
-        <Block name="AnnotationButtonContextMenu">
-          {showGroundTruth && (
-            <Elem name="option" mod={{ groundTruth: true }} onClick={setGroundTruth}>
-              {isGroundTruth ? (
-                <>
-                  <LsStar color="#FFC53D" width={iconSize} height={iconSize} /> {"Unset "}
-                </>
-              ) : (
-                <>
-                  <LsStarOutline width={iconSize} height={iconSize} />
-                  {"Set "}
-                </>
-              )}
-              as Ground Truth
-            </Elem>
-          )}
-          {showDuplicateAnnotation && (
-            <Elem name="option" mod={{ duplicate: true }} onClick={duplicateAnnotation}>
-              <Elem name="icon">
-                <IconDuplicate width={20} height={24} />
-              </Elem>
-              Duplicate Annotation
-            </Elem>
-          )}
-          {capabilities.enableAnnotationDelete && !isPrediction && (
-            <>
-              <Elem name="seperator" />
-              <Elem name="option" mod={{ delete: true }} onClick={deleteAnnotation}>
-                <Elem name="icon">
-                  <IconTrashRect width={14} height={18} />
-                </Elem>{" "}
-                Delete Annotation
-              </Elem>
-            </>
-          )}
-        </Block>
+        <ContextMenu actions={actions} />
       );
     };
 
     return (
-      <Block name="annotation-button" mod={{ selected: entity.selected, contextMenuOpen: isContextMenuOpen }}>
+      <Block name="annotation-button" mod={{ selected: entity.selected }}>
         <Elem name="mainSection" onClick={clickHandler}>
           <Elem name="picSection">
             <Elem
@@ -260,16 +260,10 @@ export const AnnotationButton = observer(
             </Elem>
           )}
         </Elem>
-        <Elem name="contextMenu">
-          <Dropdown.Trigger
-            content={<ContextMenu entity={entity} capabilities={capabilities} annotationStore={annotationStore} />}
-            onToggle={(isVisible) => setIsContextMenuOpen(isVisible)}
-          >
-            <Elem name="ellipsisIcon">
-              <IconEllipsis width={28} height={28} />
-            </Elem>
-          </Dropdown.Trigger>
-        </Elem>
+        <ContextMenuTrigger
+          className="lsf-annotation-button__trigger"
+          content={<AnnotationButtonContextMenu entity={entity} capabilities={capabilities} annotationStore={annotationStore} />}
+        />
       </Block>
     );
   },

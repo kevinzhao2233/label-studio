@@ -14,7 +14,7 @@ const currentUserAtom = atomWithQuery(() => ({
 const currentUserUpdateAtom = atomWithMutation((get) => ({
   mutationKey: ["update-current-user"],
   async mutationFn({ pk, user }: { pk: number; user: Partial<APIUser> }) {
-    return await API.invoke("updateUser", { pk }, { body: user });
+    return await API.invoke<APIUser>("updateUser", { pk }, { body: user });
   },
 
   onSettled() {
@@ -39,12 +39,24 @@ export function useCurrentUserAtom() {
     [user.data?.id, updateUser.mutate],
   );
 
+  const updateAsync = useCallback(
+    (userUpdate: Partial<APIUser>) => {
+      if (!user.data) {
+        console.error("User is not loaded. Try fetching first.");
+        return;
+      }
+      return updateUser.mutateAsync({ pk: user.data.id, user: userUpdate });
+    },
+    [user.data?.id, updateUser.mutate],
+  );
+
   const commonResponse = {
     isInProgress: user.isFetching || updateUser.isPending,
     isUpdating: updateUser.isPending,
     loaded: user.isSuccess,
     fetch: refetch,
     update,
+    updateAsync,
   } as const;
 
   return user.isSuccess

@@ -1,12 +1,11 @@
 import { type FormEventHandler, useCallback, useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import { InputFile, ToastType, useToast } from "@humansignal/ui";
-import { API, useAPI } from "apps/labelstudio/src/providers/ApiProvider";
+import { API } from "apps/labelstudio/src/providers/ApiProvider";
 import styles from "../AccountSettings.module.scss";
 import { useCurrentUserAtom } from "@humansignal/core/lib/hooks/useCurrentUser";
 import { atomWithMutation } from "jotai-tanstack-query";
 import { useAtomValue } from "jotai";
-import type { APIUser } from "@humansignal/core/types/user";
 
 /**
  * FIXME: This is legacy imports. We're not supposed to use such statements
@@ -15,22 +14,6 @@ import type { APIUser } from "@humansignal/core/types/user";
 import { Input } from "/apps/labelstudio/src/components/Form/Elements";
 import { Userpic } from "/apps/labelstudio/src/components/Userpic/Userpic";
 import { Button } from "/apps/labelstudio/src/components/Button/Button";
-
-const updateUserAtom = atomWithMutation(() => ({
-  mutationKey: ["update-user"],
-  async mutationFn({ userId, body }: { userId: number; body: FormData }) {
-    return await API.invoke<APIUser>(
-      "updateUser",
-      {
-        pk: userId,
-      },
-      {
-        body: Object.fromEntries(body.entries()),
-        errorFilter: () => true,
-      },
-    );
-  },
-}));
 
 const updateUserAvatarAtom = atomWithMutation(() => ({
   mutationKey: ["update-user"],
@@ -58,11 +41,9 @@ const updateUserAvatarAtom = atomWithMutation(() => ({
 }));
 
 export const PersonalInfo = () => {
-  const api = useAPI();
   const toast = useToast();
-  const updateUser = useAtomValue(updateUserAtom);
+  const { user, fetch: refetchUser, isInProgress: userInProgress, updateAsync: updateUser } = useCurrentUserAtom();
   const updateUserAvatar = useAtomValue(updateUserAvatarAtom);
-  const { user, fetch: refetchUser, isInProgress: userInProgress } = useCurrentUserAtom();
   const [isInProgress, setIsInProgress] = useState(false);
   const avatarRef = useRef<HTMLInputElement>();
   const fileChangeHandler: FormEventHandler<HTMLInputElement> = useCallback(
@@ -98,7 +79,8 @@ export const PersonalInfo = () => {
       e.preventDefault();
       if (!user) return;
       const body = new FormData(e.currentTarget as HTMLFormElement);
-      const response = await updateUser.mutateAsync({ userId: user.id, body: body });
+      const json = Object.fromEntries(body.entries());
+      const response = await updateUser(json);
 
       refetchUser();
       if (!response?.$meta.ok) {

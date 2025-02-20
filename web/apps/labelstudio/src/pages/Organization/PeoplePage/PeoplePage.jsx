@@ -16,11 +16,18 @@ import { PeopleList } from "./PeopleList";
 import "./PeoplePage.scss";
 import { SelectedUser } from "./SelectedUser";
 import { TokenSettingsModal } from "@humansignal/core/blocks/TokenSettingsModal";
+import { debounce } from "@humansignal/core/lib/utils/debounce";
 
 const InvitationModal = ({ link }) => {
   return (
     <Block name="invite">
-      <Input value={link} style={{ width: "100%" }} readOnly />
+      <Input
+        value={link}
+        style={{ width: "100%" }}
+        readOnly
+        onCopy={debounce(() => __lsa("organization.add_people.manual_copy_link"), 1000)}
+        onSelect={debounce(() => __lsa("organization.add_people.select_link"), 1000)}
+      />
 
       <Description style={{ marginTop: 16 }}>
         Invite people to join your Label Studio instance. People that you invite have full access to all of your

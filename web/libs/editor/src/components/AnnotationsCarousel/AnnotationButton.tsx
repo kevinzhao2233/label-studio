@@ -20,12 +20,14 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDropdown } from "../../common/Dropdown/DropdownTrigger";
 import { isDefined } from "../../utils/utilities";
 import { Tooltip } from "./../../common/Tooltip/Tooltip";
+import { ToastType, useToast } from "@humansignal/ui/lib/Toast/Toast";
+import { useCopyText } from "@humansignal/core/lib/hooks/useCopyText";
 
 // eslint-disable-next-line
 // @ts-ignore
 import { confirm } from "../../common/Modal/Modal";
 import { observer } from "mobx-react";
-import { type ContextMenuAction, ContextMenu, ContextMenuTrigger, type MenuActionOnClick, contextMenuStyles } from "../ContextMenu";
+import { type ContextMenuAction, ContextMenu, ContextMenuTrigger, type MenuActionOnClick } from "../ContextMenu";
 
 interface AnnotationButtonInterface {
   entity?: any;
@@ -97,6 +99,15 @@ export const AnnotationButton = observer(
     }, [entity]);
 
     const AnnotationButtonContextMenu = ({ entity, capabilities }: AnnotationButtonInterface) => {
+      const annotationLink = useMemo(() => {
+        const url = new URL(window.location.href);
+        if (entity.pk) {
+          url.searchParams.set("annotation", entity.pk);
+        }
+        return url.toString();
+      }, [entity.pk]);
+      const [copyLink] = useCopyText(annotationLink);
+      const toast = useToast();
       const dropdown = useDropdown();
       const clickHandler = () => {
         onAnnotationChange?.();
@@ -115,9 +126,13 @@ export const AnnotationButton = observer(
         });
       }, [entity]);
       const linkAnnotation = useCallback<MenuActionOnClick>(() => {
-        console.log("linkAnnotation");
+        copyLink();
         dropdown?.close();
-      }, [entity]);
+        toast.show({
+          message: "Annotation link copied to clipboard",
+          type: ToastType.info,
+        });
+      }, [entity, copyLink]);
       const deleteAnnotation = useCallback(() => {
         clickHandler();
         confirm({
@@ -161,6 +176,7 @@ export const AnnotationButton = observer(
           label: "Copy Annotation Link",
           onClick: linkAnnotation,
           icon: <IconLink width={24} height={24} />,
+          enabled: !isDraft,
         },
         {
           label: "Delete Annotation",
@@ -170,7 +186,7 @@ export const AnnotationButton = observer(
           danger: true,
           enabled: capabilities.enableAnnotationDelete && !isPrediction,
         },
-      ], [entity, isGroundTruth, isPrediction, capabilities.enableAnnotationDelete, capabilities.enableCreateAnnotation, capabilities.groundTruthEnabled]);
+      ], [entity, isGroundTruth, isPrediction, isDraft, capabilities.enableAnnotationDelete, capabilities.enableCreateAnnotation, capabilities.groundTruthEnabled]);
 
       return (
         <ContextMenu actions={actions} />

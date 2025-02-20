@@ -99,6 +99,7 @@ export function PersonalJWTToken() {
   const [dialogOpened, setDialogOpened] = useState(false);
   const tokens = useAtomValue(tokensListAtom);
   const revokeToken = useAtomValue(revokeTokenAtom);
+  const createToken = useAtomValue(refreshTokenAtom);
 
   const tokensListClassName = clsx({
     [styles.tokensList]: tokens.data && tokens.data.length,
@@ -112,8 +113,8 @@ export function PersonalJWTToken() {
   );
 
   const disallowAddingTokens = useMemo(() => {
-    return tokens.isLoading || (tokens.data?.length ?? 0) > 0;
-  }, [tokens.isLoading, tokens.data]);
+    return createToken.isPending || tokens.isLoading || (tokens.data?.length ?? 0) > 0;
+  }, [createToken.isPending, tokens.isLoading, tokens.data]);
 
   function openDialog() {
     if (dialogOpened) return;
@@ -123,6 +124,7 @@ export function PersonalJWTToken() {
       title: "New Auth Token",
       style: { width: 680 },
       body: CreateTokenForm,
+      closeOnClickOutside: false,
       onHidden: () => setDialogOpened(false),
     });
   }

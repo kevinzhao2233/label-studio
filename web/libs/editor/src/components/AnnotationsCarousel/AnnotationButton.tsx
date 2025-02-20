@@ -104,6 +104,9 @@ export const AnnotationButton = observer(
         if (entity.pk) {
           url.searchParams.set("annotation", entity.pk);
         }
+        // In case of annotation, we don't want to show the region in the URL
+        // otherwise it will be shown as a region link
+        url.searchParams.delete("region");
         return url.toString();
       }, [entity.pk]);
       const [copyLink] = useCopyText(annotationLink);

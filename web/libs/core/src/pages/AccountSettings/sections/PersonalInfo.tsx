@@ -6,7 +6,7 @@ import { Userpic } from "/apps/labelstudio/src/components/Userpic/Userpic";
 import { Button } from "/apps/labelstudio/src/components/Button/Button";
 import { API, useAPI } from "apps/labelstudio/src/providers/ApiProvider";
 import styles from "../AccountSettings.module.scss";
-import { useCurrentUser } from "@humansignal/core/lib/hooks/useCurrentUser";
+import { useCurrentUserAtom } from "@humansignal/core/lib/hooks/useCurrentUser";
 import { atomWithMutation } from "jotai-tanstack-query";
 import { useAtomValue } from "jotai";
 import type { APIUser } from "@humansignal/core/types/user";
@@ -57,7 +57,7 @@ export const PersonalInfo = () => {
   const toast = useToast();
   const updateUser = useAtomValue(updateUserAtom);
   const updateUserAvatar = useAtomValue(updateUserAvatarAtom);
-  const { user, fetch: refetchUser, isInProgress: userInProgress } = useCurrentUser();
+  const { user, fetch: refetchUser, isInProgress: userInProgress } = useCurrentUserAtom();
   const [isInProgress, setIsInProgress] = useState(false);
   const userAvatarForm = useRef<HTMLFormElement>();
   const avatarRef = useRef<HTMLInputElement>();

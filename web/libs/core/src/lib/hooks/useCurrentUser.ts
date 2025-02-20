@@ -1,7 +1,7 @@
 import type { APIUser } from "@humansignal/core/types/user";
 import { API } from "apps/labelstudio/src/providers/ApiProvider";
 import { useAtomValue } from "jotai";
-import { atomWithQuery, queryClientAtom } from "jotai-tanstack-query";
+import { atomWithMutation, atomWithQuery, queryClientAtom } from "jotai-tanstack-query";
 import { useCallback } from "react";
 
 const currentUserAtom = atomWithQuery(() => ({
@@ -11,24 +11,50 @@ const currentUserAtom = atomWithQuery(() => ({
   },
 }));
 
-export function useCurrentUser() {
+const currentUserUpdateAtom = atomWithMutation((get) => ({
+  mutationKey: ["update-current-user"],
+  async mutationFn({ pk, user }: { pk: number; user: Partial<APIUser> }) {
+    return await API.invoke("updateUser", { pk }, { body: user });
+  },
+
+  onSettled() {
+    const queryClient = get(queryClientAtom);
+    queryClient.invalidateQueries({ queryKey: ["current-user"] });
+  },
+}));
+
+export function useCurrentUserAtom() {
   const user = useAtomValue(currentUserAtom);
+  const updateUser = useAtomValue(currentUserUpdateAtom);
   const queryClient = useAtomValue(queryClientAtom);
   const refetch = useCallback(() => queryClient.invalidateQueries({ queryKey: ["current-user"] }), []);
+  const update = useCallback(
+    (userUpdate: Partial<APIUser>) => {
+      if (!user.data) {
+        console.error("User is not loaded. Try fetching first.");
+        return;
+      }
+      updateUser.mutate({ pk: user.data.id, user: userUpdate });
+    },
+    [user.data?.id, updateUser.mutate],
+  );
+
+  const commonResponse = {
+    isInProgress: user.isFetching || updateUser.isPending,
+    loaded: user.isSuccess,
+    fetch: refetch,
+    update,
+  } as const;
 
   return user.isSuccess
     ? ({
         user: user.data,
-        isInProgress: user.isFetching,
-        loaded: user.isSuccess,
         error: null,
-        fetch: refetch,
+        ...commonResponse,
       } as const)
     : ({
         user: null,
-        isInProgress: user.isFetching,
-        loaded: user.isSuccess,
         error: user.error,
-        fetch: refetch,
+        ...commonResponse,
       } as const);
 }

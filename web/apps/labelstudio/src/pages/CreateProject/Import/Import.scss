@@ -36,14 +36,26 @@
       width: 320px;
       border-radius: 5px 0 0 5px;
       box-shadow: inset 0 1px 2px rgba(var(--color-neutral-shadow-raw) / 12%);
+      transition: all 150ms ease-out;
+
+      &:focus, &:focus-visible {
+        border-color: var(--color-neutral-border-bolder);
+        outline: none;
+        box-shadow: 0 0 0 4px var(--color-primary-focus-outline);
+      }
     }
 
     button {
       margin-left: -1px;
       border-radius: 0 5px 5px 0;
       background: var(--color-primary-surface);
-      color: var(--sand_0);
+      color: var(--color-primary-surface-content);
       cursor: pointer;
+      transition: all 150ms ease-out;
+
+      &:hover {
+        background: var(--color-primary-surface-hover);
+      }
     }
 
     & + span {
@@ -114,7 +126,12 @@
     background: var(--color-primary-background);
     border-radius: 4px;
     cursor: pointer;
-    color: var(--color-primary-content)
+    color: var(--color-primary-content);
+    transition: all 150ms ease-out;
+
+    &:hover {
+      background: var(--color-primary-emphasis-subtle);
+    }
   }
 
   &__upload-icon {

@@ -9,6 +9,10 @@ body {
 
   margin: 0;
   color: var(--color-neutral-content-subtle);
+  background: var(--color-neutral-background);
+  width: 100vw;
+  max-width: 100%;
+  min-height: 100vh;
 }
 
 .app-wrapper {

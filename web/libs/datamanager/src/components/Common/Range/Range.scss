@@ -88,7 +88,7 @@
       content: '';
       position: absolute;
       background: var(--color-primary-surface);
-      box-shadow: 0 5px 10px rgba(var(--color-primary-shadow) / 30%);
+      box-shadow: 0 5px 10px rgba(var(--color-primary-shadow-raw) / 30%);
       border-radius: 8px;
       transform: translate3d(-50%, -50%, 0);
     }

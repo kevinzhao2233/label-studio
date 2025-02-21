@@ -21,27 +21,27 @@ class JWTAuthenticationMiddleware:
         JWT_ACCESS_TOKEN_ENABLED = flag_set('fflag__feature_develop__prompts__dia_1829_jwt_token_auth')
         logger.debug('JWT call')
         if JWT_ACCESS_TOKEN_ENABLED:
-            logger.debug('JWT enabled')
+            logger.warning('JWT enabled')
             try:
                 logger.debug('JWT attempt')
                 user_and_token = JWTAuthentication().authenticate(request)
                 if not user_and_token:
-                    logger.debug('JWT auth could not resolve user/token')
+                    logger.warning('JWT auth could not resolve user/token')
                     return self.get_response(request)
 
                 user = User.objects.get(pk=user_and_token[0].pk)
                 if user.active_organization.jwt.api_tokens_enabled:
-                    logger.debug('JWT auth resolved user/token')
+                    logger.warning('JWT auth resolved user/token')
                     request.user = user
                     request.is_jwt = True
                 else:
-                    logger.debug('JWT auth resolved user/token, but org does not have jwt enabled')
+                    logger.warning('JWT auth resolved user/token, but org does not have jwt enabled')
 
             except User.DoesNotExist:
-                logger.info('JWT authentication failed: User no longer exists')
+                logger.warning('JWT authentication failed: User no longer exists')
                 return JsonResponse({'detail': 'User not found'}, status=status.HTTP_401_UNAUTHORIZED)
             except (AuthenticationFailed, InvalidToken, TokenError) as e:
-                logger.info('JWT authentication failed: %s', e)
+                logger.warning('JWT authentication failed: %s', e)
                 # don't raise 401 here, fallback to other auth methods (in case token is valid for them)
                 # (have unit tests verifying that this still results in a 401 if other auth mechanisms fail)
         return self.get_response(request)

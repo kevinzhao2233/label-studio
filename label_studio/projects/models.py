@@ -526,7 +526,7 @@ class Project(ProjectMixin, models.Model):
 
         with transaction.atomic():
             # Lock summary for update to avoid race conditions
-            summary = ProjectSummary.objects.select_for_update().get(id=self.summary_id)
+            summary = ProjectSummary.objects.select_for_update().get(id=self.summary.id)
 
             if self.num_tasks == 0:
                 logger.debug(f'Project {self} has no tasks: nothing to validate here. Ensure project summary is empty')
@@ -788,7 +788,7 @@ class Project(ProjectMixin, models.Model):
         if hasattr(self, 'summary'):
             with transaction.atomic():
                 # Lock summary for update to avoid race conditions
-                summary = ProjectSummary.objects.select_for_update().get(id=self.summary_id)
+                summary = ProjectSummary.objects.select_for_update().get(id=self.summary.id)
                 # Ensure project.summary is consistent with current tasks / annotations
                 if self.num_tasks == 0:
                     logger.info(f'calling reset project_id={self.id} Project.save() num_tasks={self.num_tasks}')

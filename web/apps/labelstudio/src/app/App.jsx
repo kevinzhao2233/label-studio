@@ -14,13 +14,13 @@ import { RoutesProvider } from "../providers/RoutesProvider";
 import { DRAFT_GUARD_KEY, DraftGuard, draftGuardCallback } from "../components/DraftGuard/DraftGuard";
 import { AsyncPage } from "./AsyncPage/AsyncPage";
 import ErrorBoundary from "./ErrorBoundary";
-import { RootPage } from "./RootPage";
 import { FF_OPTIC_2, FF_UNSAVED_CHANGES, FF_PRODUCT_TOUR, isFF } from "../utils/feature-flags";
 import { TourProvider } from "@humansignal/core";
 import { ToastProvider, ToastViewport } from "@humansignal/ui";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { JotaiProvider, JotaiStore } from "../utils/jotai-store";
 import { CurrentUserProvider } from "../providers/CurrentUser";
+import { RootPage } from "./RootPage";
 import "@humansignal/ui/src/tailwind.css";
 import "./App.scss";
 

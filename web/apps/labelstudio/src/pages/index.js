@@ -3,7 +3,7 @@ import { HomePage } from "./Home/HomePage";
 import { OrganizationPage } from "./Organization";
 import { ModelsPage } from "./Organization/Models/ModelsPage";
 import { FF_HOMEPAGE } from "../utils/feature-flags";
-import { AccountSettingsPage } from "@humansignal/core";
+import { pages } from "@humansignal/core";
 import { FF_AUTH_TOKENS, isFF } from "../utils/feature-flags";
 
 export const Pages = [
@@ -11,5 +11,5 @@ export const Pages = [
   ProjectsPage,
   OrganizationPage,
   ModelsPage,
-  isFF(FF_AUTH_TOKENS) && AccountSettingsPage,
+  isFF(FF_AUTH_TOKENS) && pages.AccountSettingsPage,
 ].filter(Boolean);

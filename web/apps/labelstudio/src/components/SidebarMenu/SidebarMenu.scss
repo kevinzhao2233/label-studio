@@ -7,6 +7,19 @@
     width: calc(var(--menu-sidebar-width));
     display: flex;
     transition: border 400ms ease-out;
+
+    & .main-menu {
+      background: var(--color-neutral-background);
+
+      &__item {
+        background: var(--color-neutral-background);
+
+        &_active {
+          background: var(--color-primary-emphasis-subtle);
+          pointer-events: all;
+        }
+      }
+    }
   }
 
   &__content {

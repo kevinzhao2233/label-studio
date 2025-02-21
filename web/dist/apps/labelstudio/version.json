@@ -1,6 +1,6 @@
 {
-  "message": "fix: DIA-1928: [FE] User is able to create multiple tokens by multiple clicks on 'Create new token' button (#7113)",
-  "commit": "e694268c3e2da4a2de4e023915fd9fddcdf445b9",
-  "date": "2025-02-20T14:49:48.000Z",
+  "message": "fix: LEAP-1819: Prevent drawing actions outside the stage area (#7084)",
+  "commit": "debc18662a1af719d2d45bb71afbec3e919e4670",
+  "date": "2025-02-21T15:17:53.000Z",
   "branch": "develop"
 }

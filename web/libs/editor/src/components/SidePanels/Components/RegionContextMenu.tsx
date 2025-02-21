@@ -47,7 +47,7 @@ export const RegionContextMenu: FC<{ item: any }> = observer(({ item }: { item: 
 
   return (
     <ContextMenuTrigger
-      className={cn("region-context-menu")}
+      className={cn("region-context-menu").toClassName()}
       content={<ContextMenu actions={actions} />}
       onToggle={(isOpen) => setOpen(isOpen)}
     >

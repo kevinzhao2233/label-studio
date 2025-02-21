@@ -298,7 +298,7 @@ export const AnnotationButton = observer(
           )}
         </Elem>
         <ContextMenuTrigger
-          className={cn("annotation-button").elem("trigger")}
+          className={cn("annotation-button").elem("trigger").toClassName()}
           content={
             <AnnotationButtonContextMenu
               entity={entity}

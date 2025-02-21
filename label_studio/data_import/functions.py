@@ -49,7 +49,7 @@ def async_import_background(
     if project_import.commit_to_project:
         with transaction.atomic():
             # Lock summary for update to avoid race conditions
-            summary = ProjectSummary.objects.select_for_update().get(id=project.summary.id)
+            summary = ProjectSummary.objects.select_for_update().get(project=project)
 
             # Immediately create project tasks and update project states and counters
             serializer = ImportApiSerializer(data=tasks, many=True, context={'project': project})
@@ -153,7 +153,7 @@ def async_reimport_background(reimport_id, organization_id, user, **kwargs):
 
     with transaction.atomic():
         # Lock summary for update to avoid race conditions
-        summary = ProjectSummary.objects.select_for_update().get(id=project.summary.id)
+        summary = ProjectSummary.objects.select_for_update().get(project=project)
 
         project.remove_tasks_by_file_uploads(reimport.file_upload_ids)
         serializer = ImportApiSerializer(data=tasks, many=True, context={'project': project, 'user': user})

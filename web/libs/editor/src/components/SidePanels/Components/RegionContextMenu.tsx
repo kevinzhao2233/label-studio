@@ -4,8 +4,8 @@ import { useCopyText } from "@humansignal/core/lib/hooks/useCopyText";
 import { ToastType, useToast } from "@humansignal/ui/lib/Toast/Toast";
 import { IconLink, IconEllipsis } from "../../../assets/icons";
 import { ContextMenu, type ContextMenuAction, ContextMenuTrigger, type MenuActionOnClick } from "../../ContextMenu";
-import { Button } from "libs/editor/src/common/Button/Button";
-import { cn } from "libs/editor/src/utils/bem";
+import { Button } from "../../../common/Button/Button";
+import { cn } from "../../../utils/bem";
 
 export const RegionContextMenu: FC<{ item: any }> = observer(({ item }: { item: any }) => {
   const [open, setOpen] = useState(false);

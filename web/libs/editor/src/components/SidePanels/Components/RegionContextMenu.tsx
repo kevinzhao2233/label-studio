@@ -5,6 +5,7 @@ import { ToastType, useToast } from "@humansignal/ui/lib/Toast/Toast";
 import { IconLink, IconEllipsis } from "../../../assets/icons";
 import { ContextMenu, type ContextMenuAction, ContextMenuTrigger, type MenuActionOnClick } from "../../ContextMenu";
 import { Button } from "libs/editor/src/common/Button/Button";
+import { cn } from "libs/editor/src/utils/bem";
 
 export const RegionContextMenu: FC<{ item: any }> = observer(({ item }: { item: any }) => {
   const [open, setOpen] = useState(false);
@@ -46,7 +47,7 @@ export const RegionContextMenu: FC<{ item: any }> = observer(({ item }: { item: 
 
   return (
     <ContextMenuTrigger
-      className="lsf-region-context-menu"
+      className={cn("region-context-menu")}
       content={<ContextMenu actions={actions} />}
       onToggle={(isOpen) => setOpen(isOpen)}
     >

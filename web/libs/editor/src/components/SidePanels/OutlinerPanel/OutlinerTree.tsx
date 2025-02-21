@@ -470,8 +470,7 @@ const injector = inject(({ store }) => {
 });
 
 const RegionControls: FC<RegionControlsProps> = injector(
-  observer(
-    ({ hovered, item, entity, collapsed, regions, hasControls, type, toggleCollapsed, store }) => {
+  observer(({ hovered, item, entity, collapsed, regions, hasControls, type, toggleCollapsed, store }) => {
     const { regions: regionStore } = useContext(OutlinerContext);
 
     const hidden = useMemo(() => {
@@ -571,8 +570,8 @@ const RegionControls: FC<RegionControlsProps> = injector(
         </Elem>
       </Elem>
     );
-  },
-));
+  }),
+);
 
 interface RegionItemOCSProps {
   item: any;

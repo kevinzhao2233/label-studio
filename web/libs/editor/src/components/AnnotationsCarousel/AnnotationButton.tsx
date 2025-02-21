@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { inject, observer } from "mobx-react";
-import { Block, Elem } from "../../utils/bem";
+import { Block, cn, Elem } from "../../utils/bem";
 import { Userpic } from "../../common/Userpic/Userpic";
 import {
   IconAnnotationGroundTruth,
@@ -105,112 +105,114 @@ export const AnnotationButton = observer(
       }
     }, [entity]);
 
-    const AnnotationButtonContextMenu = injector(observer(({ entity, capabilities, store }: AnnotationButtonInterface) => {
-      const annotationLink = useMemo(() => {
-        const url = new URL(window.location.href);
-        if (entity.pk) {
-          url.searchParams.set("annotation", entity.pk);
-        }
-        // In case of targeting directly an annotation, we don't want to show the region in the URL
-        // otherwise it will be shown as a region link
-        url.searchParams.delete("region");
-        return url.toString();
-      }, [entity.pk]);
-      const [copyLink] = useCopyText(annotationLink);
-      const toast = useToast();
-      const dropdown = useDropdown();
-      const clickHandler = () => {
-        onAnnotationChange?.();
-        dropdown?.close();
-      };
-      const setGroundTruth = useCallback<MenuActionOnClick>(() => {
-        entity.setGroundTruth(!isGroundTruth);
-        clickHandler();
-      }, [entity]);
-      const duplicateAnnotation = useCallback<MenuActionOnClick>(() => {
-        const c = annotationStore.addAnnotationFromPrediction(entity);
-
-        window.setTimeout(() => {
-          annotationStore.selectAnnotation(c.id);
+    const AnnotationButtonContextMenu = injector(
+      observer(({ entity, capabilities, store }: AnnotationButtonInterface) => {
+        const annotationLink = useMemo(() => {
+          const url = new URL(window.location.href);
+          if (entity.pk) {
+            url.searchParams.set("annotation", entity.pk);
+          }
+          // In case of targeting directly an annotation, we don't want to show the region in the URL
+          // otherwise it will be shown as a region link
+          url.searchParams.delete("region");
+          return url.toString();
+        }, [entity.pk]);
+        const [copyLink] = useCopyText(annotationLink);
+        const toast = useToast();
+        const dropdown = useDropdown();
+        const clickHandler = () => {
+          onAnnotationChange?.();
+          dropdown?.close();
+        };
+        const setGroundTruth = useCallback<MenuActionOnClick>(() => {
+          entity.setGroundTruth(!isGroundTruth);
           clickHandler();
-        });
-      }, [entity]);
-      const linkAnnotation = useCallback<MenuActionOnClick>(() => {
-        copyLink();
-        dropdown?.close();
-        toast.show({
-          message: "Annotation link copied to clipboard",
-          type: ToastType.info,
-        });
-      }, [entity, copyLink]);
-      const deleteAnnotation = useCallback(() => {
-        clickHandler();
-        confirm({
-          title: "Delete annotation?",
-          body: (
-            <>
-              This will <strong>delete all existing regions</strong>. Are you sure you want to delete them?
-              <br />
-              This action cannot be undone.
-            </>
-          ),
-          buttonLook: "destructive",
-          okText: "Delete",
-          onOk: () => {
-            entity.list.deleteAnnotation(entity);
-          },
-        });
-      }, [entity]);
-      const isPrediction = entity.type === "prediction";
-      const isDraft = !isDefined(entity.pk);
-      const showGroundTruth = capabilities.groundTruthEnabled && !isPrediction && !isDraft;
-      const showDuplicateAnnotation = capabilities.enableCreateAnnotation && !isDraft;
-      const actions = useMemo<ContextMenuAction[]>(
-        () => [
-          {
-            label: `${isGroundTruth ? "Unset " : "Set "} as Ground Truth`,
-            onClick: setGroundTruth,
-            icon: isGroundTruth ? (
-              <LsStar color="#FFC53D" width={iconSize} height={iconSize} />
-            ) : (
-              <LsStarOutline width={iconSize} height={iconSize} />
-            ),
-            enabled: showGroundTruth,
-          },
-          {
-            label: "Duplicate Annotation",
-            onClick: duplicateAnnotation,
-            icon: <IconDuplicate width={16} height={20} />,
-            enabled: showDuplicateAnnotation,
-          },
-          {
-            label: "Copy Annotation Link",
-            onClick: linkAnnotation,
-            icon: <IconLink width={24} height={24} />,
-            enabled: !isDraft && store.hasInterface("annotations:copy-link"),
-          },
-          {
-            label: "Delete Annotation",
-            onClick: deleteAnnotation,
-            icon: <IconTrashRect width={14} height={18} />,
-            separator: true,
-            danger: true,
-            enabled: capabilities.enableAnnotationDelete && !isPrediction,
-          },
-        ],
-        [
-          entity,
-          isGroundTruth,
-          isPrediction,
-          isDraft,
-          capabilities.enableAnnotationDelete,
-          capabilities.enableCreateAnnotation,
-          capabilities.groundTruthEnabled,
-        ],
-      );
+        }, [entity]);
+        const duplicateAnnotation = useCallback<MenuActionOnClick>(() => {
+          const c = annotationStore.addAnnotationFromPrediction(entity);
 
-      return <ContextMenu actions={actions} />;
-    }));
+          window.setTimeout(() => {
+            annotationStore.selectAnnotation(c.id);
+            clickHandler();
+          });
+        }, [entity]);
+        const linkAnnotation = useCallback<MenuActionOnClick>(() => {
+          copyLink();
+          dropdown?.close();
+          toast.show({
+            message: "Annotation link copied to clipboard",
+            type: ToastType.info,
+          });
+        }, [entity, copyLink]);
+        const deleteAnnotation = useCallback(() => {
+          clickHandler();
+          confirm({
+            title: "Delete annotation?",
+            body: (
+              <>
+                This will <strong>delete all existing regions</strong>. Are you sure you want to delete them?
+                <br />
+                This action cannot be undone.
+              </>
+            ),
+            buttonLook: "destructive",
+            okText: "Delete",
+            onOk: () => {
+              entity.list.deleteAnnotation(entity);
+            },
+          });
+        }, [entity]);
+        const isPrediction = entity.type === "prediction";
+        const isDraft = !isDefined(entity.pk);
+        const showGroundTruth = capabilities.groundTruthEnabled && !isPrediction && !isDraft;
+        const showDuplicateAnnotation = capabilities.enableCreateAnnotation && !isDraft;
+        const actions = useMemo<ContextMenuAction[]>(
+          () => [
+            {
+              label: `${isGroundTruth ? "Unset " : "Set "} as Ground Truth`,
+              onClick: setGroundTruth,
+              icon: isGroundTruth ? (
+                <LsStar color="#FFC53D" width={iconSize} height={iconSize} />
+              ) : (
+                <LsStarOutline width={iconSize} height={iconSize} />
+              ),
+              enabled: showGroundTruth,
+            },
+            {
+              label: "Duplicate Annotation",
+              onClick: duplicateAnnotation,
+              icon: <IconDuplicate width={16} height={20} />,
+              enabled: showDuplicateAnnotation,
+            },
+            {
+              label: "Copy Annotation Link",
+              onClick: linkAnnotation,
+              icon: <IconLink width={24} height={24} />,
+              enabled: !isDraft && store.hasInterface("annotations:copy-link"),
+            },
+            {
+              label: "Delete Annotation",
+              onClick: deleteAnnotation,
+              icon: <IconTrashRect width={14} height={18} />,
+              separator: true,
+              danger: true,
+              enabled: capabilities.enableAnnotationDelete && !isPrediction,
+            },
+          ],
+          [
+            entity,
+            isGroundTruth,
+            isPrediction,
+            isDraft,
+            capabilities.enableAnnotationDelete,
+            capabilities.enableCreateAnnotation,
+            capabilities.groundTruthEnabled,
+          ],
+        );
+
+        return <ContextMenu actions={actions} />;
+      }),
+    );
 
     return (
       <Block name="annotation-button" mod={{ selected: entity.selected }}>
@@ -296,7 +298,7 @@ export const AnnotationButton = observer(
           )}
         </Elem>
         <ContextMenuTrigger
-          className="lsf-annotation-button__trigger"
+          className={cn("annotation-button").elem("trigger")}
           content={
             <AnnotationButtonContextMenu
               entity={entity}

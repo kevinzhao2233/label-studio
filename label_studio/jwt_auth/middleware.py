@@ -19,8 +19,11 @@ class JWTAuthenticationMiddleware:
         from rest_framework_simplejwt.exceptions import AuthenticationFailed, InvalidToken, TokenError
 
         JWT_ACCESS_TOKEN_ENABLED = flag_set('fflag__feature_develop__prompts__dia_1829_jwt_token_auth')
+        logger.debug('JWT call')
         if JWT_ACCESS_TOKEN_ENABLED:
+            logger.debug('JWT enabled')
             try:
+                logger.debug('JWT attempt')
                 user_and_token = JWTAuthentication().authenticate(request)
                 if not user_and_token:
                     logger.debug('JWT auth could not resolve user/token')

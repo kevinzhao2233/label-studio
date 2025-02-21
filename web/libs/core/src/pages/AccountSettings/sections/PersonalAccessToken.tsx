@@ -9,8 +9,8 @@ import { useCopyText } from "../../../lib/hooks/useCopyText";
  * FIXME: This is legacy imports. We're not supposed to use such statements
  * each one of these eventually has to be migrated to core/ui
  */
-import { Input, TextArea } from "/apps/labelstudio/src/components/Form";
-import { Button } from "/apps/labelstudio/src/components/Button/Button";
+import { Input, TextArea } from "apps/labelstudio/src/components/Form";
+import { Button } from "apps/labelstudio/src/components/Button/Button";
 
 const tokenAtom = atomWithQuery(() => ({
   queryKey: ["access-token"],

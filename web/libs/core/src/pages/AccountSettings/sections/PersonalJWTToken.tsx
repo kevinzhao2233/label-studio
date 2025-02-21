@@ -12,11 +12,11 @@ import styles from "./PersonalJWTToken.module.scss";
  * FIXME: This is legacy imports. We're not supposed to use such statements
  * each one of these eventually has to be migrated to core/ui
  */
-import { API } from "/apps/labelstudio/src/providers/ApiProvider";
-import { modal, confirm } from "/apps/labelstudio/src/components/Modal/Modal";
-import { Button } from "/apps/labelstudio/src/components/Button/Button";
-import { Input, Label } from "/apps/labelstudio/src/components/Form/Elements";
-import { Tooltip } from "/apps/labelstudio/src/components/Tooltip/Tooltip";
+import { API } from "apps/labelstudio/src/providers/ApiProvider";
+import { modal, confirm } from "apps/labelstudio/src/components/Modal/Modal";
+import { Button } from "apps/labelstudio/src/components/Button/Button";
+import { Input, Label } from "apps/labelstudio/src/components/Form/Elements";
+import { Tooltip } from "apps/labelstudio/src/components/Tooltip/Tooltip";
 
 type Token = {
   token: string;

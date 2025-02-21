@@ -1,12 +1,17 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import { InputFile, useToast } from "@humansignal/ui";
-import { Input } from "/apps/labelstudio/src/components/Form/Elements";
-import { Userpic } from "/apps/labelstudio/src/components/Userpic/Userpic";
-import { useCurrentUser } from "/apps/labelstudio/src/providers/CurrentUser";
-import { Button } from "/apps/labelstudio/src/components/Button/Button";
 import { useAPI } from "apps/labelstudio/src/providers/ApiProvider";
 import styles from "../AccountSettings.module.scss";
+
+/**
+ * FIXME: This is legacy imports. We're not supposed to use such statements
+ * each one of these eventually has to be migrated to core/ui
+ */
+import { Input } from "apps/labelstudio/src/components/Form/Elements";
+import { Userpic } from "apps/labelstudio/src/components/Userpic/Userpic";
+import { useCurrentUser } from "apps/labelstudio/src/providers/CurrentUser";
+import { Button } from "apps/labelstudio/src/components/Button/Button";
 
 export const PersonalInfo = () => {
   const api = useAPI();

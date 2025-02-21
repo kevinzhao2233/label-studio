@@ -1,8 +1,8 @@
 .button-ls {
-  --button-color: var(--grape_500);
-  --button-background-color: var(--sand_0);
+  --button-color: var(--color-neutral-content);
+  --button-background-color: var(--color-neutral-surface-hover);
   --button-background-image: none;
-  --button-shadow: inset 0px -1px 0px rgb(0 0 0 / 10%), inset 0px 0px 0px 1px rgb(0 0 0 / 15%);
+  --button-shadow: inset 0 -1px 1px rgba(var(--color-neutral-shadow-raw) / 4%);
   --button-content-align: center;
   --button-content-justify: center;
   --button-events: all;
@@ -12,11 +12,11 @@
   --button-min-width: 0;
   --icon-size: 16px;
   --button-padding: 0 16px;
-  --button-radius: 5px;
+  --button-radius: var(--radius-xs);
   --button-font-size: var(--font-size-400);
   --button-margin-left: 0;
   --button-margin-right: 0;
-  --button-border: 1px solid var(--button-color);
+  --button-border: 1px solid var(--color-neutral-border);
   --button-gap: 6px;
 
   border: var(--button-border);
@@ -24,9 +24,9 @@
   outline: none;
   display: inline-flex;
   text-align: center;
-  transition: all 100ms ease;
   position: relative;
   box-sizing: border-box;
+  box-shadow: var(--button-shadow);
   color: var(--button-color) !important;
   font-size: var(--button-font-size);
   font-family: var(--font-sans);
@@ -46,37 +46,42 @@
   border-radius: var(--button-radius);
   text-decoration: none;
   gap: var(--button-gap);
+  transition: all 150ms ease-out;
 
   &:hover:not(:disabled, .button-ls_waiting, .button-ls_look_danger, .button-ls_look_primary) {
-    --button-color: var(--grape_700);
-    --button-background-color: var(--grape_0);
+    --button-color: var(--color-neutral-content);
+    --button-background-color: var(--color-neutral-surface-hover);
+    --button-border-color: var(--color-neutral-border-bold);
+
+    background-color: var(--button-background-color);
+    border-color: var(--button-border-color);
   }
 
   &:active {
     color: var(--button-color);
 
-    --button-background-image: linear-gradient(0deg, rgb(18 17 13 / 2%), rgb(18 17 13 / 2%)), var(--sand_0);
+    --button-background-image: linear-gradient(0deg, transparent, rgba(var(--color-neutral-shadow-raw) / 4%));
   }
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 0 4px var(--grape_100);
+    box-shadow: 0 0 0 4px var(--color-primary-focus-outline);
   }
 
   &_waiting,
   &:disabled,
   &_disabled {
-    --button-color: var(--sand_500);
-    --button-background-color: var(--sand_200);
+    --button-color: var(--color-neutral-content-subtlest);
+    --button-background-color: var(--color-neutral-background);
     --button-events: none;
 
-    border: none;
+    border: 1px solid var(--color-neutral-border);
 
     & svg {
-      color: var(--sand_500) !important;
+      color: var(--color-neutral-content-subtlest) !important;
 
       & path {
-        stroke: var(--sand_500);
+        stroke: var(--color-neutral-content-subtlest);
       }
     }
   }
@@ -145,48 +150,54 @@
 
   &_look {
     &_primary {
-      --button-color: var(--sand_0);
-      --button-background-color: var(--primary_link);
-      --button-border: none;
+      --button-color: var(--color-primary-surface-content);
+      --button-background-color: var(--color-primary-surface);
+      --button-border: 1px solid var(--color-primary-border);
+
+      box-shadow: inset 0 -1px 2px rgba(var(--color-neutral-shadow-raw) / 10%);
 
       &:hover:not(:disabled, .button-ls_waiting) {
-        --button-background-color: var(--grape_700);
-        --button-color: var(--sand_0);
+        --button-background-color: var(--color-primary-surface-hover);
+        --button-color: var(--color-primary-surface-content);
       }
 
       &:active:not(:disabled) {
-        --button-background-color: var(--primary_link);
+        --button-background-color: var(--color-primary-content);
       }
 
       &:focus:not(:disabled) {
-        box-shadow: 0 0 0 4px var(--grape_100);
+        box-shadow: 0 0 0 4px var(--color-primary-focus-outline);
       }
     }
 
     &_danger {
-      --button-color: var(--danger_color);
+      --button-color: var(--color-negative-content);
+
+      border-color: var(--color-negative-border);
 
       &:hover:not(:disabled, &_waiting) {
-        --button-color: var(--danger_color);
+        --button-color: var(--color-neutral-content);
 
-        border-color: var(--danger_color);
-        background: var(--red_1);
+        border-color: var(--color-negative-border-bold);
+        background: var(--color-negative-emphasis-subtle);
       }
     }
 
     &_destructive {
-      --button-color: var(--sand_0);
-      --button-background-color: var(--danger_color);
+      --button-color: var(--color-negative-surface-content);
+      --button-background-color: var(--color-negative-surface);
 
       &:hover:not(:disabled, .button-ls_waiting) {
-        --button-color: var(--danger_color);
+        --button-color: var(--color-negative-surface-content);
 
-        border-color: var(--danger_color);
-        background: var(--red_1);
+        background: var(--color-negative-surface-hover);
+        border-color: var(--color-negative-border-bold);
       }
 
       &:active {
-        --button-background--color: var(--red_10);
+        --button-background--color: var(--color-negative-surface-active);
+
+        border-color: var(--color-negative-border-bold);
       }
     }
 
@@ -202,26 +213,26 @@
   &_look_danger:disabled,
   &_look_danger &_waiting,
   &_look_danger &_disabled {
-    --button-color: var(--sand_500);
+    --button-color: var(--color-negative-content-subtlest);
   }
 
   &_look_destructive:disabled,
   &_look_destructive &_waiting,
   &_look_destructive &_disabled {
-    --button-color: rgb(255 255 255 / 50%);
-    --button-background-color: var(--danger_color);
+    --button-color: var(--color-neutral-content-subtlest);
+    --button-background-color: var(--color-neutral-background);
   }
 
   &_look_primary:disabled,
   &_look_primary.button-ls_disabled {
-    --button-color: var(--sand_500);
-    --button-background-color: var(--sand_200);
+    --button-color: var(--color-neutral-content-subtlest);
+    --button-background-color: var(--color-neutral-background);
 
-    border: none;
+    border: 1px solid var(--color-neutral-border);
   }
 
   &_look_primary.button-ls_waiting {
-    --button-color: var(--sand_0);
+    --button-color: var(--color-neutral-content);
   }
 
   &_size {
@@ -302,14 +313,14 @@
     background-size: 37px 100%;
 
     --button-background-image: var(--button-waiting-animation-bg);
-    --button-background-color: var(--sand_0);
+    --button-background-color: var(--color-neutral-background);
 
     animation: button-waiting 1s linear infinite;
   }
 
   &_waiting.button-ls_look_primary {
     --button-background-image: var(--primary-button-waiting-animation-bg);
-    --button-background-color: var(--primary_link);
+    --button-background-color: var(--color-primary-surface);
   }
 
   &_size_small &__icon {

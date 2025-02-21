@@ -34,6 +34,7 @@ const ProjectName = ({ name, setName, onSaveName, onSubmit, error, description, 
           value={name}
           onChange={(e) => setName(e.target.value)}
           onBlur={onSaveName}
+          className="project-title"
         />
         {error && <span className="error">{error}</span>}
       </div>
@@ -47,6 +48,7 @@ const ProjectName = ({ name, setName, onSaveName, onSubmit, error, description, 
           style={{ minHeight: 100 }}
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          className="project-description"
         />
       </div>
       {isFF(FF_LSDV_E_297) && (

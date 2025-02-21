@@ -206,7 +206,8 @@ const ConfigureSettings = ({ template }) => {
         return (
           <li key={key}>
             <label>
-              {options.title} <input type="text" onInput={onChange} value={value} size={size} />
+              {options.title}{" "}
+              <input className="lsf-input-ls" type="text" onInput={onChange} value={value} size={size} />
             </label>
           </li>
         );
@@ -293,7 +294,15 @@ const ConfigureColumn = ({ template, obj, columns }) => {
         {!columns?.length && <option value={value}>{"<imported file>"}</option>}
         <option value="-">{"<set manually>"}</option>
       </select>
-      {isManual && <input value={newValue} onChange={handleChange} onBlur={handleBlur} onKeyDown={handleKeyDown} />}
+      {isManual && (
+        <input
+          className="lsf-input-ls"
+          value={newValue}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          onKeyDown={handleKeyDown}
+        />
+      )}
     </p>
   );
 };

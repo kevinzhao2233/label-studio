@@ -27,6 +27,21 @@
     <link href="{{settings.FRONTEND_HOSTNAME}}/react-app/main.css?v={{ versions.backend.commit }}" rel="stylesheet">
   {% endblock %}
 
+  {% block theme_colors %}
+    <script>
+      function handleThemeColor() {
+        let themeColor = window.localStorage.getItem("preferred-color-scheme");
+        if (themeColor === "Auto") {
+          themeColor = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "Dark" : "Light"
+        } else if (!themeColor) {
+          themeColor = "Light";
+        }
+        document.documentElement.setAttribute("data-color-scheme", themeColor.toLowerCase());
+      }
+      handleThemeColor();
+    </script>
+  {% endblock %}
+  
   {% block app-scripts %}
   {% endblock %}
 
@@ -52,6 +67,7 @@
 
   {% get_current_language as LANGUAGE_CODE %}
   {% get_available_languages as LANGUAGES %}
+
 </head>
 
 <body>

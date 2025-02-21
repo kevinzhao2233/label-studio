@@ -1,5 +1,7 @@
 export * from "./lib/checkbox/checkbox";
 export * from "./lib/toast/toast";
+export * from "./lib/MultiStateToggle/MultiStateToggle";
+export * from "./lib/ThemeToggle/ThemeToggle";
 export * from "./lib/InputFile/InputFile";
 export * from "./lib/Card/Card";
 export * from "./lib/label/label";

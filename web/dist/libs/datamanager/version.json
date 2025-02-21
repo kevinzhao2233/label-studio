@@ -1,6 +1,6 @@
 {
-  "message": "fix: DIA-1928: [FE] User is able to create multiple tokens by multiple clicks on 'Create new token' button (#7113)",
-  "commit": "e694268c3e2da4a2de4e023915fd9fddcdf445b9",
-  "date": "2025-02-20T14:49:48.000Z",
+  "message": "fix: OPTIC-1677: Incorrect video frame rendered when pausing a video during playback (#7078)",
+  "commit": "6691ef0e1b7eebcaff54b9eb44dfc63eb9269577",
+  "date": "2025-02-21T17:21:27.000Z",
   "branch": "develop"
 }

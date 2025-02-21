@@ -19,6 +19,7 @@ import {
   FF_DEV_3034,
   FF_LSDV_4620_3_ML,
   FF_OPTIC_2,
+  FF_REGION_VISIBILITY_FROM_URL,
   isFF,
 } from "../utils/feature-flags";
 import { isDefined } from "../utils/utils";
@@ -140,6 +141,9 @@ export class LSFWrapper {
         "annotations:tabs",
         "predictions:tabs",
       );
+      if (isFF(FF_REGION_VISIBILITY_FROM_URL)) {
+        interfaces.push("annotations:copy-link");
+      }
     }
 
     if (this.datamanager.hasInterface("instruction")) {

@@ -1,5 +1,5 @@
 import chroma from "chroma-js";
-import { observer } from "mobx-react";
+import { inject, observer } from "mobx-react";
 import Tree from "rc-tree";
 import {
   createContext,
@@ -463,8 +463,15 @@ interface RegionControlsProps {
   toggleCollapsed: (e: any) => void;
 }
 
-const RegionControls: FC<RegionControlsProps> = observer(
-  ({ hovered, item, entity, collapsed, regions, hasControls, type, toggleCollapsed }) => {
+const injector = inject(({ store }) => {
+  return {
+    store,
+  };
+});
+
+const RegionControls: FC<RegionControlsProps> = injector(
+  observer(
+    ({ hovered, item, entity, collapsed, regions, hasControls, type, toggleCollapsed, store }) => {
     const { regions: regionStore } = useContext(OutlinerContext);
 
     const hidden = useMemo(() => {
@@ -525,9 +532,11 @@ const RegionControls: FC<RegionControlsProps> = observer(
           </>
         )}
         <Elem name={"wrapper"}>
-          <Elem name="control" mod={{ type: "menu" }}>
-            <RegionContextMenu item={item} />
-          </Elem>
+          {store.hasInterface("annotations:copy-link") && (
+            <Elem name="control" mod={{ type: "menu" }}>
+              <RegionContextMenu item={item} />
+            </Elem>
+          )}
           <Elem name="control" mod={{ type: "lock" }}>
             <LockButton
               item={item}
@@ -563,7 +572,7 @@ const RegionControls: FC<RegionControlsProps> = observer(
       </Elem>
     );
   },
-);
+));
 
 interface RegionItemOCSProps {
   item: any;

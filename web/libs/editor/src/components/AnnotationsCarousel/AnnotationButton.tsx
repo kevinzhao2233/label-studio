@@ -1,3 +1,5 @@
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { inject, observer } from "mobx-react";
 import { Block, Elem } from "../../utils/bem";
 import { Userpic } from "../../common/Userpic/Userpic";
 import {
@@ -15,8 +17,6 @@ import {
 } from "../../assets/icons";
 import { userDisplayName } from "../../utils/utilities";
 import { TimeAgo } from "../../common/TimeAgo/TimeAgo";
-import "./AnnotationButton.scss";
-import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDropdown } from "../../common/Dropdown/DropdownTrigger";
 import { isDefined } from "../../utils/utilities";
 import { Tooltip } from "./../../common/Tooltip/Tooltip";
@@ -26,13 +26,14 @@ import { useCopyText } from "@humansignal/core/lib/hooks/useCopyText";
 // eslint-disable-next-line
 // @ts-ignore
 import { confirm } from "../../common/Modal/Modal";
-import { observer } from "mobx-react";
 import { type ContextMenuAction, ContextMenu, ContextMenuTrigger, type MenuActionOnClick } from "../ContextMenu";
+import "./AnnotationButton.scss";
 
 interface AnnotationButtonInterface {
   entity?: any;
   capabilities?: any;
   annotationStore?: any;
+  store: any;
   onAnnotationChange?: () => void;
 }
 
@@ -57,6 +58,12 @@ const renderCommentTooltip = (ent: any) => {
 
   return "";
 };
+
+const injector = inject(({ store }) => {
+  return {
+    store,
+  };
+});
 
 export const AnnotationButton = observer(
   ({ entity, capabilities, annotationStore, onAnnotationChange }: AnnotationButtonInterface) => {
@@ -98,13 +105,13 @@ export const AnnotationButton = observer(
       }
     }, [entity]);
 
-    const AnnotationButtonContextMenu = ({ entity, capabilities }: AnnotationButtonInterface) => {
+    const AnnotationButtonContextMenu = injector(observer(({ entity, capabilities, store }: AnnotationButtonInterface) => {
       const annotationLink = useMemo(() => {
         const url = new URL(window.location.href);
         if (entity.pk) {
           url.searchParams.set("annotation", entity.pk);
         }
-        // In case of annotation, we don't want to show the region in the URL
+        // In case of targeting directly an annotation, we don't want to show the region in the URL
         // otherwise it will be shown as a region link
         url.searchParams.delete("region");
         return url.toString();
@@ -180,7 +187,7 @@ export const AnnotationButton = observer(
             label: "Copy Annotation Link",
             onClick: linkAnnotation,
             icon: <IconLink width={24} height={24} />,
-            enabled: !isDraft,
+            enabled: !isDraft && store.hasInterface("annotations:copy-link"),
           },
           {
             label: "Delete Annotation",
@@ -203,7 +210,7 @@ export const AnnotationButton = observer(
       );
 
       return <ContextMenu actions={actions} />;
-    };
+    }));
 
     return (
       <Block name="annotation-button" mod={{ selected: entity.selected }}>

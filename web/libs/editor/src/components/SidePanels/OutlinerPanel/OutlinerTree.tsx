@@ -531,7 +531,7 @@ const RegionControls: FC<RegionControlsProps> = injector(
           </>
         )}
         <Elem name={"wrapper"}>
-          {store.hasInterface("annotations:copy-link") && (
+          {store.hasInterface("annotations:copy-link") && isDefined(item?.annotation?.pk) && (
             <Elem name="control" mod={{ type: "menu" }}>
               <RegionContextMenu item={item} />
             </Elem>

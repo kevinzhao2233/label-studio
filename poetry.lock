@@ -741,15 +741,15 @@ files = [
 
 [[package]]
 name = "django"
-version = "5.1.5"
+version = "5.1.6"
 description = "A high-level Python web framework that encourages rapid development and clean, pragmatic design."
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 markers = "python_version >= \"3.12\" or python_version <= \"3.11\""
 files = [
-    {file = "Django-5.1.5-py3-none-any.whl", hash = "sha256:c46eb936111fffe6ec4bc9930035524a8be98ec2f74d8a0ff351226a3e52f459"},
-    {file = "Django-5.1.5.tar.gz", hash = "sha256:19bbca786df50b9eca23cee79d495facf55c8f5c54c529d9bf1fe7b5ea086af3"},
+    {file = "Django-5.1.6-py3-none-any.whl", hash = "sha256:8d203400bc2952fbfb287c2bbda630297d654920c72a73cc82a9ad7926feaad5"},
+    {file = "Django-5.1.6.tar.gz", hash = "sha256:1e39eafdd1b185e761d9fab7a9f0b9fa00af1b37b25ad980a8aa0dac13535690"},
 ]
 
 [package.dependencies]
@@ -2208,7 +2208,7 @@ python-versions = ">=3.9,<4"
 groups = ["main"]
 markers = "python_version >= \"3.12\" or python_version <= \"3.11\""
 files = [
-    {file = "f4bd76d918110709b84f662e95ca480e5cc3b935.zip", hash = "sha256:226c9521b61597704a743c83d96267cece56c5f110f43f5ed6d4df4f1ea24a20"},
+    {file = "d953881b2b4567b9381883e35ebf378f9526a55e.zip", hash = "sha256:3403f4680a7de1f79d1a53fd7717a19dbe3330880d5719517a9dc4be3029e669"},
 ]
 
 [package.dependencies]
@@ -2233,7 +2233,7 @@ xmljson = "0.2.1"
 
 [package.source]
 type = "url"
-url = "https://github.com/HumanSignal/label-studio-sdk/archive/f4bd76d918110709b84f662e95ca480e5cc3b935.zip"
+url = "https://github.com/HumanSignal/label-studio-sdk/archive/d953881b2b4567b9381883e35ebf378f9526a55e.zip"
 
 [[package]]
 name = "launchdarkly-server-sdk"
@@ -5127,4 +5127,4 @@ uwsgi = ["pyuwsgi", "uwsgitop"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10,<4"
-content-hash = "fb2ee5a1973a8da3505cd6f4e7664ac430b8c18d0312031e5431f99ce2c3f6e5"
+content-hash = "7e4ed4be8502fd9dc0144e24dbb82e928054411b1dc58d64189e441ca0225a34"

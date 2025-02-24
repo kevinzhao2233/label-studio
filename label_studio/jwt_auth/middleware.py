@@ -24,6 +24,8 @@ class JWTAuthenticationMiddleware:
         logger.warning(
             f'>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> JWT enabled: {JWT_ACCESS_TOKEN_ENABLED}'
         )
+        logger.warning(f'>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Body: {request.body}')
+        logger.warning(f'>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Headers: {request.headers}')
         try:
             logger.warning('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> JWT attempt')
             user_and_token = JWTAuthentication().authenticate(request)

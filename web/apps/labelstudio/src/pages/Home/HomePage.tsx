@@ -200,7 +200,7 @@ function ProjectSimpleCard({
           <a href={`/projects/${project.id}`} className="text-lsNeutralContent">
             {project.title}
           </a>
-          <div className="text-lsNeutralContentSubtler">
+          <div className="text-lsNeutralContentSubtler text-sm">
             {finished} of {total} Tasks ({total > 0 ? Math.round((finished / total) * 100) : 0}%)
           </div>
         </div>

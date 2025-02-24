@@ -31,7 +31,7 @@ export const Space = ({
 
   const clsList: string[] = [
     direction === "vertical" ? styles.directionVertical : styles.directionHorizontal,
-    align === "end" ? styles.alignEnv : styles.alignStart,
+    align === "end" ? styles.alignEnd : styles.alignStart,
   ];
 
   return (

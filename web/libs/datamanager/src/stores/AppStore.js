@@ -245,8 +245,9 @@ export const AppStore = types
 
         if (isFF(FF_REGION_VISIBILITY_FROM_URL)) {
           const { annotation: annIDFromUrl, region: regionIDFromUrl } = History.getParams();
-          if (annIDFromUrl) {
-            const annotationStore = self.LSF.lsf.annotationStore;
+          const annotationStore = self.LSF?.lsf?.annotationStore;
+
+          if (annIDFromUrl && annotationStore) {
             const lsfAnnotation = [...annotationStore.annotations, ...annotationStore.predictions].find((a) => {
               return a.pk === annIDFromUrl || a.id === annIDFromUrl;
             });

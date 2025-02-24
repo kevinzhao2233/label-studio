@@ -32,15 +32,9 @@ export const ProjectsPage = () => {
 
   const [modal, setModal] = React.useState(false);
 
-  const openModal = () => {
-    setModal(true);
-    __lsa("create_project.start_wizard");
-  };
+  const openModal = () => setModal(true);
 
-  const closeModal = () => {
-    setModal(false);
-    __lsa("create_project.close_wizard");
-  };
+  const closeModal = () => setModal(false);
 
   const fetchProjects = async (page = currentPage, pageSize = defaultPageSize) => {
     setNetworkState("loading");

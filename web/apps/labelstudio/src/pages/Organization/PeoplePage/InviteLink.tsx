@@ -3,18 +3,19 @@ import { Block } from "apps/labelstudio/src/components/Menu/MenuContext";
 import { Input } from "../../../components/Form";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Space } from "@humansignal/ui";
-import { Button } from "@humansignal/shad/components/ui/button";
 import { API } from "apps/labelstudio/src/providers/ApiProvider";
 import { atomWithQuery } from "jotai-tanstack-query";
 import { useAtomValue } from "jotai";
 import { Modal } from "apps/labelstudio/src/components/Modal/ModalPopup";
+import { Button } from "apps/labelstudio/src/components";
 
 const linkAtom = atomWithQuery(() => ({
   queryKey: ["invite-link"],
   async queryFn() {
+    console.log("loading intite link");
     // called only once when the component is rendered on page reload
     // will also be reset when called `refetch()` on the Reset button
-    const result = await API.resetInviteLink();
+    const result = await API.invoke("resetInviteLink");
     return location.origin + result.invite_url;
   },
 }));
@@ -54,6 +55,7 @@ export function InviteLink({
 
 const InvitationModal = () => {
   const { data: link } = useAtomValue(linkAtom);
+  console.log({ link });
   return (
     <Block name="invite">
       <Input value={link} style={{ width: "100%" }} readOnly />
@@ -89,7 +91,7 @@ const InvitationFooter = () => {
         </Button>
       </Space>
       <Space>
-        <Button style={{ width: 170 }} onClick={() => copyText(link!)}>
+        <Button look="primary" style={{ width: 170 }} onClick={() => copyText(link!)}>
           {copied ? "Copied!" : "Copy link"}
         </Button>
       </Space>

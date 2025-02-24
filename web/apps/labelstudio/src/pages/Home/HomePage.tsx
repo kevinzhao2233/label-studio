@@ -1,5 +1,5 @@
 import type { Page } from "../types/Page";
-import { Button } from "@humansignal/shad/components/ui/button";
+import { Button } from "../../components";
 import { IconFolder, SimpleCard, Spinner } from "@humansignal/ui";
 import { IconExternal, IconFolderAdd, IconHumanSignal, IconUserAdd } from "@humansignal/icons";
 import { HeidiTips } from "../../components/HeidiTips/HeidiTips";

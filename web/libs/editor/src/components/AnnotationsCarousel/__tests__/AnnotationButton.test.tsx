@@ -32,11 +32,7 @@ describe("AnnotationsButton", () => {
     const entity = annotationStore.annotations[0];
     const view = mount(
       <Provider store={mockStore}>
-        <AnnotationButton
-            entity={entity}
-            capabilities={{}}
-            annotationStore={annotationStore}
-          />
+        <AnnotationButton entity={entity} capabilities={{}} annotationStore={annotationStore} />
       </Provider>,
     );
 
@@ -47,11 +43,7 @@ describe("AnnotationsButton", () => {
     const entity = annotationStore.predictions[0];
     const view = mount(
       <Provider store={mockStore}>
-        <AnnotationButton
-            entity={entity}
-            capabilities={{}}
-            annotationStore={annotationStore}
-          />
+        <AnnotationButton entity={entity} capabilities={{}} annotationStore={annotationStore} />
       </Provider>,
     );
 

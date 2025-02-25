@@ -3,7 +3,6 @@ import { StaticContent } from "../../app/StaticContent/StaticContent";
 import {
   IconBook,
   IconFolder,
-  IconModel,
   IconPersonInCircle,
   IconPin,
   IconTerminal,
@@ -26,11 +25,10 @@ import { VersionNotifier, VersionProvider } from "../VersionNotifier/VersionNoti
 import "./Menubar.scss";
 import "./MenuContent.scss";
 import "./MenuSidebar.scss";
-import { ModelsPage } from "../../pages/Organization/Models/ModelsPage";
 import { FF_HOMEPAGE } from "../../utils/feature-flags";
 import { IconHome } from "@humansignal/ui";
 import { pages } from "@humansignal/core";
-import { FF_DIA_835, isFF } from "../../utils/feature-flags";
+import { isFF } from "../../utils/feature-flags";
 
 export const MenubarContext = createContext();
 
@@ -191,7 +189,6 @@ export const Menubar = ({ enabled, defaultOpened, defaultPinned, children, onSid
                 {isFF(FF_HOMEPAGE) && <Menu.Item label="Home" to="/" icon={<IconHome />} data-external exact />}
                 <Menu.Item label="Projects" to="/projects" icon={<IconFolder />} data-external exact />
                 <Menu.Item label="Organization" to="/organization" icon={<IconPersonInCircle />} data-external exact />
-                {isFF(FF_DIA_835) && <Menu.Item label="Models" to={ModelsPage.path} icon={<IconModel />} exact />}
 
                 <Menu.Spacer />
 

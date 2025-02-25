@@ -1,5 +1,5 @@
 import { API } from "apps/labelstudio/src/providers/ApiProvider";
-import { atomWithMutation, atomWithQuery, queryClientAtom } from "jotai-tanstack-query";
+import { atomWithQuery } from "jotai-tanstack-query";
 
 type AuthTokenSettings = {
   api_tokens_enabled: boolean;
@@ -21,41 +21,3 @@ export const settingsAtom = atomWithQuery(() => ({
     return result;
   },
 }));
-
-export const saveSettingsAtom = atomWithMutation((get) => {
-  const queryClient = get(queryClientAtom);
-  return {
-    mutationKey: ["api-settings-save"],
-    async mutationFn(settings: Partial<AuthTokenSettings>) {
-      const result = await API.invoke(
-        "accessTokenUpdateSettings",
-        {},
-        {
-          body: settings,
-        },
-      );
-
-      if (!result.$meta.ok) {
-        throw new Error(result.error);
-      }
-
-      return result as Partial<AuthTokenSettings>;
-    },
-    async onMutate(settings: Partial<AuthTokenSettings>) {
-      await queryClient.cancelQueries({ queryKey: [TOKEN_SETTINGS_KEY] });
-      const previousSettings = queryClient.getQueryData([TOKEN_SETTINGS_KEY]) as AuthTokenSettings;
-      queryClient.setQueryData(
-        [TOKEN_SETTINGS_KEY],
-        (old: AuthTokenSettings[]) => ({ ...previousSettings, ...settings }) as AuthTokenSettings,
-      );
-
-      return { previousSettings };
-    },
-    onError: (err, newTodo, context) => {
-      queryClient.setQueryData([TOKEN_SETTINGS_KEY], context?.previousSettings);
-    },
-    onSettled() {
-      queryClient.invalidateQueries({ queryKey: [TOKEN_SETTINGS_KEY] });
-    },
-  };
-});

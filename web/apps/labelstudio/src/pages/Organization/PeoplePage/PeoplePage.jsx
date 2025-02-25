@@ -1,19 +1,21 @@
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { LsPlus } from "../../../assets/icons";
 import { Button } from "../../../components";
 import { Description } from "../../../components/Description/Description";
 import { Input } from "../../../components/Form";
 import { HeidiTips } from "../../../components/HeidiTips/HeidiTips";
+import { modal } from "../../../components/Modal/Modal";
 import { Space } from "../../../components/Space/Space";
 import { useAPI } from "../../../providers/ApiProvider";
 import { useConfig } from "../../../providers/ConfigProvider";
 import { Block, Elem } from "../../../utils/bem";
 import { FF_AUTH_TOKENS, FF_LSDV_E_297, isFF } from "../../../utils/feature-flags";
-import { PeopleList } from "./PeopleList";
-import { SelectedUser } from "./SelectedUser";
-import { InviteLink } from "./InviteLink";
 import "./PeopleInvitation.scss";
+import { PeopleList } from "./PeopleList";
 import "./PeoplePage.scss";
+import { SelectedUser } from "./SelectedUser";
+import { TokenSettingsModal } from "@humansignal/core/blocks/TokenSettingsModal";
+import { InviteLink } from "./InviteLink";
 
 const InvitationModal = ({ link }) => {
   return (
@@ -41,10 +43,11 @@ const InvitationModal = ({ link }) => {
 
 export const PeoplePage = () => {
   const api = useAPI();
-  const inviteModal = useRef();
   const config = useConfig();
   const [selectedUser, setSelectedUser] = useState(null);
   const [invitationOpen, setInvitationOpen] = useState(false);
+
+  const [link, setLink] = useState();
 
   const selectUser = useCallback(
     (user) => {
@@ -55,10 +58,19 @@ export const PeoplePage = () => {
     [setSelectedUser],
   );
 
+  const apiTokensSettingsModalProps = useMemo(
+    () => ({
+      title: "API Token Settings",
+      style: { width: 480 },
+      body: () => <TokenSettingsModal />,
+    }),
+    [],
+  );
+
   const showApiTokenSettingsModal = useCallback(() => {
-    inviteModal.current = modal(apiTokensSettingsModalProps);
+    modal(apiTokensSettingsModalProps);
     __lsa("organization.token_settings");
-  }, [inviteModalProps, link]);
+  }, [apiTokensSettingsModalProps]);
 
   const defaultSelected = useMemo(() => {
     return localStorage.getItem("selectedUser");
@@ -68,6 +80,8 @@ export const PeoplePage = () => {
     <Block name="people">
       <Elem name="controls">
         <Space spread>
+          <Space />
+
           <Space>
             {isFF(FF_AUTH_TOKENS) && <Button onClick={showApiTokenSettingsModal}>API Tokens Settings</Button>}
             <Button icon={<LsPlus />} primary onClick={() => setInvitationOpen(true)}>
@@ -89,7 +103,7 @@ export const PeoplePage = () => {
           isFF(FF_LSDV_E_297) && <HeidiTips collection="organizationPage" />
         )}
       </Elem>
-      <InviteLink opened={invitationOpen} onClosed={() => setInvitationOpen(false)} />
+      <InviteLink opened={invitationOpen} onClose={() => setInvitationOpen(false)} />
     </Block>
   );
 };

@@ -1,6 +1,6 @@
 {
-  "message": "feat: block sentry in frontend side (#6615)",
-  "commit": "560e33091fa392bec906ca43f082afb1657b11a7",
-  "date": "2025-02-13T23:13:39.000Z",
+  "message": "feat: OPTIC-1607: More analytics event tracking (#7120)",
+  "commit": "f9d94ecbcd23307b937b64793e626704610c4458",
+  "date": "2025-02-25T15:43:30.000Z",
   "branch": "develop"
 }

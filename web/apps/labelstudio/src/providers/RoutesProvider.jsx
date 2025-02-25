@@ -100,7 +100,6 @@ export const RoutesProvider = ({ children }) => {
     }
   }, [location, routesMap, currentContextProps, routesChain, lastRoute]);
 
-  console.log(breadcrumbs);
   return <RoutesContext.Provider value={contextValue}>{children}</RoutesContext.Provider>;
 };
 

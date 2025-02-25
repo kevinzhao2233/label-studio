@@ -17,10 +17,7 @@ export const TokenSettingsModal = ({
   const reloadSettings = () => {
     queryClient.invalidateQueries({ queryKey: [TOKEN_SETTINGS_KEY] });
   };
-  if (!settings.isSuccess || settings.isError) {
-    return <div>Error loading settings.</div>;
-  }
-  if ("error" in settings.data) {
+  if (!settings.isSuccess || settings.isError || "error" in settings.data) {
     return <div>Error loading settings.</div>;
   }
   return (

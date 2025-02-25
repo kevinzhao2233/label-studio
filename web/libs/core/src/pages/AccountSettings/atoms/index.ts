@@ -12,13 +12,13 @@ export const TOKEN_SETTINGS_KEY = "api-settings";
 export const settingsAtom = atomWithQuery(() => ({
   queryKey: [TOKEN_SETTINGS_KEY],
   async queryFn() {
-    const result = await API.invoke("accessTokenSettings");
+    const result = await API.invoke<AuthTokenSettings>("accessTokenSettings");
 
     if (!result.$meta.ok) {
       return { error: true };
     }
 
-    return result as AuthTokenSettings;
+    return result;
   },
 }));
 

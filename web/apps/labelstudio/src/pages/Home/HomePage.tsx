@@ -191,15 +191,13 @@ function ProjectSimpleCard({
   const color = project.color && project.color !== white ? project.color : "#E1DED5";
 
   return (
-    <div className=" even:bg-lsNeutralSurface rounded-sm overflow-hidden">
+    <a href={`/projects/${project.id}`} className="block even:bg-lsNeutralSurface rounded-sm overflow-hidden">
       <div
         className="grid grid-cols-[minmax(0,1fr)_150px] p-2 py-3 items-center border-l-[3px]"
         style={{ borderLeftColor: color }}
       >
         <div className="flex flex-col gap-1">
-          <a href={`/projects/${project.id}`} className="text-lsNeutralContent">
-            {project.title}
-          </a>
+          <span className="text-lsNeutralContent">{project.title}</span>
           <div className="text-lsNeutralContentSubtler text-sm">
             {finished} of {total} Tasks ({total > 0 ? Math.round((finished / total) * 100) : 0}%)
           </div>
@@ -208,6 +206,6 @@ function ProjectSimpleCard({
           <div className="bg-lsPositiveSurfaceHover h-full" style={{ maxWidth: `${progress}%` }} />
         </div>
       </div>
-    </div>
+    </a>
   );
 }

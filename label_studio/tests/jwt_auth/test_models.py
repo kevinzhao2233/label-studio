@@ -5,11 +5,9 @@ from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.settings import api_settings as simple_jwt_settings
 from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
 
-from ..utils import mock_feature_flag
 from .utils import create_user_with_token_settings
 
 
-@mock_feature_flag(flag_name='fflag__feature_develop__prompts__dia_1829_jwt_token_auth', value=True)
 @pytest.mark.django_db
 def test_jwt_settings_permissions():
     user = create_user_with_token_settings(api_tokens_enabled=True, legacy_api_tokens_enabled=False)
@@ -28,7 +26,6 @@ def test_jwt_settings_permissions():
     assert org.jwt.has_permission(user) is False
 
 
-@mock_feature_flag(flag_name='fflag__feature_develop__prompts__dia_1829_jwt_token_auth', value=True)
 @pytest.fixture
 def token_backend():
     return LSTokenBackend(
@@ -43,7 +40,6 @@ def token_backend():
     )
 
 
-@mock_feature_flag(flag_name='fflag__feature_develop__prompts__dia_1829_jwt_token_auth', value=True)
 def test_encode_returns_only_header_and_payload(token_backend):
     payload = {
         'user_id': 123,
@@ -59,7 +55,6 @@ def test_encode_returns_only_header_and_payload(token_backend):
     assert all(part.replace('-', '+').replace('_', '/') for part in parts)
 
 
-@mock_feature_flag(flag_name='fflag__feature_develop__prompts__dia_1829_jwt_token_auth', value=True)
 def test_encode_full_returns_complete_jwt(token_backend):
     payload = {
         'user_id': 123,
@@ -74,7 +69,6 @@ def test_encode_full_returns_complete_jwt(token_backend):
     assert all(part.replace('-', '+').replace('_', '/') for part in parts)
 
 
-@mock_feature_flag(flag_name='fflag__feature_develop__prompts__dia_1829_jwt_token_auth', value=True)
 def test_encode_vs_encode_full_comparison(token_backend):
     payload = {
         'user_id': 123,
@@ -87,7 +81,6 @@ def test_encode_vs_encode_full_comparison(token_backend):
     assert full_token.startswith(partial_token)
 
 
-@mock_feature_flag(flag_name='fflag__feature_develop__prompts__dia_1829_jwt_token_auth', value=True)
 @pytest.mark.django_db
 def test_token_lifecycle():
     """Test full token lifecycle including creation, access token generation, blacklisting, and validation"""

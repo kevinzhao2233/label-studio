@@ -9,7 +9,7 @@ import { Space } from "../../../components/Space/Space";
 import { useAPI } from "../../../providers/ApiProvider";
 import { useConfig } from "../../../providers/ConfigProvider";
 import { Block, Elem } from "../../../utils/bem";
-import { FF_AUTH_TOKENS, FF_LSDV_E_297, isFF } from "../../../utils/feature-flags";
+import { FF_LSDV_E_297, isFF } from "../../../utils/feature-flags";
 import { copyText } from "../../../utils/helpers";
 import "./PeopleInvitation.scss";
 import { PeopleList } from "./PeopleList";
@@ -157,7 +157,9 @@ export const PeoplePage = () => {
           <Space />
 
           <Space>
-            {isFF(FF_AUTH_TOKENS) && <Button onClick={showApiTokenSettingsModal}>API Tokens Settings</Button>}
+            <Button onClick={showApiTokenSettingsModal}>
+              API Tokens Settings
+            </Button>
             <Button icon={<LsPlus />} primary onClick={showInvitationModal}>
               Add People
             </Button>

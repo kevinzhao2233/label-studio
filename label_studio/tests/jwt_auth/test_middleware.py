@@ -6,11 +6,9 @@ from rest_framework.authtoken.models import Token
 from rest_framework.test import APIClient
 from users.models import User
 
-from ..utils import mock_feature_flag
 from .utils import create_user_with_token_settings
 
 
-@mock_feature_flag(flag_name='fflag__feature_develop__prompts__dia_1829_jwt_token_auth', value=True)
 @pytest.mark.django_db
 def test_request_without_auth_header_returns_401():
     client = APIClient()
@@ -18,7 +16,6 @@ def test_request_without_auth_header_returns_401():
     assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
 
-@mock_feature_flag(flag_name='fflag__feature_develop__prompts__dia_1829_jwt_token_auth', value=True)
 @pytest.mark.django_db
 def test_request_with_invalid_token_returns_401():
     client = APIClient()
@@ -27,7 +24,6 @@ def test_request_with_invalid_token_returns_401():
     assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
 
-@mock_feature_flag(flag_name='fflag__feature_develop__prompts__dia_1829_jwt_token_auth', value=True)
 @pytest.mark.django_db
 def test_request_with_valid_token_returns_authenticated_user():
     user = create_user_with_token_settings(api_tokens_enabled=True, legacy_api_tokens_enabled=False)
@@ -41,7 +37,6 @@ def test_request_with_valid_token_returns_authenticated_user():
     assert response.wsgi_request.user == user
 
 
-@mock_feature_flag(flag_name='fflag__feature_develop__prompts__dia_1829_jwt_token_auth', value=True)
 @pytest.mark.django_db
 def test_jwt_token_auth_disabled_user_cannot_use_jwt_token():
     user = create_user_with_token_settings(api_tokens_enabled=False, legacy_api_tokens_enabled=True)
@@ -53,7 +48,6 @@ def test_jwt_token_auth_disabled_user_cannot_use_jwt_token():
     assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
 
-@mock_feature_flag(flag_name='fflag__feature_develop__prompts__dia_1829_jwt_token_auth', value=True)
 @pytest.mark.django_db
 def test_user_with_both_auth_enabled_can_use_both_methods():
     user = create_user_with_token_settings(api_tokens_enabled=True, legacy_api_tokens_enabled=True)
@@ -78,7 +72,6 @@ def test_user_with_both_auth_enabled_can_use_both_methods():
     assert response.wsgi_request.user == user
 
 
-@mock_feature_flag(flag_name='fflag__feature_develop__prompts__dia_1829_jwt_token_auth', value=True)
 @pytest.mark.django_db
 def test_user_with_no_auth_enabled_cannot_use_either_method():
     user = create_user_with_token_settings(api_tokens_enabled=False, legacy_api_tokens_enabled=False)
@@ -101,7 +94,6 @@ def test_user_with_no_auth_enabled_cannot_use_either_method():
     assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
 
-@mock_feature_flag(flag_name='fflag__feature_develop__prompts__dia_1829_jwt_token_auth', value=True)
 @pytest.mark.django_db
 def test_jwt_token_invalid_after_user_deleted():
     user = create_user_with_token_settings(api_tokens_enabled=True, legacy_api_tokens_enabled=False)
@@ -119,7 +111,6 @@ def test_jwt_token_invalid_after_user_deleted():
     assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
 
-@mock_feature_flag(flag_name='fflag__feature_develop__prompts__dia_1829_jwt_token_auth', value=True)
 @pytest.mark.django_db
 def test_user_with_default_auth_settings_can_use_jwt_but_not_legacy_token():
     # Create user and org with default settings from create_organization

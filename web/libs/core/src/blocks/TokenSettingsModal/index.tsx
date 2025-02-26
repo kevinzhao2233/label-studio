@@ -18,7 +18,14 @@ export const TokenSettingsModal = ({
   if (!settings.isSuccess || settings.isError || "error" in settings.data) {
     return <div>Error loading settings.</div>;
   }
-  return <TokenSettingsModalView settings={settings.data} showTTL={showTTL} onSaved={onSaved} />;
+  return (
+    <TokenSettingsModalView
+      key={settings.data?.api_tokens_enabled}
+      settings={settings.data}
+      showTTL={showTTL}
+      onSaved={onSaved}
+    />
+  );
 };
 
 function TokenSettingsModalView({

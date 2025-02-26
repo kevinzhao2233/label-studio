@@ -1,6 +1,6 @@
 {
-  "message": "fix: DIA-1916: [FE] User is NOT able to upload profile image on new account page (#7106)",
-  "commit": "9215ad62f05c8c3e36b46a2adf4d04d8ab1a41aa",
-  "date": "2025-02-24T11:55:34.000Z",
+  "message": "feat: OPTIC-1607: More analytics event tracking (#7120)",
+  "commit": "f9d94ecbcd23307b937b64793e626704610c4458",
+  "date": "2025-02-25T15:43:30.000Z",
   "branch": "develop"
 }

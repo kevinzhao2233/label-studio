@@ -9,25 +9,28 @@ import { type ChangeEvent, useState } from "react";
 
 export const TokenSettingsModal = ({
   showTTL,
+  onSaved,
 }: {
   showTTL?: boolean;
+  onSaved?: () => void;
 }) => {
   const settings = useAtomValue(settingsAtom);
-  const queryClient = useAtomValue(queryClientAtom);
-  const reloadSettings = () => {
-    queryClient.invalidateQueries({ queryKey: [TOKEN_SETTINGS_KEY] });
-  };
   if (!settings.isSuccess || settings.isError || "error" in settings.data) {
     return <div>Error loading settings.</div>;
   }
-  return <TokenSettingsModalView settings={settings.data} showTTL={showTTL} />;
+  return <TokenSettingsModalView settings={settings.data} showTTL={showTTL} onSaved={onSaved} />;
 };
 
-function TokenSettingsModalView({ settings, showTTL }: { settings: AuthTokenSettings; showTTL?: boolean }) {
+function TokenSettingsModalView({
+  settings,
+  showTTL,
+  onSaved,
+}: { settings: AuthTokenSettings; showTTL?: boolean; onSaved?: () => void }) {
   const [enableTTL, setEnableTTL] = useState(settings.api_tokens_enabled);
   const queryClient = useAtomValue(queryClientAtom);
   const reloadSettings = () => {
     queryClient.invalidateQueries({ queryKey: [TOKEN_SETTINGS_KEY] });
+    onSaved?.();
   };
   return (
     <Form action="accessTokenUpdateSettings" onSubmit={reloadSettings}>
@@ -67,7 +70,6 @@ function TokenSettingsModalView({ settings, showTTL }: { settings: AuthTokenSett
         </Form.Row>
       )}
       <Form.Actions>
-        <Form.Indicator />
         <Button type="submit">Save</Button>
       </Form.Actions>
     </Form>

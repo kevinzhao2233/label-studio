@@ -31,9 +31,9 @@ export function InviteLink({
 }) {
   const modalRef = useRef();
   useEffect(() => {
-    if (opened) {
+    if (modalRef.current && opened) {
       modalRef.current?.show?.();
-    } else {
+    } else if (modalRef.current && modalRef.current.visible) {
       modalRef.current?.hide?.();
     }
   }, [opened]);
@@ -55,7 +55,6 @@ export function InviteLink({
 
 const InvitationModal = () => {
   const { data: link } = useAtomValue(linkAtom);
-  console.log({ link });
   return (
     <Block name="invite">
       <Input value={link} style={{ width: "100%" }} readOnly />

@@ -4,7 +4,7 @@ import { atomWithQuery } from "jotai-tanstack-query";
 type AuthTokenSettings = {
   api_tokens_enabled: boolean;
   legacy_api_tokens_enabled: boolean;
-  time_to_live: number;
+  api_token_ttl_days: number;
 };
 
 export const TOKEN_SETTINGS_KEY = "api-settings";

@@ -45,7 +45,7 @@ def user_signup(request):
 
     # checks if the URL is a safe redirection.
     if not next_page or not url_has_allowed_host_and_scheme(url=next_page, allowed_hosts=request.get_host()):
-        if flag_set('fflag_all_feat_dia_1777_ls_homepage_short'):
+        if flag_set('fflag_all_feat_dia_1777_ls_homepage_short', user):
             next_page = reverse('main')
         else:
             next_page = reverse('projects:project-index')
@@ -108,7 +108,7 @@ def user_login(request):
 
     # checks if the URL is a safe redirection.
     if not next_page or not url_has_allowed_host_and_scheme(url=next_page, allowed_hosts=request.get_host()):
-        if flag_set('fflag_all_feat_dia_1777_ls_homepage_short'):
+        if flag_set('fflag_all_feat_dia_1777_ls_homepage_short', user):
             next_page = reverse('main')
         else:
             next_page = reverse('projects:project-index')

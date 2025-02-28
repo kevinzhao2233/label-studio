@@ -10,7 +10,7 @@ import { isDefined } from "../../../utils/utils";
 import { Button } from "../Button/Button";
 import { Icon } from "../Icon/Icon";
 import { modal } from "../Modal/Modal";
-import { Tooltip } from "../Tooltip/Tooltip";
+import { Tooltip } from "@humansignal/ui";
 import "./Table.scss";
 import { TableCheckboxCell } from "./TableCheckbox";
 import { tableCN, TableContext } from "./TableContext";

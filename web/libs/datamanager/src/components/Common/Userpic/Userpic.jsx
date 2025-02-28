@@ -1,6 +1,6 @@
 import { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { cn } from "../../../utils/bem";
-import { Tooltip } from "../Tooltip/Tooltip";
+import { Tooltip } from "@humansignal/ui";
 import "./Userpic.scss";
 
 const FALLBACK_IMAGE =

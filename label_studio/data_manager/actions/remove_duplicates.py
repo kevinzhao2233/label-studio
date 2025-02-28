@@ -212,7 +212,7 @@ actions = [
     {
         'entry_point': remove_duplicates,
         'permission': all_permissions.projects_change,
-        'title': 'Remove Duplicated Tasks',
+        'title': 'Delete Duplicated Tasks',
         'order': 95,
         'experimental': False,
         'dialog': {

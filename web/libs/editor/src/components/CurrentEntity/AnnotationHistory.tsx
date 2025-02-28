@@ -1,7 +1,7 @@
 import { when } from "mobx";
 import { inject, observer } from "mobx-react";
 import { type FC, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
-import { Tooltip } from "antd";
+import { Tooltip } from "@humansignal/ui";
 import {
   IconAnnotationAccepted,
   IconAnnotationImported,
@@ -251,8 +251,8 @@ const HistoryItemComponent: FC<{
             {extra && <Elem name="date">{extra}</Elem>}
             {date && (
               <Elem name="date">
-                <Tooltip placement="topRight" title={new Date(date).toLocaleString()}>
-                  {humanDateDiff(date)}
+                <Tooltip alignment="top-right" title={new Date(date).toLocaleString()}>
+                  <>{humanDateDiff(date)}</>
                 </Tooltip>
               </Elem>
             )}

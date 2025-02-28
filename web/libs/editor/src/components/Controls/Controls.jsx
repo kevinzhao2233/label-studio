@@ -5,7 +5,7 @@ import Hint from "../Hint/Hint";
 import { DraftPanel } from "../Annotations/Annotations";
 import styles from "./Controls.module.scss";
 import { Button } from "../../common/Button/Button";
-import { Tooltip } from "../../common/Tooltip/Tooltip";
+import { Tooltip } from "@humansignal/ui";
 import { cn } from "../../utils/bem";
 
 const TOOLTIP_DELAY = 0.8;

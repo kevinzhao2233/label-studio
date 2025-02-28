@@ -19,7 +19,7 @@ import { userDisplayName } from "../../utils/utilities";
 import { TimeAgo } from "../../common/TimeAgo/TimeAgo";
 import { useDropdown } from "../../common/Dropdown/DropdownTrigger";
 import { isDefined } from "../../utils/utilities";
-import { Tooltip } from "./../../common/Tooltip/Tooltip";
+import { Tooltip } from "@humansignal/ui";
 import { ToastType, useToast } from "@humansignal/ui/lib/Toast/Toast";
 import { useCopyText } from "@humansignal/core/lib/hooks/useCopyText";
 

@@ -1,6 +1,6 @@
 import { observer } from "mobx-react";
 import { type FC, useState } from "react";
-import { Tooltip } from "antd";
+import { Tooltip } from "@humansignal/ui";
 import { IconCheck, IconEllipsis } from "../../../assets/icons";
 import { Space } from "../../../common/Space/Space";
 import { Userpic } from "../../../common/Userpic/Userpic";
@@ -74,7 +74,7 @@ export const CommentItem: FC<any> = observer(
       if (isPersisted && time)
         return (
           <Elem name="date">
-            <Tooltip placement="topRight" title={new Date(time).toLocaleString()}>
+            <Tooltip alignment="top-right" title={new Date(time).toLocaleString()}>
               {`${isEdited ? "updated" : ""} ${humanDateDiff(time)}`}
             </Tooltip>
           </Elem>

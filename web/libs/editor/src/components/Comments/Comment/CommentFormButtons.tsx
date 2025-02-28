@@ -2,7 +2,7 @@ import type { MouseEventHandler } from "react";
 
 import { IconCommentLinkTo } from "../../../assets/icons";
 import { ReactComponent as IconSend } from "../../../assets/icons/send.svg";
-import { Tooltip } from "../../../common/Tooltip/Tooltip";
+import { Tooltip } from "@humansignal/ui";
 import { Block, Elem } from "../../../utils/bem";
 const TOOLTIP_DELAY = 0.8;
 import "./CommentFormButtons.scss";

@@ -2,7 +2,7 @@ import { inject, observer } from "mobx-react";
 import { LsGrid, LsList } from "../../../assets/icons";
 import { FF_LOPS_E_10, isFF } from "../../../utils/feature-flags";
 import { RadioGroup } from "../../Common/RadioGroup/RadioGroup";
-import { Tooltip } from "../../Common/Tooltip/Tooltip";
+import { Tooltip } from "@humansignal/ui";
 
 const viewInjector = inject(({ store }) => ({
   view: store.currentView,

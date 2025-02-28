@@ -2,7 +2,7 @@ import chroma from "chroma-js";
 import { type CSSProperties, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Block, Elem } from "../../utils/bem";
 import { isDefined, userDisplayName } from "../../utils/utilities";
-import { Tooltip } from "../Tooltip/Tooltip";
+import { Tooltip } from "@humansignal/ui";
 import "./Userpic.scss";
 
 const FALLBACK_IMAGE =

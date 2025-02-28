@@ -12,3 +12,7 @@ export const formDataToJPO = (formData: FormData) => {
 
   return formData;
 };
+
+export const isDefined = <T>(value: T | undefined | null): value is T => {
+  return value !== null && value !== undefined;
+};

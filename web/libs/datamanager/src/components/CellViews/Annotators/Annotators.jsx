@@ -5,7 +5,7 @@ import { useSDK } from "../../../providers/SDKProvider";
 import { cn } from "../../../utils/bem";
 import { isDefined } from "../../../utils/utils";
 import { Space } from "../../Common/Space/Space";
-import { Tooltip } from "../../Common/Tooltip/Tooltip";
+import { Tooltip } from "@humansignal/ui";
 import { Userpic } from "../../Common/Userpic/Userpic";
 import { Common } from "../../Filters/types";
 import { VariantSelect } from "../../Filters/types/List";

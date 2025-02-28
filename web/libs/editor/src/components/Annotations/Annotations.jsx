@@ -54,7 +54,7 @@ const Annotation = observer(({ item, store }) => {
           ev.preventDefault();
           item.setGroundTruth(false);
         }}
-      >test
+      >
         <StarOutlined />
       </Button>
     </Tooltip>
@@ -72,7 +72,7 @@ const Annotation = observer(({ item, store }) => {
             ev.preventDefault();
             item.setGroundTruth(!item.ground_truth);
           }}
-        >123
+        >
           {item.ground_truth ? <StarFilled /> : <StarOutlined />}
         </Button>
       </Tooltip>
@@ -242,7 +242,7 @@ class Annotations extends Component {
                 ev.preventDefault();
                 store.annotationStore.toggleViewingAllAnnotations();
               }}
-            >bla
+            >
               <WindowsOutlined />
             </Button>
           </Tooltip>

@@ -80,11 +80,7 @@ const convert = (
 
     if (!item.hint) return item.color ? color(item) : item.label;
 
-    return (
-      <Tooltip title={item.hint}>
-        {item.color ? color(item) : <span>{item.label}</span>}
-      </Tooltip>
-    );
+    return <Tooltip title={item.hint}>{item.color ? color(item) : <span>{item.label}</span>}</Tooltip>;
   };
 
   const convertItem = (item: TaxonomyItem): AntTaxonomyItem => {

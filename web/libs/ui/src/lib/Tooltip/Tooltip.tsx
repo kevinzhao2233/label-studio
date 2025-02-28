@@ -32,8 +32,7 @@ export type TooltipProps = PropsWithChildren<{
 }>;
 
 const TooltipInner = forwardRef(
-  ({ title, children, alignment, defaultVisible, disabled, style, interactive,
-    theme = "dark", }: TooltipProps, ref) => {
+  ({ title, children, alignment, defaultVisible, disabled, style, interactive, theme = "dark" }: TooltipProps, ref) => {
     if (!children || Array.isArray(children)) {
       throw new Error("Tooltip does accept a single child only");
     }
@@ -89,17 +88,17 @@ const TooltipInner = forwardRef(
     const visibilityClasses = useMemo(() => {
       switch (visibility) {
         case "before-appear":
-          return {[styles["before-appear"]] : true};
+          return { [styles["before-appear"]]: true };
         case "appear":
           return { [styles["appear"]]: true, [styles["before-appear"]]: true };
         case "before-disappear":
-          return {[styles["before-disappear"]] : true};
+          return { [styles["before-disappear"]]: true };
         case "disappear":
           return { [styles["disappear"]]: true, [styles["before-disappear"]]: true };
         case "visible":
-          return {[styles["visible"]]: true};
+          return { [styles["visible"]]: true };
         default:
-          return visibility ? {[styles["visible"]] : true} : null;
+          return visibility ? { [styles["visible"]]: true } : null;
       }
     }, [visibility]);
 
@@ -108,11 +107,10 @@ const TooltipInner = forwardRef(
         injected ? (
           <div
             ref={(el: any) => setRef(tooltipElement, el)}
-            className={clsx(
-              styles.tooltip,
-              visibilityClasses,
-              { [styles[`tooltip_align_${align}`]]: true, [styles[`tooltip_theme_${theme}`]]: true },
-            )}
+            className={clsx(styles.tooltip, visibilityClasses, {
+              [styles[`tooltip_align_${align}`]]: true,
+              [styles[`tooltip_theme_${theme}`]]: true,
+            })}
             style={{
               ...offset,
               ...style,

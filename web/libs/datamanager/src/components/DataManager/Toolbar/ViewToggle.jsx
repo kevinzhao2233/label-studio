@@ -9,7 +9,6 @@ const viewInjector = inject(({ store }) => ({
 
 export const ViewToggle = viewInjector(
   observer(({ view, size, ...rest }) => {
-
     return (
       <RadioGroup size={size} value={view.type} onChange={(e) => view.setType(e.target.value)} {...rest}>
         <Tooltip title="List view">

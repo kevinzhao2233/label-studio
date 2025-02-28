@@ -63,8 +63,8 @@ export const Table = observer(
 
     const columns = useMemo(() => {
       const columns = prepareColumns(props.columns, props.hiddenColumns);
-
-      if (props.onSelectAll && props.onSelectRow) {
+      const columnIDs = columns.map((col) => col.id);
+      if (props.onSelectAll && props.onSelectRow && !columnIDs.includes("select")) {
         columns.unshift({
           id: "select",
           headerClassName: "table__select-all",
@@ -99,61 +99,63 @@ export const Table = observer(
         });
       }
 
-      columns.push({
-        id: "show-source",
-        cellClassName: "show-source",
-        style: {
-          width: 40,
-          maxWidth: 40,
-          justifyContent: "center",
-        },
-        onClick: (e) => e.stopPropagation(),
-        Header() {
-          return <div style={{ width: 40 }} />;
-        },
-        Cell({ data }) {
-          let out = JSON.parse(data.source ?? "{}");
+      if (!columnIDs.includes("select")) {
+        columns.push({
+          id: "show-source",
+          cellClassName: "show-source",
+          style: {
+            width: 40,
+            maxWidth: 40,
+            justifyContent: "center",
+          },
+          onClick: (e) => e.stopPropagation(),
+          Header() {
+            return <div style={{ width: 40 }} />;
+          },
+          Cell({ data }) {
+            let out = JSON.parse(data.source ?? "{}");
 
-          out = {
-            id: out?.id,
-            data: out?.data,
-            annotations: out?.annotations,
-            predictions: out?.predictions,
-          };
+            out = {
+              id: out?.id,
+              data: out?.data,
+              annotations: out?.annotations,
+              predictions: out?.predictions,
+            };
 
-          const onTaskLoad = async () => {
-            if (isFF(FF_LOPS_E_3) && type === "DE") {
-              return new Promise((resolve) => resolve(out));
-            }
-            const response = await api.task({ taskID: out.id });
+            const onTaskLoad = async () => {
+              if (isFF(FF_LOPS_E_3) && type === "DE") {
+                return new Promise((resolve) => resolve(out));
+              }
+              const response = await api.task({ taskID: out.id });
 
-            return response ?? {};
-          };
+              return response ?? {};
+            };
 
-          return (
-            <Tooltip title="Show task source">
-              <Button
-                type="link"
-                style={{ width: 32, height: 32, padding: 0 }}
-                onClick={() => {
-                  modal({
-                    title: `Source for task ${out?.id}`,
-                    style: { width: 800 },
-                    body: <TaskSourceView content={out} onTaskLoad={onTaskLoad} sdkType={type} />,
-                  });
-                }}
-                icon={
-                  isFF(FF_LOPS_E_10) ? (
-                    <Icon icon={RiCodeLine} style={{ width: 24, height: 24 }} />
-                  ) : (
-                    <Icon icon={FaCode} />
-                  )
-                }
-              />
-            </Tooltip>
-          );
-        },
-      });
+            return (
+              <Tooltip title="Show task source">
+                <Button
+                  type="link"
+                  style={{ width: 32, height: 32, padding: 0 }}
+                  onClick={() => {
+                    modal({
+                      title: `Source for task ${out?.id}`,
+                      style: { width: 800 },
+                      body: <TaskSourceView content={out} onTaskLoad={onTaskLoad} sdkType={type} />,
+                    });
+                  }}
+                  icon={
+                    isFF(FF_LOPS_E_10) ? (
+                      <Icon icon={RiCodeLine} style={{ width: 24, height: 24 }} />
+                    ) : (
+                      <Icon icon={FaCode} />
+                    )
+                  }
+                />
+              </Tooltip>
+            );
+          },
+        });
+      }
 
       if (Object.keys(colOrder).length > 0) {
         columns.sort((a, b) => {

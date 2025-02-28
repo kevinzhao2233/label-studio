@@ -234,7 +234,7 @@ class Annotations extends Component {
             </Tooltip>
           )}
           &nbsp;
-          <Tooltip alignment="top-left" title="View all annotations 123">
+          <Tooltip alignment="top-left" title="View all annotations">
             <Button
               size="small"
               type={store.annotationStore.viewingAll ? "primary" : ""}

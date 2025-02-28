@@ -99,9 +99,9 @@ export const PersonalInfo = () => {
           </form>
           {user?.avatar && (
             <form onSubmit={(e) => avatarFormSubmitHandler(e, true)}>
-              <button type="submit" look="danger">
+              <Button type="submit" look="danger">
                 Delete
-              </button>
+              </Button>
             </form>
           )}
         </div>

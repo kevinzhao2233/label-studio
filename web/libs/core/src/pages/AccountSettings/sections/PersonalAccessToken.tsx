@@ -2,7 +2,6 @@ import { IconLaunch, IconFileCopy, Label } from "@humansignal/ui";
 import styles from "./PersonalAccessToken.module.scss";
 import { atomWithMutation, atomWithQuery } from "jotai-tanstack-query";
 import { atom, useAtomValue } from "jotai";
-import clsx from "clsx";
 import { useCopyText } from "../../../lib/hooks/useCopyText";
 
 /**
@@ -71,7 +70,8 @@ export const PersonalAccessToken = () => {
             <TextArea
               name="example-curl"
               readOnly
-              className={clsx(styles.input, styles.textarea, "w-full min-h-[90px]")}
+              className={styles.textarea}
+              rawClassName={styles.textarea}
               value={curl}
             />
             <Button icon={<IconFileCopy />} onClick={copyCurl} disabled={curlCopied}>

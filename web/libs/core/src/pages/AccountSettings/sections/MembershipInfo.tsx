@@ -68,7 +68,9 @@ export const MembershipInfo = () => {
       <div className="flex gap-2 w-full justify-between">
         <div>Organization</div>
         <div>
-          <a href="/organization">{user?.email}</a>
+          <a href="/organization" className="text-blue-600 hover:underline">
+            {user?.email}
+          </a>
         </div>
       </div>
 

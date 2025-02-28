@@ -58,110 +58,114 @@ export const Table = observer(
     const tableHead = useRef();
     const [colOrder, setColOrder] = useState(JSON.parse(localStorage.getItem(colOrderKey)) ?? {});
     const listRef = useRef();
-    const columns = prepareColumns(props.columns, props.hiddenColumns);
     const Decoration = useMemo(() => Decorator(decoration), [decoration]);
     const { api, type } = useSDK();
 
-    useEffect(() => {
-      localStorage.setItem(colOrderKey, JSON.stringify(colOrder));
-    }, [colOrder]);
+    const columns = useMemo(() => {
+      const columns = prepareColumns(props.columns, props.hiddenColumns);
 
-    if (props.onSelectAll && props.onSelectRow) {
-      columns.unshift({
-        id: "select",
-        headerClassName: "table__select-all",
-        cellClassName: "select-row",
+      if (props.onSelectAll && props.onSelectRow) {
+        columns.unshift({
+          id: "select",
+          headerClassName: "table__select-all",
+          cellClassName: "select-row",
+          style: {
+            width: 40,
+            maxWidth: 40,
+            justifyContent: "center",
+          },
+          onClick: (e) => e.stopPropagation(),
+          Header: () => {
+            return (
+              <TableCheckboxCell
+                checked={selectedItems.isAllSelected}
+                indeterminate={selectedItems.isIndeterminate}
+                onChange={() => props.onSelectAll()}
+                className="select-all"
+                ariaLabel={`${selectedItems.isAllSelected ? "Unselect" : "Select"} all rows`}
+              />
+            );
+          },
+          Cell: ({ data }) => {
+            const isChecked = selectedItems.isSelected(data.id);
+            return (
+              <TableCheckboxCell
+                checked={isChecked}
+                onChange={() => props.onSelectRow(data.id)}
+                ariaLabel={`${isChecked ? "Unselect" : "Select"} Task ${data.id}`}
+              />
+            );
+          },
+        });
+      }
+
+      columns.push({
+        id: "show-source",
+        cellClassName: "show-source",
         style: {
           width: 40,
           maxWidth: 40,
           justifyContent: "center",
         },
         onClick: (e) => e.stopPropagation(),
-        Header: () => {
-          return (
-            <TableCheckboxCell
-              checked={selectedItems.isAllSelected}
-              indeterminate={selectedItems.isIndeterminate}
-              onChange={() => props.onSelectAll()}
-              className="select-all"
-              ariaLabel={`${selectedItems.isAllSelected ? "Unselect" : "Select"} all rows`}
-            />
-          );
+        Header() {
+          return <div style={{ width: 40 }} />;
         },
-        Cell: ({ data }) => {
-          const isChecked = selectedItems.isSelected(data.id);
+        Cell({ data }) {
+          let out = JSON.parse(data.source ?? "{}");
+
+          out = {
+            id: out?.id,
+            data: out?.data,
+            annotations: out?.annotations,
+            predictions: out?.predictions,
+          };
+
+          const onTaskLoad = async () => {
+            if (isFF(FF_LOPS_E_3) && type === "DE") {
+              return new Promise((resolve) => resolve(out));
+            }
+            const response = await api.task({ taskID: out.id });
+
+            return response ?? {};
+          };
+
           return (
-            <TableCheckboxCell
-              checked={isChecked}
-              onChange={() => props.onSelectRow(data.id)}
-              ariaLabel={`${isChecked ? "Unselect" : "Select"} Task ${data.id}`}
-            />
+            <Tooltip title="Show task source">
+              <Button
+                type="link"
+                style={{ width: 32, height: 32, padding: 0 }}
+                onClick={() => {
+                  modal({
+                    title: `Source for task ${out?.id}`,
+                    style: { width: 800 },
+                    body: <TaskSourceView content={out} onTaskLoad={onTaskLoad} sdkType={type} />,
+                  });
+                }}
+                icon={
+                  isFF(FF_LOPS_E_10) ? (
+                    <Icon icon={RiCodeLine} style={{ width: 24, height: 24 }} />
+                  ) : (
+                    <Icon icon={FaCode} />
+                  )
+                }
+              />
+            </Tooltip>
           );
         },
       });
-    }
 
-    columns.push({
-      id: "show-source",
-      cellClassName: "show-source",
-      style: {
-        width: 40,
-        maxWidth: 40,
-        justifyContent: "center",
-      },
-      onClick: (e) => e.stopPropagation(),
-      Header() {
-        return <div style={{ width: 40 }} />;
-      },
-      Cell({ data }) {
-        let out = JSON.parse(data.source ?? "{}");
+      if (Object.keys(colOrder).length > 0) {
+        columns.sort((a, b) => {
+          return colOrder[a.id] < colOrder[b.id] ? -1 : 1;
+        });
+      }
+      return columns;
+    }, [props.columns, props.hiddenColumns, props.onSelectAll, props.onSelectRow, selectedItems, type]);
 
-        out = {
-          id: out?.id,
-          data: out?.data,
-          annotations: out?.annotations,
-          predictions: out?.predictions,
-        };
-
-        const onTaskLoad = async () => {
-          if (isFF(FF_LOPS_E_3) && type === "DE") {
-            return new Promise((resolve) => resolve(out));
-          }
-          const response = await api.task({ taskID: out.id });
-
-          return response ?? {};
-        };
-
-        return (
-          <Tooltip title="Show task source">
-            <Button
-              type="link"
-              style={{ width: 32, height: 32, padding: 0 }}
-              onClick={() => {
-                modal({
-                  title: `Source for task ${out?.id}`,
-                  style: { width: 800 },
-                  body: <TaskSourceView content={out} onTaskLoad={onTaskLoad} sdkType={type} />,
-                });
-              }}
-              icon={
-                isFF(FF_LOPS_E_10) ? (
-                  <Icon icon={RiCodeLine} style={{ width: 24, height: 24 }} />
-                ) : (
-                  <Icon icon={FaCode} />
-                )
-              }
-            />
-          </Tooltip>
-        );
-      },
-    });
-
-    if (Object.keys(colOrder).length > 0) {
-      columns.sort((a, b) => {
-        return colOrder[a.id] < colOrder[b.id] ? -1 : 1;
-      });
-    }
+    useEffect(() => {
+      localStorage.setItem(colOrderKey, JSON.stringify(colOrder));
+    }, [colOrder]);
 
     const contextValue = {
       columns,

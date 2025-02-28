@@ -1,13 +1,12 @@
 import { observer } from "mobx-react";
 import type React from "react";
 import { type FC, useCallback, useContext, useMemo, useState } from "react";
-import { Tooltip } from "@humansignal/ui";
+import { Tooltip, Userpic } from "@humansignal/ui";
 import { IconCheck, IconEllipsis } from "../../../assets/icons";
 import { Button } from "../../../common/Button/Button";
 import { Dropdown } from "../../../common/Dropdown/Dropdown";
 import { Menu } from "../../../common/Menu/Menu";
 import { Space } from "../../../common/Space/Space";
-import { Userpic } from "../../../common/Userpic/Userpic";
 import { Block, Elem } from "../../../utils/bem";
 import { humanDateDiff, userDisplayName } from "../../../utils/utilities";
 import { CommentFormBase } from "../CommentFormBase";

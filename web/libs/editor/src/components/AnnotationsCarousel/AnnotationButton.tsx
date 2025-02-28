@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { inject, observer } from "mobx-react";
 import { Block, cn, Elem } from "../../utils/bem";
-import { Userpic } from "../../common/Userpic/Userpic";
+import { Userpic } from "@humansignal/ui";
 import {
   IconAnnotationGroundTruth,
   IconAnnotationSkipped2,

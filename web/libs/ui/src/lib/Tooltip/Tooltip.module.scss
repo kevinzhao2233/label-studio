@@ -101,8 +101,9 @@
       --animation-start: -10px;
 
       &::before {
+        left: initial;
         bottom: 0;
-        right: 24px;
+        right: 18px;
         transform: translate(-50%, 50%) rotate(45deg);
       }
     }

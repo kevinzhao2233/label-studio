@@ -87,4 +87,14 @@ declare type APIProject = {
 
   /** JSON-formatted labeling configuration */
   parsed_label_config?: string;
+
+  /**
+   * Total number of tasks in the queue
+   */
+  queue_total: number;
+
+  /**
+   * Number of finished tasks
+   */
+  queue_done: number;
 };

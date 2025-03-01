@@ -118,10 +118,20 @@ export const Userpic = forwardRef(
       );
     };
 
+    const classNameList: Record<string, any> = {};
+    if (className) {
+      className
+        .toString()
+        .split(" ")
+        .forEach((c) => {
+          classNameList[c] = true;
+        });
+    }
+
     const userpic = (
       <div
         ref={ref}
-        className={clsx(styles.userpic, { [styles.faded]: faded, className })}
+        className={clsx(styles.userpic, { [styles.faded]: faded, ...classNameList })}
         style={stylesheet}
         {...rest}
       >
@@ -144,7 +154,7 @@ export const Userpic = forwardRef(
         {badge &&
           Object.entries(badge).map(([align, content], i) => {
             return (
-              <div key={`badge-${i}`} name="badge" mod={{ [align]: true }}>
+              <div key={`badge-${i}`} className={clsx(styles.badge, { [styles[align]]: true })}>
                 {content}
               </div>
             );

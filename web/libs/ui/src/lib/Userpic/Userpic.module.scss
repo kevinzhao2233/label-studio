@@ -3,7 +3,6 @@
   height: 28px;
   flex-shrink: 0;
   display: flex;
-  overflow: hidden;
   position: relative;
   align-items: center;
   border-radius: 50%;
@@ -36,22 +35,22 @@
   .badge {
     position: absolute;
 
-    .topLeft {
+    &.topLeft {
       top: 0;
       left: 0;
     }
 
-    .topRight {
+    &.topRight {
       top: 0;
       right: 0;
     }
 
-    .bottomLeft {
+    &.bottomLeft {
       bottom: 0;
       left: 0;
     }
 
-    .bottomRight {
+    &.bottomRight {
       bottom: 0;
       right: 0;
     }

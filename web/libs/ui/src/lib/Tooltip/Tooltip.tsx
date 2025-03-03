@@ -103,7 +103,7 @@ const TooltipInner = forwardRef(
             ref={(el: any) => setRef(tooltipElement, el)}
             className={clsx(styles.tooltip, visibilityClasses, {
               [styles[`tooltip_align_${align}`]]: true,
-              [styles[`tooltip_theme_light`]]: theme === "light",
+              [styles.tooltip_theme_light]: theme === "light",
             })}
             style={{
               ...offset,

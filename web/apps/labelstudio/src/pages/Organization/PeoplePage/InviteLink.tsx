@@ -29,7 +29,7 @@ export function InviteLink({
   onOpened?: () => void;
   onClosed?: () => void;
 }) {
-  const modalRef = useRef();
+  const modalRef = useRef<Modal>();
   useEffect(() => {
     if (modalRef.current && opened) {
       modalRef.current?.show?.();

@@ -103,7 +103,13 @@ export const PeoplePage = () => {
           isFF(FF_LSDV_E_297) && <HeidiTips collection="organizationPage" />
         )}
       </Elem>
-      <InviteLink opened={invitationOpen} onClose={() => setInvitationOpen(false)} />
+      <InviteLink
+        opened={invitationOpen}
+        onClosed={() => {
+          console.log("hidden");
+          setInvitationOpen(false);
+        }}
+      />
     </Block>
   );
 };

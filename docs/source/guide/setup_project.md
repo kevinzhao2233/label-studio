@@ -47,7 +47,7 @@ After you [start Label Studio](start) and [create an account](signup), create a 
     We recommend that you begin with a pre-configured template and modify it, but you can also create your own custom template using our [tag library](/tags). 
     
     If enabled, can start by describing to the Label Studio [AI assistant](ask_ai) what your are looking for and let it generate the XML on your behalf. 
-4. **[Configure project settings](project_settings)**. 
+4. **[Configure project settings](project_settings_lse)**. 
 
     Next, you will want to configure what information annotators and reviewers can see, and how automated you want their workflow to be. 
 

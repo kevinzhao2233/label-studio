@@ -1,7 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { inject, observer } from "mobx-react";
+import { Tooltip, Userpic } from "@humansignal/ui";
+import { ToastType, useToast } from "@humansignal/ui/lib/Toast/Toast";
+import { useCopyText } from "@humansignal/core/lib/hooks/useCopyText";
+import { isDefined, userDisplayName } from "@humansignal/core/lib/utils/helpers";
 import { Block, cn, Elem } from "../../utils/bem";
-import { Userpic } from "@humansignal/ui";
 import {
   IconAnnotationGroundTruth,
   IconAnnotationSkipped2,
@@ -15,13 +18,8 @@ import {
   LsStar,
   LsStarOutline,
 } from "../../assets/icons";
-import { userDisplayName } from "../../utils/utilities";
 import { TimeAgo } from "../../common/TimeAgo/TimeAgo";
 import { useDropdown } from "../../common/Dropdown/DropdownTrigger";
-import { isDefined } from "../../utils/utilities";
-import { Tooltip } from "@humansignal/ui";
-import { ToastType, useToast } from "@humansignal/ui/lib/Toast/Toast";
-import { useCopyText } from "@humansignal/core/lib/hooks/useCopyText";
 
 // eslint-disable-next-line
 // @ts-ignore

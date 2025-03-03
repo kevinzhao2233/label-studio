@@ -84,12 +84,12 @@ export const HomePage: Page = () => {
             <Heading size={1}>Welcome 👋</Heading>
             <Sub>Let's get you started.</Sub>
           </div>
-          <div className="flex justify-between 2xl:justify-start gap-4">
+          <div className="flex justify-start gap-4">
             {actions.map((action) => {
               return (
                 <Button
                   key={action.title}
-                  className="flex-1 2xl:flex-grow-0 text-lsLabelMedium text-lsPrimaryContent [&_svg]:w-6 [&_svg]:h-6"
+                  className="flex-grow-0 text-lsLabelMedium text-lsPrimaryContent text-left justify-start min-w-[250px] [&_svg]:w-6 [&_svg]:h-6"
                   variant="lsOutline"
                   onClick={handleActions(action.type)}
                 >

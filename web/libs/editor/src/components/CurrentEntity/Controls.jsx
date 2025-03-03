@@ -11,7 +11,6 @@ import { IconBan } from "../../assets/icons";
 import "./Controls.scss";
 import { Hotkey } from "../../core/Hotkey";
 
-
 const ButtonTooltip = inject("store")(
   observer(({ store, name, title, children }) => {
     return (

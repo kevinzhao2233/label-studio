@@ -8,8 +8,6 @@ import { Button } from "../../common/Button/Button";
 import { Tooltip } from "@humansignal/ui";
 import { cn } from "../../utils/bem";
 
-const TOOLTIP_DELAY = 0.8;
-
 export default inject("store")(
   observer(({ item, store }) => {
     /**
@@ -59,7 +57,7 @@ export default inject("store")(
 
       if (store.hasInterface("skip")) {
         skipButton = (
-          <Tooltip title="Cancel (skip) task: [ Ctrl+Space ]" mouseEnterDelay={TOOLTIP_DELAY}>
+          <Tooltip title="Cancel (skip) task: [ Ctrl+Space ]">
             <Button
               disabled={disabled}
               look="danger"
@@ -74,7 +72,7 @@ export default inject("store")(
 
       if ((userGenerate && !sentUserGenerate) || (store.explore && !userGenerate && store.hasInterface("submit"))) {
         submitButton = (
-          <Tooltip title="Save results: [ Ctrl+Enter ]" mouseEnterDelay={TOOLTIP_DELAY}>
+          <Tooltip title="Save results: [ Ctrl+Enter ]">
             <Button
               disabled={disabled}
               look="primary"
@@ -90,7 +88,7 @@ export default inject("store")(
 
       if ((userGenerate && sentUserGenerate) || (!userGenerate && store.hasInterface("update"))) {
         updateButton = (
-          <Tooltip title="Update this task: [ Alt+Enter ]" mouseEnterDelay={TOOLTIP_DELAY}>
+          <Tooltip title="Update this task: [ Alt+Enter ]">
             <Button
               disabled={disabled}
               look="primary"

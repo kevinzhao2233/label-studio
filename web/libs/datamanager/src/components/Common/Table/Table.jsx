@@ -61,7 +61,7 @@ export const Table = observer(
     const Decoration = useMemo(() => Decorator(decoration), [decoration]);
     const { api, type } = useSDK();
 
-    const columns = useMemo(() => {
+    const columnsMemoized = useMemo(() => {
       const columns = prepareColumns(props.columns, props.hiddenColumns);
       const columnIDs = columns.map((col) => col.id);
       if (props.onSelectAll && props.onSelectRow && !columnIDs.includes("select")) {
@@ -99,7 +99,7 @@ export const Table = observer(
         });
       }
 
-      if (!columnIDs.includes("select")) {
+      if (!columnIDs.includes("show-source")) {
         columns.push({
           id: "show-source",
           cellClassName: "show-source",
@@ -170,7 +170,7 @@ export const Table = observer(
     }, [colOrder]);
 
     const contextValue = {
-      columns,
+      columns: columnsMemoized,
       data,
       cellViews,
     };

@@ -27,8 +27,6 @@ export type TooltipProps = PropsWithChildren<{
   children: React.ReactNode;
   interactive?: boolean;
   theme?: "light" | "dark";
-  // activates intent detecting mode
-  mouseEnterDelay?: number;
 }>;
 
 const TooltipInner = forwardRef(
@@ -105,7 +103,7 @@ const TooltipInner = forwardRef(
             ref={(el: any) => setRef(tooltipElement, el)}
             className={clsx(styles.tooltip, visibilityClasses, {
               [styles[`tooltip_align_${align}`]]: true,
-              [styles[`tooltip_theme_${theme}`]]: true,
+              [styles[`tooltip_theme_light`]]: theme === "light",
             })}
             style={{
               ...offset,

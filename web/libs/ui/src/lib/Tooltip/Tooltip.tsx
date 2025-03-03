@@ -86,15 +86,15 @@ const TooltipInner = forwardRef(
         case "before-appear":
           return { [styles["before-appear"]]: true };
         case "appear":
-          return { [styles["appear"]]: true, [styles["before-appear"]]: true };
+          return { [styles.appear]: true, [styles["before-appear"]]: true };
         case "before-disappear":
           return { [styles["before-disappear"]]: true };
         case "disappear":
-          return { [styles["disappear"]]: true, [styles["before-disappear"]]: true };
+          return { [styles.disappear]: true, [styles["before-disappear"]]: true };
         case "visible":
-          return { [styles["visible"]]: true };
+          return { [styles.visible]: true };
         default:
-          return visibility ? { [styles["visible"]]: true } : null;
+          return visibility ? { [styles.visible]: true } : null;
       }
     }, [visibility]);
 

@@ -131,6 +131,7 @@ export const Userpic = forwardRef(
     const userpic = (
       <div
         ref={ref}
+        data-testid="userpic"
         className={clsx(styles.userpic, { [styles.faded]: faded, ...classNameList })}
         style={stylesheet}
         {...rest}

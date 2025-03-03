@@ -33,17 +33,13 @@ export type TooltipProps = PropsWithChildren<{
 
 const TooltipInner = forwardRef(
   ({ title, children, alignment, defaultVisible, disabled, style, interactive, theme = "dark" }: TooltipProps, ref) => {
-    if (!children || Array.isArray(children)) {
-      throw new Error("Tooltip does accept a single child only");
-    }
-
     const triggerElement = useRef<any>();
     const tooltipElement = useRef<HTMLDivElement>();
+    const hideTimeoutRef = useRef<NodeJS.Timeout>();
     const [offset, setOffset] = useState({});
     const [visibility, setVisibility] = useState(defaultVisible ? "visible" : null);
     const [injected, setInjected] = useState(false);
     const [align, setAlign] = useState(alignment ?? "top-center");
-    const hideTimeoutRef = useRef<NodeJS.Timeout>();
 
     const clearHideTimeout = () => {
       if (hideTimeoutRef.current) {
@@ -131,6 +127,7 @@ const TooltipInner = forwardRef(
                 }, 300);
               }
             }}
+            data-testid="tooltip"
           >
             <div className={styles.tooltip__body} data-testid="tooltip-body">
               {title}
@@ -193,15 +190,9 @@ export const Tooltip = forwardRef((props: TooltipProps, ref) => {
 
   if (!props.title) return child;
 
-  // @todo commented out code would be very helpful but might break some styles; enable it later
-  // disabled elements won't have mouse events, so we need a wrapper
-  // if (child.props.disabled) {
-  //   return (
-  //     <TooltipInner {...rest} ref={ref}>
-  //       <div>{child}</div>
-  //     </TooltipInner>
-  //   )
-  // }
+  if (!children || Array.isArray(children)) {
+    throw new Error("Tooltip does accept a single child only");
+  }
 
   return <TooltipInner {...rest} children={child} ref={ref} />;
 });

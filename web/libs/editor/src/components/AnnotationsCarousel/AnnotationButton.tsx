@@ -265,21 +265,21 @@ export const AnnotationButton = observer(
           {!isPrediction && (
             <Elem name="icons">
               {entity.draftId > 0 && (
-                <Tooltip title={"Draft"}>
+                <Tooltip title="Draft">
                   <Elem name="icon" mod={{ draft: true }}>
                     <IconDraftCreated2 color="#617ADA" />
                   </Elem>
                 </Tooltip>
               )}
               {entity.skipped && (
-                <Tooltip title={"Skipped"}>
+                <Tooltip title="Skipped">
                   <Elem name="icon" mod={{ skipped: true }}>
                     <IconAnnotationSkipped2 color="#DD0000" />
                   </Elem>
                 </Tooltip>
               )}
               {isGroundTruth && (
-                <Tooltip title={"Ground-truth"}>
+                <Tooltip title="Ground-truth">
                   <Elem name="icon" mod={{ groundTruth: true }}>
                     <IconAnnotationGroundTruth />
                   </Elem>

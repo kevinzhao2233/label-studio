@@ -13,7 +13,14 @@ import { modal } from "../components/Modal/Modal";
 import { API_CONFIG } from "../config/ApiConfig";
 import { type ApiParams, APIProxy } from "@humansignal/core/lib/api-proxy";
 import { absoluteURL, isDefined } from "../utils/helpers";
+import { FF_IMPROVE_GLOBAL_ERROR_MESSAGES, isFF } from "../utils/feature-flags";
 import type { ApiResponse, WrappedResponse } from "@humansignal/core/lib/api-proxy/types";
+import { ToastType, useToast } from "@humansignal/ui";
+import { captureException } from "../config/Sentry";
+
+export const IMPROVE_GLOBAL_ERROR_MESSAGES = isFF(FF_IMPROVE_GLOBAL_ERROR_MESSAGES);
+// Duration for toast errors
+export const API_ERROR_TOAST_DURATION = 10000;
 
 export const API = new APIProxy(API_CONFIG);
 
@@ -27,14 +34,20 @@ export type ApiCallOptions = {
   errorFilter?: (response: ApiResponse) => boolean;
 } & ApiParams;
 
+export type ErrorDisplayMessage = (
+  errorDetails: FormattedError,
+  result: ApiResponse,
+  showGlobalError?: boolean,
+) => void;
+
 export type ApiContextType = {
   api: typeof API;
-  callApi: <T>(method: keyof (typeof API)["methods"], options?: ApiCallOptions) => Promise<WrappedResponse<T>>;
-  handleError: (response: any, showModal?: boolean) => Promise<boolean>;
+  callApi: <T>(method: keyof (typeof API)["methods"], options?: ApiCallOptions) => Promise<WrappedResponse<T> | null>;
+  handleError: (response: Response | ApiResponse, displayErrorMessage?: ErrorDisplayMessage, showGlobalError?: boolean) => Promise<boolean>;
   resetError: () => void;
-  error: any;
-  showModal: true;
-  errorFormatter: (result: any) => any;
+  error: ApiResponse | null;
+  showGlobalError: boolean;
+  errorFormatter: (result: ApiResponse) => FormattedError;
   isValidMethod: (name: string) => boolean;
 };
 
@@ -65,70 +78,143 @@ export const errorFormatter = (result: ApiResponse): FormattedError => {
   };
 };
 
-const handleError = async (response: Response, showModal = true) => {
-  let result: ApiResponse = response;
+const displayErrorModal: ErrorDisplayMessage = (errorDetails) => {
+  const { isShutdown, title, message, stacktrace, ...formattedError } = errorDetails;
 
-  if (result instanceof Response) {
+  modal({
+    unique: "network-error",
+    allowClose: !isShutdown,
+    body: isShutdown ? (
+      <ErrorWrapper
+        possum={false}
+        title={"Connection refused"}
+        message={"Server not responding. Is it still running?"}
+      />
+    ) : (
+      <ErrorWrapper
+        {...formattedError}
+        title={title}
+        message={message}
+        stacktrace={IMPROVE_GLOBAL_ERROR_MESSAGES ? undefined : stacktrace}
+      />
+    ),
+    simple: true,
+    style: { width: 680 },
+  });
+};
+
+const handleError = async (
+  response: Response | ApiResponse,
+  displayErrorMessage?: ErrorDisplayMessage,
+  showGlobalError = true,
+) => {
+  let result: ApiResponse = response as ApiResponse;
+
+  if (response instanceof Response) {
     result = await API.generateError(response);
   }
 
-  const { isShutdown, ...formattedError } = errorFormatter(result);
+  const errorDetails = errorFormatter(result);
 
-  if (showModal) {
-    modal({
-      unique: "network-error",
-      allowClose: !isShutdown,
-      body: isShutdown ? (
-        <ErrorWrapper
-          possum={false}
-          title={"Connection refused"}
-          message={"Server not responding. Is it still running?"}
-        />
-      ) : (
-        <ErrorWrapper {...formattedError} />
-      ),
-      simple: true,
-      style: { width: 680 },
-    });
+  // Allow inline error handling
+  if (!showGlobalError) {
+    return errorDetails.isShutdown;
   }
 
-  return isShutdown;
+  if (displayErrorMessage) {
+    displayErrorMessage(errorDetails, result);
+  } else {
+    displayErrorModal(errorDetails, result);
+  }
+
+  return errorDetails.isShutdown;
 };
 
 export const ApiProvider = forwardRef<ApiContextType, PropsWithChildren<any>>(({ children }, ref) => {
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<ApiResponse | null>(null);
+  const toast = useToast();
 
   const resetError = () => setError(null);
 
   const callApi = useCallback(
-    async (method: keyof (typeof API)["methods"], { params = {}, errorFilter, ...rest } = {}) => {
-      if (apiLocked) return;
+    async <T,>(
+      method: keyof (typeof API)["methods"],
+      { params = {}, errorFilter, suppressError, ...rest }: ApiCallOptions = {},
+    ): Promise<WrappedResponse<T> | null> => {
+      if (apiLocked) return null;
 
       setError(null);
 
       const result = await API.invoke(method, params, rest);
 
-      if (result?.status === 401) {
+      if (result && "status" in result && result.status === 401) {
         apiLocked = true;
         location.href = absoluteURL("/");
-        return;
+        return null;
       }
 
       if (result?.error) {
-        const shouldShowModalError =
-          (!isDefined(errorFilter) || errorFilter(result) === false) && !result.error?.includes("aborted");
+        const status = result.$meta.status;
+        const requestCancelled = !status;
+        const requestAborted = result.error?.includes("aborted");
+        const requestCompleted = !(requestCancelled || requestAborted);
+        const containsValidationErrors =
+          isDefined(result.response?.validation_errors) && Object.keys(result.response?.validation_errors).length > 0;
 
-        if (shouldShowModalError && rest.suppressError !== true) {
+        let shouldShowGlobalError = (!isDefined(errorFilter) || errorFilter(result) === false) && requestCompleted;
+
+        if (IMPROVE_GLOBAL_ERROR_MESSAGES && requestCompleted) {
+          // We only show toast errors for 4xx errors
+          // Any non-4xx errors are logged to Sentry but there is nothing the user can do about them so don't show them to the user
+          // 401 errors are handled above
+          // If we end up with an empty status string from a cancelled request, don't show the error
+          const is4xx = status.toString().startsWith("4");
+          const stacktrace = result.response?.exc_info;
+          const version = result.response?.version;
+
+          shouldShowGlobalError = shouldShowGlobalError && is4xx;
+
+          // Log non-4xx errors that are not aborted or cancelled requests, or any errors containing an api stacktrace to Sentry
+          // So we know about them but don't show them to the user
+          if ((!is4xx || stacktrace) && result.error) {
+            captureException(new Error(result.error), {
+              extra: {
+                method,
+                params,
+                status,
+                server_stacktrace: stacktrace,
+                server_version: version,
+              },
+            });
+          }
+        }
+
+        if (shouldShowGlobalError && suppressError !== true) {
           setError(result);
-          const isShutdown = await handleError(result, contextValue.showModal);
 
+          let displayErrorToast: ErrorDisplayMessage | undefined;
+
+          // If there are no validation errors, show a toast error
+          // Otherwise, show a modal error as previously handled
+          if (IMPROVE_GLOBAL_ERROR_MESSAGES && !containsValidationErrors) {
+            displayErrorToast = (errorDetails) => {
+              toast.show({
+                message: `${errorDetails.title}: ${errorDetails.message}`,
+                type: ToastType.error,
+                duration: API_ERROR_TOAST_DURATION,
+              });
+            };
+          }
+
+          // Use global error handling
+          const isShutdown = await handleError(result, displayErrorToast, contextValue.showGlobalError);
           apiLocked = apiLocked || isShutdown;
 
           return null;
         }
       }
 
-      return result;
+      return result as WrappedResponse<T>;
     },
     [],
   );
@@ -140,14 +226,15 @@ export const ApiProvider = forwardRef<ApiContextType, PropsWithChildren<any>>(({
       handleError,
       resetError,
       error,
-      showModal: true,
+      showGlobalError: true,
       errorFormatter,
       isValidMethod(name: string) {
         return API.isValidMethod(name);
       },
     }),
-    [error],
+    [error, callApi],
   );
+
   useEffect(() => {
     if (ref && !(ref instanceof Function)) ref.current = contextValue;
   }, [ref]);

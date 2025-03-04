@@ -43,7 +43,11 @@ export type ErrorDisplayMessage = (
 export type ApiContextType = {
   api: typeof API;
   callApi: <T>(method: keyof (typeof API)["methods"], options?: ApiCallOptions) => Promise<WrappedResponse<T> | null>;
-  handleError: (response: Response | ApiResponse, displayErrorMessage?: ErrorDisplayMessage, showGlobalError?: boolean) => Promise<boolean>;
+  handleError: (
+    response: Response | ApiResponse,
+    displayErrorMessage?: ErrorDisplayMessage,
+    showGlobalError?: boolean,
+  ) => Promise<boolean>;
   resetError: () => void;
   error: ApiResponse | null;
   showGlobalError: boolean;

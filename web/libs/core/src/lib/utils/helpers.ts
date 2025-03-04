@@ -17,14 +17,13 @@ export const isDefined = <T>(value: T | undefined | null): value is T => {
   return value !== null && value !== undefined;
 };
 
-export const userDisplayName = (user: any) => {
-  const firstName = user?.first_name;
-  const lastName = user?.last_name;
+export const userDisplayName = (user: Record<string, string> = {}) => {
+  const { firstName, lastName, username, email } = user;
 
   return firstName || lastName
     ? [firstName, lastName]
         .filter((n) => !!n)
         .join(" ")
         .trim()
-    : user?.username ?? user?.email ?? "";
+    : username || email;
 };

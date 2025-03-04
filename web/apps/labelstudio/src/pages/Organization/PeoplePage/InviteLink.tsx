@@ -2,7 +2,7 @@ import { Description } from "apps/labelstudio/src/components/Description/Descrip
 import { Block } from "apps/labelstudio/src/components/Menu/MenuContext";
 import { Input } from "../../../components/Form";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Space } from "@humansignal/ui";
+import { Space } from "@humansignal/ui/lib/space/space";
 import { API } from "apps/labelstudio/src/providers/ApiProvider";
 import { atomWithQuery } from "jotai-tanstack-query";
 import { useAtomValue } from "jotai";

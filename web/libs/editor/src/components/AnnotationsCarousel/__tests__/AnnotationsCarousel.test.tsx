@@ -20,13 +20,6 @@ jest.mock("@humansignal/ui", () => ({
       </div>
     );
   },
-}));
-jest.mock("react", () => ({
-  ...jest.requireActual("react"),
-  useLayoutEffect: jest.requireActual("react").useEffect,
-}));
-
-jest.mock("@humansignal/ui/lib/Toast/Toast", () => ({
   ToastProvider: ({ children }: { children: React.ReactNode }) => children,
   ToastViewport: ({ children }: { children: React.ReactNode }) => children,
   Toast: ({ children }: { children: React.ReactNode }) => children,

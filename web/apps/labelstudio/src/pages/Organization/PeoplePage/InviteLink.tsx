@@ -12,7 +12,6 @@ import { Button } from "apps/labelstudio/src/components";
 const linkAtom = atomWithQuery(() => ({
   queryKey: ["invite-link"],
   async queryFn() {
-    console.log("loading intite link");
     // called only once when the component is rendered on page reload
     // will also be reset when called `refetch()` on the Reset button
     const result = await API.invoke("resetInviteLink");

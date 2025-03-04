@@ -64,14 +64,9 @@ export class Modal extends React.Component {
   }
 
   hide(onHidden) {
-    console.log("hiding modal");
     return new Promise((resolve) => {
-      console.log("promise start");
       this.transition("disappear", () => {
-        console.log("transition ended");
         this.setState({ visible: false }, () => {
-          console.log("settings state");
-          console.log(this.props.onHide, onHidden);
           this.props.onHide?.();
           resolve();
           onHidden?.();

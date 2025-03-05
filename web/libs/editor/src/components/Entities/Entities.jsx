@@ -11,9 +11,8 @@ import { Block, Elem } from "../../utils/bem";
 import { RadioGroup } from "../../common/RadioGroup/RadioGroup";
 import "./Entities.scss";
 import { Button } from "../../common/Button/Button";
-import { LsInvisible, LsTrash, LsVisible } from "../../assets/icons";
 import { confirm } from "../../common/Modal/Modal";
-import { Tooltip } from "@humansignal/ui";
+import { LsInvisible, LsTrash, LsVisible, Tooltip } from "@humansignal/ui";
 
 export default observer(({ regionStore, annotation }) => {
   const { classifications, regions, view } = regionStore;

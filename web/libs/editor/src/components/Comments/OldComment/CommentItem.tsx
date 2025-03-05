@@ -1,7 +1,6 @@
 import { observer } from "mobx-react";
 import { type FC, useState } from "react";
-import { Tooltip, Userpic } from "@humansignal/ui";
-import { IconCheck, IconEllipsis } from "../../../assets/icons";
+import { Tooltip, Userpic, IconCheck, IconEllipsis } from "@humansignal/ui";
 import { Space } from "../../../common/Space/Space";
 import { Dropdown } from "../../../common/Dropdown/Dropdown";
 import { Menu } from "../../../common/Menu/Menu";

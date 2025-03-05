@@ -1,10 +1,9 @@
 import { forwardRef } from "react";
 import { observer } from "mobx-react";
-import { Userpic } from "@humansignal/ui";
+import { IconBan, LsSparks, LsStar, Userpic } from "@humansignal/ui";
 import { Space } from "../../common/Space/Space";
 import { Block, Elem } from "../../utils/bem";
 import "./AnnotationTabs.scss";
-import { IconBan, LsSparks, LsStar } from "../../assets/icons";
 
 export const EntityTab = observer(
   forwardRef(

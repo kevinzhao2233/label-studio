@@ -4,7 +4,7 @@ import { LabelItem } from "./LabelItem";
 import { RegionItem } from "./RegionItem";
 import { observer } from "mobx-react";
 import { useState } from "react";
-import { LsChevron } from "../../assets/icons";
+import { LsChevron } from "@humansignal/ui";
 import { FF_DEV_2755, isFF } from "../../utils/feature-flags";
 
 const { localStorage } = window;

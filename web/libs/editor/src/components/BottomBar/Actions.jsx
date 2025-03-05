@@ -1,4 +1,4 @@
-import { IconInfoOutline, LsSettingsAlt } from "../../assets/icons";
+import { IconInfoOutline, LsSettingsAlt, Tooltip } from "@humansignal/ui";
 import { Button } from "../../common/Button/Button";
 import { Elem } from "../../utils/bem";
 import { isSelfServe } from "../../utils/billing";
@@ -7,7 +7,6 @@ import { EditingHistory } from "./HistoryActions";
 import { DynamicPreannotationsToggle } from "../AnnotationTab/DynamicPreannotationsToggle";
 import { AutoAcceptToggle } from "../AnnotationTab/AutoAcceptToggle";
 import { GroundTruth } from "../CurrentEntity/GroundTruth";
-import { Tooltip } from "@humansignal/ui";
 
 export const Actions = ({ store }) => {
   const annotationStore = store.annotationStore;

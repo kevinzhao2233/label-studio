@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { IconSpark } from "../../assets/icons";
+import { IconSparkGradient } from "@humansignal/ui";
 import { Block, Elem } from "../../utils/bem";
 import "./Enterprise.scss";
 
@@ -9,7 +9,7 @@ export const EnterpriseBadge: FC<{
   return (
     <Block name="enterprise-badge" mod={{ filled }}>
       <Elem name="label">
-        <Elem name="icon" tag={IconSpark} />
+        <Elem name="icon" tag={IconSparkGradient} />
         Enterprise
       </Elem>
     </Block>

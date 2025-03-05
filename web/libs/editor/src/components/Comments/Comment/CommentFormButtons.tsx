@@ -1,8 +1,6 @@
 import type { MouseEventHandler } from "react";
 
-import { IconCommentLinkTo } from "../../../assets/icons";
-import { ReactComponent as IconSend } from "../../../assets/icons/send.svg";
-import { Tooltip } from "@humansignal/ui";
+import { IconCommentLinkTo, IconSend, Tooltip } from "@humansignal/ui";
 import { Block, Elem } from "../../../utils/bem";
 import "./CommentFormButtons.scss";
 

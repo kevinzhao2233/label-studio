@@ -11,7 +11,8 @@ import {
   LsGitHub,
   LsSettings,
   LsSlack,
-} from "../../assets/icons";
+  Userpic,
+} from "@humansignal/ui";
 import { useConfig } from "../../providers/ConfigProvider";
 import { useContextComponent, useFixedLocation } from "../../providers/RoutesProvider";
 import { useCurrentUser } from "../../providers/CurrentUser";
@@ -21,7 +22,6 @@ import { Breadcrumbs } from "../Breadcrumbs/Breadcrumbs";
 import { Dropdown } from "../Dropdown/Dropdown";
 import { Hamburger } from "../Hamburger/Hamburger";
 import { Menu } from "../Menu/Menu";
-import { Userpic } from "@humansignal/ui";
 import { VersionNotifier, VersionProvider } from "../VersionNotifier/VersionNotifier";
 import "./Menubar.scss";
 import "./MenuContent.scss";

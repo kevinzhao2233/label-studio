@@ -11,7 +11,7 @@ import {
   IconSortUpNew,
   IconSpeed,
   IconTagAlt,
-} from "../../../assets/icons";
+} from "@humansignal/ui";
 import { Button } from "../../../common/Button/Button";
 import { Dropdown } from "../../../common/Dropdown/Dropdown";
 // eslint-disable-next-line

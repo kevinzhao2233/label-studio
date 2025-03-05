@@ -3,7 +3,7 @@ import { Modal } from "../../../components/Modal/Modal";
 import { cn } from "../../../utils/bem";
 import { unique } from "../../../utils/helpers";
 import "./Import.scss";
-import { IconError, IconInfo, IconUpload } from "../../../assets/icons";
+import { IconError, IconInfo, IconUpload } from "@humansignal/ui";
 import { useAPI } from "../../../providers/ApiProvider";
 
 const importClass = cn("upload_page");

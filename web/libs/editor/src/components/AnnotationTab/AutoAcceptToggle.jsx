@@ -1,10 +1,9 @@
 import { inject, observer } from "mobx-react";
 
-import { IconCheck, IconCross } from "../../assets/icons";
+import { IconCheck, IconCross, Toggle } from "@humansignal/ui";
 import { Button } from "../../common/Button/Button";
 import { Block, Elem } from "../../utils/bem";
 import { Space } from "../../common/Space/Space";
-import { Toggle } from "@humansignal/ui";
 
 import "./AutoAcceptToggle.scss";
 

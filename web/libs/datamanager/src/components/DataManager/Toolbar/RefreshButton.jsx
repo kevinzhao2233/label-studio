@@ -1,5 +1,5 @@
 import { inject } from "mobx-react";
-import { LsRefresh, LsRefresh2 } from "../../../assets/icons";
+import { LsRefresh, LsRefresh2 } from "@humansignal/ui";
 import { FF_LOPS_E_10, isFF } from "../../../utils/feature-flags";
 import { Button } from "../../Common/Button/Button";
 

@@ -12,7 +12,7 @@ import { CREATE_RELATION_MODE } from "../../stores/Annotation/LinkingModes";
 import { NodeDebug, NodeMinimal } from "../Node/Node";
 import Hint from "../Hint/Hint";
 import styles from "./Entity.module.scss";
-import { Tooltip } from "@humansignal/ui";
+import { IconWarning, Tooltip } from "@humansignal/ui";
 import { Button } from "../../common/Button/Button";
 import { Tag } from "../../common/Tag/Tag";
 import { Space } from "../../common/Space/Space";
@@ -20,7 +20,6 @@ import { Block, cn, Elem } from "../../utils/bem";
 import "./Entity.scss";
 import { PER_REGION_MODES } from "../../mixins/PerRegion";
 import { Hotkey } from "../../core/Hotkey";
-import { IconWarning } from "../../assets/icons";
 
 const { Paragraph, Text } = Typography;
 

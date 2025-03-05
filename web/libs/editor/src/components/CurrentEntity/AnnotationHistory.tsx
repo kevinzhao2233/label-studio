@@ -1,9 +1,7 @@
 import { when } from "mobx";
 import { inject, observer } from "mobx-react";
 import { type FC, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
-import { Tooltip, Userpic } from "@humansignal/ui";
-import {
-  IconAnnotationAccepted,
+import { Tooltip, Userpic, IconAnnotationAccepted,
   IconAnnotationImported,
   IconAnnotationPrediction,
   IconAnnotationPropagated,
@@ -13,8 +11,7 @@ import {
   IconAnnotationSubmitted,
   IconCheck,
   IconDraftCreated,
-  LsSparks,
-} from "../../assets/icons";
+  LsSparks, } from "@humansignal/ui";
 import { Space } from "../../common/Space/Space";
 import { Block, Elem } from "../../utils/bem";
 import { humanDateDiff, userDisplayName } from "../../utils/utilities";

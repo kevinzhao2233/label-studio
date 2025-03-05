@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import styles from "./Entities.module.scss";
 import Utils from "../../utils";
 
-import { LsChevron } from "../../assets/icons";
+import { LsChevron } from "@humansignal/ui";
 import { RegionItem } from "./RegionItem";
 
 export const RegionTree = observer(({ regionStore }) => {

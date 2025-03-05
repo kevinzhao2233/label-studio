@@ -3,7 +3,7 @@ import { observer } from "mobx-react";
 import chroma from "chroma-js";
 import { Button } from "antd";
 
-import { IconCommentLinkTo, LsClose } from "../../../assets/icons";
+import { IconCommentLinkTo, LsClose } from "@humansignal/ui";
 import { Block, Elem } from "../../../utils/bem";
 import { NodeIcon } from "../../Node/Node";
 import { RegionLabel } from "../../SidePanels/OutlinerPanel/RegionLabel";

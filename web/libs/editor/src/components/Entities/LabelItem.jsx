@@ -3,7 +3,7 @@ import { observer } from "mobx-react";
 import { Button } from "../../common/Button/Button";
 import { Block, Elem } from "../../utils/bem";
 import { Space } from "../../common/Space/Space";
-import { LsInvisible, LsVisible } from "../../assets/icons";
+import { LsInvisible, LsVisible } from "@humansignal/ui";
 import { Label } from "../Label/Label";
 import { asVars } from "../../utils/styles";
 import "./LabelItem.scss";

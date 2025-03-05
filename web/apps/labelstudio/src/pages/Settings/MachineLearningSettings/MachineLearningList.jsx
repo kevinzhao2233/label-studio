@@ -1,12 +1,11 @@
 import { formatDistanceToNow, format, parseISO } from "date-fns";
 import { useCallback, useContext } from "react";
-import { LsEllipsis } from "../../../assets/icons";
 
 import truncate from "truncate-middle";
 import { Button, Dropdown, Menu } from "../../../components";
 import { confirm } from "../../../components/Modal/Modal";
 import { Oneof } from "../../../components/Oneof/Oneof";
-import { Tooltip } from "@humansignal/ui";
+import { LsEllipsis, Tooltip } from "@humansignal/ui";
 import { ApiContext } from "../../../providers/ApiProvider";
 import { Block, cn } from "../../../utils/bem";
 

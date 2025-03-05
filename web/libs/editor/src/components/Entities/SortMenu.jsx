@@ -1,7 +1,7 @@
 import { Menu } from "antd";
 import { observer } from "mobx-react";
 import { ThunderboltOutlined } from "@ant-design/icons";
-import { LsDate } from "../../assets/icons";
+import { LsDate } from "@humansignal/ui";
 import { Block, Elem } from "../../utils/bem";
 import "./SortMenu.scss";
 

@@ -6,7 +6,7 @@ import BaseTool from "./Base";
 import ToolMixin from "../mixins/Tool";
 import { Tool } from "../components/Toolbar/Tool";
 import { FlyoutMenu } from "../components/Toolbar/FlyoutMenu";
-import { IconExpand, IconHandTool, IconZoomIn, IconZoomOut } from "../assets/icons";
+import { IconExpand, IconHandTool, IconZoomIn, IconZoomOut } from "@humansignal/ui";
 
 const ToolView = observer(({ item }) => {
   return (

@@ -2,7 +2,7 @@ import type { FC } from "react";
 import { Block, Elem } from "../../../utils/bem";
 
 import "./Info.scss";
-import { IconInfoConfig } from "../../../assets/icons/timeline";
+import { IconInfoConfig } from "@humansignal/ui";
 
 export interface InfoProps {
   text: string;

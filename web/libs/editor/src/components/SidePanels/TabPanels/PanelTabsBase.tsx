@@ -6,7 +6,7 @@ import {
   IconOutlinerDrag,
   LsCollapseSmall,
   LsExpandSmall,
-} from "../../../assets/icons";
+} from "@humansignal/ui";
 import { useDrag } from "../../../hooks/useDrag";
 import { clamp, isDefined } from "../../../utils/utilities";
 import { DEFAULT_PANEL_HEIGHT, DEFAULT_PANEL_MIN_HEIGHT, DEFAULT_PANEL_WIDTH, PANEL_HEADER_HEIGHT } from "../constants";

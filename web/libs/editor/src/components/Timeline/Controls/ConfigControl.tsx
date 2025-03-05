@@ -3,7 +3,7 @@ import { type FC, type MouseEvent, useEffect, useState } from "react";
 import { Block, Elem } from "../../../utils/bem";
 
 import "./ConfigControl.scss";
-import { IconConfig } from "../../../assets/icons/timeline";
+import { IconConfig } from "@humansignal/ui";
 import { ControlButton } from "../Controls";
 import { Slider } from "./Slider";
 

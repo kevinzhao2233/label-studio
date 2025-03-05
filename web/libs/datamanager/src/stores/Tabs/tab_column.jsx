@@ -8,7 +8,7 @@ import {
   LsStarSquare,
   LsThumbsDown,
   LsThumbsUp,
-} from "../../assets/icons";
+} from "@humansignal/ui";
 import * as CellViews from "../../components/CellViews";
 import { normalizeCellAlias } from "../../components/CellViews";
 import { all } from "../../utils/utils";

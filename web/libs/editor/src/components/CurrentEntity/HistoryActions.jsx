@@ -1,7 +1,6 @@
 import { observer } from "mobx-react";
-import { LsRedo, LsRemove, LsUndo } from "../../assets/icons";
 import { Button } from "../../common/Button/Button";
-import { Tooltip } from "@humansignal/ui";
+import { LsRedo, LsRemove, LsUndo, Tooltip } from "@humansignal/ui";
 import { Block, Elem } from "../../utils/bem";
 import "./HistoryActions.scss";
 import { Hotkey } from "../../core/Hotkey";

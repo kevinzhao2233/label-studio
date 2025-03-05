@@ -1,8 +1,6 @@
 import { useCallback } from "react";
-import { LsPencil } from "../../assets/icons";
-import { IconCross } from "@humansignal/ui";
 import { Button } from "../../components";
-import { Toggle } from "@humansignal/ui";
+import { IconCross, LsPencil, Toggle } from "@humansignal/ui";
 import { Block, Elem } from "../../utils/bem";
 import "./WebhookPage.scss";
 import { format } from "date-fns";

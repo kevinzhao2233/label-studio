@@ -1,9 +1,8 @@
 import { useCallback, useContext } from "react";
 
 import { format, formatDistanceToNow, parseISO } from "date-fns";
-import { IconInfoOutline, IconPredictions, LsEllipsis } from "../../../assets/icons";
 import { Button, Dropdown, Menu } from "../../../components";
-import { Tooltip } from "@humansignal/ui";
+import { IconInfoOutline, IconPredictions, LsEllipsis, Tooltip } from "@humansignal/ui";
 import { confirm } from "../../../components/Modal/Modal";
 import { ApiContext } from "../../../providers/ApiProvider";
 import { Block, cn } from "../../../utils/bem";

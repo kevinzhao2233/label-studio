@@ -3,7 +3,7 @@ import { observer } from "mobx-react";
 import { isAlive } from "mobx-state-tree";
 import { Button } from "../../common/Button/Button";
 import { Node, NodeIcon } from "../Node/Node";
-import { LsCollapse, LsExpand, LsInvisible, LsSparks, LsVisible } from "../../assets/icons";
+import { LsCollapse, LsExpand, LsInvisible, LsSparks, LsVisible } from "@humansignal/ui";
 import styles from "./Entities.module.scss";
 import Utils from "../../utils";
 

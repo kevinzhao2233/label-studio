@@ -1,11 +1,10 @@
 import { inject } from "mobx-react";
 import clsx from "clsx";
-import { LsCheckAlt, LsCrossAlt } from "../../../assets/icons";
 import { useSDK } from "../../../providers/SDKProvider";
 import { cn } from "../../../utils/bem";
 import { isDefined } from "../../../utils/utils";
 import { Space } from "../../Common/Space/Space";
-import { Tooltip, Userpic } from "@humansignal/ui";
+import { LsCheckAlt, LsCrossAlt, Tooltip, Userpic } from "@humansignal/ui";
 import { Common } from "../../Filters/types";
 import { VariantSelect } from "../../Filters/types/List";
 import "./Annotators.scss";

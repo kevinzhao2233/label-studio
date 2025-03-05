@@ -1,9 +1,8 @@
 import React from "react";
 import { Typography } from "antd";
 import { EnterOutlined } from "@ant-design/icons";
-import { IconEdit, IconTrashAlt } from "../../assets/icons";
 import { Button } from "../../common/Button/Button";
-import { Tooltip } from "@humansignal/ui";
+import { IconEdit, IconTrashAlt, Tooltip } from "@humansignal/ui";
 import styles from "./HtxTextBox.module.scss";
 import throttle from "lodash.throttle";
 

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { observer } from "mobx-react";
 
-import { LsChevron } from "../../assets/icons";
+import { LsChevron } from "@humansignal/ui";
 import { Button } from "../../common/Button/Button";
 import { Block, Elem } from "../../utils/bem";
 import { clamp, sortAnnotations } from "../../utils/utilities";

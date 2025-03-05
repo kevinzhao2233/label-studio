@@ -1,7 +1,6 @@
 import { observer } from "mobx-react";
 import { type FC, useCallback, useMemo, useState } from "react";
-import { IconMenu, IconRelationBi, IconRelationLeft, IconRelationRight, IconTrash } from "../../../assets/icons";
-import { IconEyeClosed, IconEyeOpened } from "../../../assets/icons/timeline";
+import { IconMenu, IconRelationBi, IconRelationLeft, IconRelationRight, IconTrash, IconEyeClosed, IconEyeOpened } from "@humansignal/ui";
 import { Button } from "../../../common/Button/Button";
 import { Block, Elem } from "../../../utils/bem";
 import { wrapArray } from "../../../utils/utilities";

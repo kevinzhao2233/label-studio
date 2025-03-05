@@ -1,6 +1,6 @@
 import { Fragment, useCallback, useMemo, useState } from "react";
 import sanitizeHtml from "sanitize-html";
-import { LsSlack } from "../../assets/icons";
+import { LsSlack } from "@humansignal/ui";
 import { Block, Elem } from "../../utils/bem";
 import { absoluteURL, copyText } from "../../utils/helpers";
 import { Button } from "../Button/Button";

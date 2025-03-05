@@ -4,7 +4,7 @@ import {
   IconInterpolationRemove,
   IconKeypointAdd,
   IconKeypointDelete,
-} from "../../../../assets/icons/timeline";
+} from "@humansignal/ui";
 import { TimelineContext } from "../../Context";
 import { ControlButton } from "../../Controls";
 import type { TimelineExtraControls } from "../../Types";

@@ -8,7 +8,7 @@ import { observer } from "mobx-react";
 import type React from "react";
 import { useCallback, useState } from "react";
 
-import { IconBan, LsChevron } from "../../assets/icons";
+import { IconBan, LsChevron } from "@humansignal/ui";
 import { Button } from "../../common/Button/Button";
 import { Dropdown } from "../../common/Dropdown/Dropdown";
 import type { CustomButtonType } from "../../stores/CustomButton";

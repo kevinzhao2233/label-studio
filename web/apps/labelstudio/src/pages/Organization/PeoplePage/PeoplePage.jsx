@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { LsPlus } from "../../../assets/icons";
 import { Button } from "../../../components";
 import { Description } from "../../../components/Description/Description";
 import { Input } from "../../../components/Form";
@@ -16,7 +15,7 @@ import { PeopleList } from "./PeopleList";
 import "./PeoplePage.scss";
 import { SelectedUser } from "./SelectedUser";
 import { TokenSettingsModal } from "@humansignal/core/blocks/TokenSettingsModal";
-import { useToast } from "@humansignal/ui";
+import { LsPlus, useToast } from "@humansignal/ui";
 import { debounce } from "@humansignal/core/lib/utils/debounce";
 
 const InvitationModal = ({ link }) => {

@@ -1,6 +1,5 @@
 import React, { useMemo } from "react";
 import { Modal, Table, Tabs } from "antd";
-import { Checkbox } from "@humansignal/ui";
 import { observer } from "mobx-react";
 
 import { Hotkey } from "../../core/Hotkey";
@@ -11,8 +10,7 @@ import { triggerResizeEvent } from "../../utils/utilities";
 
 import EditorSettings from "../../core/settings/editorsettings";
 import * as TagSettings from "./TagSettings";
-import { LsClose } from "../../assets/icons";
-import { Toggle } from "@humansignal/ui";
+import { Checkbox, LsClose, Toggle } from "@humansignal/ui";
 import { FF_DEV_3873, isFF } from "../../utils/feature-flags";
 
 const HotkeysDescription = () => {

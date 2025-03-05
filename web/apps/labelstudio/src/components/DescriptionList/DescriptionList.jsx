@@ -1,7 +1,6 @@
 import { cn } from "../../utils/bem";
 import "./DescriptionList.scss";
-import { IconInfoOutline } from "../../assets/icons";
-import { Tooltip } from "@humansignal/ui";
+import { IconInfoOutline, Tooltip } from "@humansignal/ui";
 
 export const DescriptionList = ({ style, className, children }) => {
   return (

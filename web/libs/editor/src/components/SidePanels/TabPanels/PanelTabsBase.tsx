@@ -1,8 +1,8 @@
 import { type FC, type MouseEvent as RMouseEvent, useCallback, useMemo, useRef, useState } from "react";
 import { Block, Elem } from "../../../utils/bem";
 import {
-  IconArrowLeftSmall,
-  IconArrowRightSmall,
+  LsChevronLeft,
+  LsChevronRight,
   IconOutlinerDrag,
   LsCollapseSmall,
   LsExpandSmall,
@@ -317,7 +317,7 @@ export const PanelTabsBase: FC<BaseProps> = ({
                     onClick={handleGroupPanelToggle}
                     data-tooltip={`${tooltipText} Group`}
                   >
-                    {Side.left === alignment ? <IconArrowLeftSmall /> : <IconArrowRightSmall />}
+                    {Side.left === alignment ? <LsChevronLeft /> : <LsChevronRight />}
                   </Elem>
                 )}
                 {!collapsed && (

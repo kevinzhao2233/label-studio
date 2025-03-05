@@ -63,6 +63,12 @@ def predictions_to_annotations(project, queryset, **kwargs):
     else:
         logger.info(">>>>>>>>>> no db_annotations")
 
+    try:
+        from stats.functions.stats import recalculate_stats_async_or_sync
+        recalculate_stats_async_or_sync(project, all=False)
+    except (ModuleNotFoundError, ImportError):
+        logger.info("Predictions converted to annotations in LSO, stats recomputation skipped")
+
     return {'response_code': 200, 'detail': f'Created {count} annotations'}
 
 

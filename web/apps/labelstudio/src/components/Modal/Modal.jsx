@@ -46,7 +46,7 @@ const standaloneModal = (props) => {
           }}
           animateAppearance={animate}
         />
-        <ToastViewport />
+        {!props.simple && <ToastViewport />}
       </MultiProvider>,
       rootDiv,
     );

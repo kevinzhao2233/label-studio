@@ -58,7 +58,6 @@ def predictions_to_annotations(project, queryset, **kwargs):
         )
         # Update counters for tasks and is_labeled. It should be a single operation as counters affect bulk is_labeled update
         project.update_tasks_counters_and_is_labeled(Task.objects.filter(id__in=tasks_ids))
-
     return {'response_code': 200, 'detail': f'Created {count} annotations'}
 
 

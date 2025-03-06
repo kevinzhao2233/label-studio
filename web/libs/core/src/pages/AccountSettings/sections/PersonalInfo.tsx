@@ -11,8 +11,8 @@ import { useAtomValue } from "jotai";
  * FIXME: This is legacy imports. We're not supposed to use such statements
  * each one of these eventually has to be migrated to core or ui
  */
-import { Input } from "/apps/labelstudio/src/components/Form/Elements";
-import { Button } from "/apps/labelstudio/src/components/Button/Button";
+import { Input } from "apps/labelstudio/src/components/Form/Elements";
+import { Button } from "apps/labelstudio/src/components/Button/Button";
 
 const updateUserAvatarAtom = atomWithMutation(() => ({
   mutationKey: ["update-user"],
@@ -44,6 +44,9 @@ export const PersonalInfo = () => {
   const { user, fetch: refetchUser, isInProgress: userInProgress, updateAsync: updateUser } = useCurrentUserAtom();
   const updateUserAvatar = useAtomValue(updateUserAvatarAtom);
   const [isInProgress, setIsInProgress] = useState(false);
+  const [fname, setFname] = useState(user?.first_name);
+  const [lname, setLname] = useState(user?.last_name);
+  const [phone, setPhone] = useState(user?.phone);
   const avatarRef = useRef<HTMLInputElement>();
   const fileChangeHandler: FormEventHandler<HTMLInputElement> = useCallback(
     async (e) => {
@@ -79,6 +82,7 @@ export const PersonalInfo = () => {
       if (!user) return;
       const body = new FormData(e.currentTarget as HTMLFormElement);
       const json = Object.fromEntries(body.entries());
+      console.log("json", json);
       const response = await updateUser(json);
 
       refetchUser();
@@ -90,6 +94,12 @@ export const PersonalInfo = () => {
   );
 
   useEffect(() => setIsInProgress(userInProgress), [userInProgress]);
+
+  useEffect(() => {
+    setFname(user?.first_name);
+    setLname(user?.last_name);
+    setPhone(user?.phone);
+  }, [user]);
 
   return (
     <div className={styles.section} id="personal-info">
@@ -113,10 +123,20 @@ export const PersonalInfo = () => {
         <form onSubmit={userFormSubmitHandler} className={styles.sectionContent}>
           <div className={styles.flexRow}>
             <div className={styles.flex1}>
-              <Input label="First Name" value={user?.first_name} name="first_name" />
+              <Input
+                label="First Name"
+                value={fname}
+                onChange={(e: React.KeyboardEvent<HTMLInputElement>) => setFname(e.currentTarget.value)}
+                name="first_name"
+              />
             </div>
             <div className={styles.flex1}>
-              <Input label="Last Name" value={user?.last_name} name="last_name" />
+              <Input
+                label="Last Name"
+                value={lname}
+                onChange={(e: React.KeyboardEvent<HTMLInputElement>) => setLname(e.currentTarget.value)}
+                name="last_name"
+              />
             </div>
           </div>
           <div className={styles.flexRow}>
@@ -124,7 +144,13 @@ export const PersonalInfo = () => {
               <Input label="E-mail" type="email" readOnly={true} value={user?.email} />
             </div>
             <div className={styles.flex1}>
-              <Input label="Phone" type="phone" value={user?.phone} name="phone" />
+              <Input
+                label="Phone"
+                type="phone"
+                onChange={(e: React.KeyboardEvent<HTMLInputElement>) => setPhone(e.currentTarget.value)}
+                value={phone}
+                name="phone"
+              />
             </div>
           </div>
           <div className={clsx(styles.flexRow, styles.flexEnd)}>

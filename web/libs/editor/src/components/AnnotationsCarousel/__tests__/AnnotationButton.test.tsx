@@ -17,7 +17,7 @@ jest.mock("react", () => ({
 jest.mock("@humansignal/ui", () => {
   const { forwardRef } = jest.requireActual("react");
   const actualCheckbox = jest.requireActual("@humansignal/ui/lib/checkbox/checkbox");
-  const actualToast = jest.requireActual("@humansignal/ui/lib/Toast/Toast");
+  const actualToast = jest.requireActual("@humansignal/ui/lib/toast/toast");
   const {
     IconAnnotationGroundTruth,
     IconAnnotationSkipped2,

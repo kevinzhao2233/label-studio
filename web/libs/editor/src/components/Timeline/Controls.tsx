@@ -14,7 +14,7 @@ import {
   IconPlay,
   IconPrev,
   IconRewind,
-} from "@humansignal/ui";
+} from "@humansignal/icons";
 import { Button, type ButtonProps } from "../../common/Button/Button";
 import { Space } from "../../common/Space/Space";
 import { Hotkey } from "../../core/Hotkey";

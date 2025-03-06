@@ -1,12 +1,6 @@
 import { type FC, type MouseEvent as RMouseEvent, useCallback, useMemo, useRef, useState } from "react";
 import { Block, Elem } from "../../../utils/bem";
-import {
-  LsChevronLeft,
-  LsChevronRight,
-  IconOutlinerDrag,
-  LsCollapseSmall,
-  LsExpandSmall,
-} from "@humansignal/ui";
+import { LsChevronLeft, LsChevronRight, IconOutlinerDrag, LsCollapseSmall, LsExpandSmall } from "@humansignal/ui";
 import { useDrag } from "../../../hooks/useDrag";
 import { clamp, isDefined } from "../../../utils/utilities";
 import { DEFAULT_PANEL_HEIGHT, DEFAULT_PANEL_MIN_HEIGHT, DEFAULT_PANEL_WIDTH, PANEL_HEADER_HEIGHT } from "../constants";

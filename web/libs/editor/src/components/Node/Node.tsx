@@ -6,7 +6,7 @@ import { ApartmentOutlined, AudioOutlined, LineChartOutlined, MessageOutlined } 
 import "./Node.scss";
 import { Block, Elem } from "../../utils/bem";
 import { NodeView } from "./NodeView";
-import { 
+import {
   IconBrushTool,
   IconBrushToolSmart,
   IconCircleTool,
@@ -22,7 +22,8 @@ import {
   IconText,
   IconWarning,
   IconTimelineRegion,
-  Tooltip } from "@humansignal/ui";
+  Tooltip,
+} from "@humansignal/ui";
 
 const NodeViews = {
   // fake view for virtual node representing label group

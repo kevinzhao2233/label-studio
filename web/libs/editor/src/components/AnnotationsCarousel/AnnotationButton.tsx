@@ -15,8 +15,10 @@ import {
   LsSparks,
   LsStar,
   LsStarOutline,
-  Tooltip, Userpic,
-  ToastType, useToast,
+  Tooltip,
+  Userpic,
+  ToastType,
+  useToast,
 } from "@humansignal/ui";
 import { TimeAgo } from "../../common/TimeAgo/TimeAgo";
 import { useDropdown } from "../../common/Dropdown/DropdownTrigger";

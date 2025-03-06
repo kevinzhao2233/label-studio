@@ -13,7 +13,15 @@ import {
   useRef,
   useState,
 } from "react";
-import { IconArrow, IconChevronLeft, IconEyeClosed, IconEyeOpened, IconWarning, LsSparks, Tooltip } from "@humansignal/ui";
+import {
+  IconArrow,
+  IconChevronLeft,
+  IconEyeClosed,
+  IconEyeOpened,
+  IconWarning,
+  LsSparks,
+  Tooltip,
+} from "@humansignal/ui";
 import Registry from "../../../core/Registry";
 import { PER_REGION_MODES } from "../../../mixins/PerRegionModes";
 import { Block, cn, Elem } from "../../../utils/bem";

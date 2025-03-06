@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { inject, observer } from "mobx-react";
-import { Tooltip, Userpic } from "@humansignal/ui";
-import { ToastType, useToast } from "@humansignal/ui/lib/Toast/Toast";
+import { ToastType, useToast, Tooltip, Userpic } from "@humansignal/ui";
 import { useCopyText } from "@humansignal/core/lib/hooks/useCopyText";
 import { isDefined, userDisplayName } from "@humansignal/core/lib/utils/helpers";
 import { Block, cn, Elem } from "../../utils/bem";

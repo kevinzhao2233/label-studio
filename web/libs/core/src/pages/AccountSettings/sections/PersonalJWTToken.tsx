@@ -195,7 +195,13 @@ function CreateTokenForm() {
       <p>Copy your new access token from below and keep it secure. </p>
 
       <div className="flex items-end w-full gap-2">
-        <Input label="Access Token" labelProps={{ className: "flex-1" }} className="w-full" readOnly value={data} />
+        <Input
+          label="Access Token"
+          labelProps={{ className: "flex-1", rawClassName: "flex-1" }}
+          className="w-full"
+          readOnly
+          value={data}
+        />
         <Button onClick={copy} disabled={copied}>
           {copied ? "Copied!" : "Copy"}
         </Button>

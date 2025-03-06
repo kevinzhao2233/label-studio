@@ -151,9 +151,27 @@ export const ApiProvider = forwardRef<ApiContextType, PropsWithChildren<any>>(({
 
       const result = await API.invoke(method, params, rest);
 
-      if (result && "status" in result && result.status === 401) {
+      if (
+        result &&
+        "status" in result &&
+        (result.status === 401 || (IMPROVE_GLOBAL_ERROR_MESSAGES && result.status === 404))
+      ) {
         apiLocked = true;
-        location.href = absoluteURL("/");
+
+        let redirectUrl = absoluteURL("/");
+
+        if (result.status === 404) {
+          // If coming from projects or a labelling page, redirect to projects
+          if (location.pathname.startsWith("/projects")) {
+            redirectUrl = absoluteURL("/projects");
+          }
+
+          // Store the error message in sessionStorage to show after redirect
+          sessionStorage.setItem("redirectMessage", "The page or resource you were looking for does not exist.");
+        }
+
+        // Perform immediate redirect
+        location.href = redirectUrl;
         return null;
       }
 
@@ -202,7 +220,7 @@ export const ApiProvider = forwardRef<ApiContextType, PropsWithChildren<any>>(({
           // Otherwise, show a modal error as previously handled
           if (IMPROVE_GLOBAL_ERROR_MESSAGES && !containsValidationErrors) {
             displayErrorToast = (errorDetails) => {
-              toast.show({
+              toast?.show({
                 message: `${errorDetails.title}: ${errorDetails.message}`,
                 type: ToastType.error,
                 duration: API_ERROR_TOAST_DURATION,
@@ -242,6 +260,20 @@ export const ApiProvider = forwardRef<ApiContextType, PropsWithChildren<any>>(({
   useEffect(() => {
     if (ref && !(ref instanceof Function)) ref.current = contextValue;
   }, [ref]);
+
+  // Check for redirect message in sessionStorage and display it
+  useEffect(() => {
+    const redirectMessage = sessionStorage.getItem("redirectMessage");
+    if (redirectMessage) {
+      toast?.show({
+        message: redirectMessage,
+        type: ToastType.error,
+        duration: API_ERROR_TOAST_DURATION,
+      });
+      // Remove the message from sessionStorage to prevent showing it again
+      sessionStorage.removeItem("redirectMessage");
+    }
+  }, [toast]);
 
   return <ApiContext.Provider value={contextValue}>{children}</ApiContext.Provider>;
 });

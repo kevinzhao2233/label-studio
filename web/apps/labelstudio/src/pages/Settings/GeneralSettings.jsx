@@ -1,10 +1,10 @@
+import { EnterpriseBadge } from "@humansignal/ui";
 import { useCallback, useContext } from "react";
 import { Button } from "../../components";
 import { Form, Input, Select, TextArea } from "../../components/Form";
 import { RadioGroup } from "../../components/Form/Elements/RadioGroup/RadioGroup";
 import { ProjectContext } from "../../providers/ProjectProvider";
 import { Block, Elem } from "../../utils/bem";
-import { EnterpriseBadge } from "../../components/Badges/Enterprise";
 import "./settings.scss";
 import { HeidiTips } from "../../components/HeidiTips/HeidiTips";
 import { FF_LSDV_E_297, isFF } from "../../utils/feature-flags";

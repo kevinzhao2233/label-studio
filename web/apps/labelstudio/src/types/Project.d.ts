@@ -52,7 +52,7 @@ declare type APIProject = {
   num_tasks_with_annotations?: string;
 
   /** Total task number in project */
-  task_number?: number;
+  task_number?: string;
 
   /** Useful annotation number in project not including skipped_annotations_number and ground_truth_number. Total annotations = annotation_number + skipped_annotations_number + ground_truth_number */
   useful_annotation_number?: string;
@@ -65,9 +65,6 @@ declare type APIProject = {
 
   /** Total annotations number in project including skipped_annotations_number and ground_truth_number. */
   total_annotations_number?: string;
-
-  /** Total number of tasks with at least one annotation */
-  finished_task_number: number;
 
   /** Total predictions number in project including skipped_annotations_number and ground_truth_number. */
   total_predictions_number?: string;
@@ -87,14 +84,4 @@ declare type APIProject = {
 
   /** JSON-formatted labeling configuration */
   parsed_label_config?: string;
-
-  /**
-   * Total number of tasks in the queue
-   */
-  queue_total: number;
-
-  /**
-   * Number of finished tasks
-   */
-  queue_done: number;
 };

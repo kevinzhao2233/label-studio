@@ -40,7 +40,7 @@ import { sanitizeHtml } from "../../utils/html";
 import { reactCleaner } from "../../utils/reactCleaner";
 import { guidGenerator } from "../../utils/unique";
 import { isDefined, sortAnnotations } from "../../utils/utilities";
-import { ToastProvider, ToastViewport } from "@humansignal/ui/lib/toast/toast";
+import { ToastProvider, ToastViewport } from "@humansignal/ui/lib/Toast/Toast";
 
 /**
  * Components

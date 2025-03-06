@@ -1,13 +1,14 @@
 import { useCallback, useState } from "react";
-import { Checkbox, Spinner } from "@humansignal/ui";
+import { Checkbox } from "@humansignal/ui";
+import { useAPI } from "apps/labelstudio/src/providers/ApiProvider";
 
 /**
  * FIXME: This is legacy imports. We're not supposed to use such statements
  * each one of these eventually has to be migrated to core/ui
  */
-import { useAPI } from "apps/labelstudio/src/providers/ApiProvider";
-import { useConfig } from "apps/labelstudio/src/providers/ConfigProvider";
-import { useCurrentUser } from "apps/labelstudio/src/providers/CurrentUser";
+import { useConfig } from "/apps/labelstudio/src/providers/ConfigProvider";
+import { useCurrentUser } from "/apps/labelstudio/src/providers/CurrentUser";
+import { Spinner } from "/apps/labelstudio/src/components/Spinner/Spinner";
 
 export const EmailPreferences = () => {
   const config = useConfig();

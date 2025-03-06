@@ -157,6 +157,7 @@ export { ReactComponent as LsEllipsis } from "./ellipsis.svg";
 export { ReactComponent as IconEmptyFolder } from "./folder-empty.svg";
 export { ReactComponent as IconError } from "./error.svg";
 export { ReactComponent as IconFolder } from "./folder.svg";
+export { ReactComponent as IconFolderOpen } from "./folder-open.svg";
 export { ReactComponent as IconGear } from "./gear.svg";
 export { ReactComponent as LsGitHub } from "./github.svg";
 export { ReactComponent as LsMinus } from "./minus.svg";

@@ -10,7 +10,7 @@ type UserpicProps = {
   className?: string;
   faded?: boolean;
   showUsername?: boolean;
-  size?: number | false;
+  size?: number;
   src?: string;
   style?: CSSProperties;
   user?: any;

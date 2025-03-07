@@ -1,5 +1,6 @@
 import { Button } from "../../common/Button/Button";
-import { IconCopy, IconInfo, IconViewAll, LsSettings, LsTrash, Tooltip } from "@humansignal/ui";
+import { IconCopy, IconInfo, IconViewAll, IconSettings, IconTrash } from "@humansignal/icons";
+import { Tooltip } from "@humansignal/ui";
 import { Elem } from "../../utils/bem";
 import { isSelfServe } from "../../utils/billing";
 import { FF_BULK_ANNOTATION, isFF } from "../../utils/feature-flags";
@@ -46,7 +47,7 @@ export const Actions = ({ store }) => {
       {!isViewAll && !isBulkMode && store.hasInterface("annotations:delete") && (
         <Tooltip title="Delete annotation">
           <Button
-            icon={<LsTrash />}
+            icon={<IconTrash />}
             look="danger"
             type="text"
             aria-label="Delete"
@@ -97,7 +98,7 @@ export const Actions = ({ store }) => {
       )}
 
       <Button
-        icon={<LsSettings />}
+        icon={<IconSettings />}
         type="text"
         aria-label="Settings"
         onClick={() => store.toggleSettings()}

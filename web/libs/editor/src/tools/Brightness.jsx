@@ -7,7 +7,7 @@ import ToolMixin from "../mixins/Tool";
 
 import { Tool } from "../components/Toolbar/Tool";
 import { Range } from "../common/Range/Range";
-import { IconBrightnessTool } from "@humansignal/ui";
+import { IconBrightnessTool } from "@humansignal/icons";
 
 const ToolView = observer(({ item }) => {
   return (

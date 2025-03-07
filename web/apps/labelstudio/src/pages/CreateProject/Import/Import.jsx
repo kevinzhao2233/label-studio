@@ -4,7 +4,7 @@ import { cn } from "../../../utils/bem";
 import { cn as scn } from "@humansignal/shad/utils";
 import { unique } from "../../../utils/helpers";
 import "./Import.scss";
-import { IconError, IconInfo, IconUpload } from "@humansignal/ui";
+import { IconError, IconInfo, IconUpload } from "@humansignal/icons";
 import { useAPI } from "../../../providers/ApiProvider";
 import Input from "libs/datamanager/src/components/Common/Input/Input";
 import { Button } from "apps/labelstudio/src/components";

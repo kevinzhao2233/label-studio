@@ -1,6 +1,6 @@
 import { type FC, type RefObject, useCallback, useRef } from "react";
 import { Block, Elem } from "../../utils/bem";
-import { IconSend } from "@humansignal/ui";
+import { IconSend } from "@humansignal/icons";
 
 import { TextArea } from "../../common/TextArea/TextArea";
 import { observer } from "mobx-react";

@@ -1,6 +1,6 @@
 import Konva from "konva";
 
-import { IconRotate } from "@humansignal/ui";
+import { IconRotate } from "@humansignal/icons";
 
 const EVENTS_NAME = "tr-konva";
 

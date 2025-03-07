@@ -10,7 +10,8 @@ import { isDefined } from "../../../utils/utils";
 import { Button } from "../Button/Button";
 import { Icon } from "../Icon/Icon";
 import { modal } from "../Modal/Modal";
-import { LsGear, LsGearNewUI, Tooltip } from "@humansignal/ui";
+import { IconGear, IconGearNewUI } from "@humansignal/icons";
+import { Tooltip } from "@humansignal/ui";
 import "./Table.scss";
 import { TableCheckboxCell } from "./TableCheckbox";
 import { tableCN, TableContext } from "./TableContext";
@@ -303,14 +304,14 @@ export const Table = observer(
               <FieldsButton
                 className={columnsSelectorCN.elem("button-new").toString()}
                 wrapper={FieldsButton.Checkbox}
-                icon={<LsGearNewUI />}
+                icon={<IconGearNewUI />}
                 style={{ padding: "0" }}
                 tooltip={"Customize Columns"}
               />
             ) : (
               <FieldsButton
                 wrapper={FieldsButton.Checkbox}
-                icon={<LsGear />}
+                icon={<IconGear />}
                 style={{
                   padding: 0,
                   zIndex: 1000,

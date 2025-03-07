@@ -18,35 +18,11 @@ jest.mock("@humansignal/ui", () => {
   const { forwardRef } = jest.requireActual("react");
   const actualCheckbox = jest.requireActual("@humansignal/ui/lib/checkbox/checkbox");
   const actualToast = jest.requireActual("@humansignal/ui/lib/toast/toast");
-  const {
-    IconAnnotationGroundTruth,
-    IconAnnotationSkipped2,
-    IconDraftCreated2,
-    IconDuplicate,
-    IconLink,
-    IconTrashRect,
-    LsCommentResolved,
-    LsCommentUnresolved,
-    LsSparks,
-    LsStar,
-    LsStarOutline,
-  } = jest.requireActual("@humansignal/ui");
 
   return {
     __esModule: true,
     ...actualCheckbox,
     ...actualToast,
-    IconAnnotationGroundTruth,
-    IconAnnotationSkipped2,
-    IconDraftCreated2,
-    IconDuplicate,
-    IconLink,
-    IconTrashRect,
-    LsCommentResolved,
-    LsCommentUnresolved,
-    LsSparks,
-    LsStar,
-    LsStarOutline,
     Label: forwardRef(({ children }, ref) => {
       return (
         <div data-testid="label" ref={ref}>

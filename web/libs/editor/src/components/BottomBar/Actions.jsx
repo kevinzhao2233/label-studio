@@ -1,4 +1,5 @@
-import { IconInfoOutline, LsSettingsAlt, Tooltip } from "@humansignal/ui";
+import { IconInfoOutline, IconSettingsAlt } from "@humansignal/icons";
+import { Tooltip } from "@humansignal/ui";
 import { Button } from "../../common/Button/Button";
 import { Elem } from "../../utils/bem";
 import { isSelfServe } from "../../utils/billing";
@@ -36,7 +37,7 @@ export const Actions = ({ store }) => {
       )}
       <Tooltip alignment="top-left" title="Settings">
         <Button
-          icon={<LsSettingsAlt />}
+          icon={<IconSettingsAlt />}
           type="text"
           aria-label="Settings"
           onClick={() => store.toggleSettings()}

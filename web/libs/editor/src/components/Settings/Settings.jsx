@@ -10,7 +10,8 @@ import { triggerResizeEvent } from "../../utils/utilities";
 
 import EditorSettings from "../../core/settings/editorsettings";
 import * as TagSettings from "./TagSettings";
-import { Checkbox, LsClose, Toggle } from "@humansignal/ui";
+import { Checkbox, IconClose } from "@humansignal/icons";
+import { Toggle } from "@humansignal/ui";
 import { FF_DEV_3873, isFF } from "../../utils/feature-flags";
 
 const HotkeysDescription = () => {
@@ -199,7 +200,7 @@ const DEFAULT_MODAL_SETTINGS = isFF(FF_DEV_3873)
   ? {
       name: "settings-modal",
       title: "Labeling Interface Settings",
-      closeIcon: <LsClose />,
+      closeIcon: <IconClose />,
     }
   : {
       name: "settings-modal-old",

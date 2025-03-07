@@ -4,7 +4,8 @@ import { useSDK } from "../../../providers/SDKProvider";
 import { cn } from "../../../utils/bem";
 import { isDefined } from "../../../utils/utils";
 import { Space } from "../../Common/Space/Space";
-import { LsCheckAlt, LsCrossAlt, Tooltip, Userpic } from "@humansignal/ui";
+import { IconCheckAlt, IconCrossAlt } from "@humansignal/icons";
+import { Tooltip, Userpic } from "@humansignal/ui";
 import { Common } from "../../Filters/types";
 import { VariantSelect } from "../../Filters/types/List";
 import "./Annotators.scss";
@@ -45,7 +46,7 @@ export const Annotators = (cell) => {
                 badge={{
                   bottomRight: review && (
                     <div className={clsx(userPickBadge.toString(), userPickBadge.mod({ [review]: true }).toString())}>
-                      {review === "rejected" ? <LsCrossAlt /> : <LsCheckAlt />}
+                      {review === "rejected" ? <IconCrossAlt /> : <IconCheckAlt />}
                     </div>
                   ),
                 }}

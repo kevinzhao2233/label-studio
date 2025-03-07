@@ -6,12 +6,12 @@ import {
   IconPersonInCircle,
   IconPin,
   IconTerminal,
-  LsDoor,
-  LsGitHub,
-  LsSettings,
-  LsSlack,
-  Userpic,
-} from "@humansignal/ui";
+  IconDoor,
+  IconGithub,
+  IconSettings,
+  IconSlack,
+} from "@humansignal/icons";
+import { Userpic } from "@humansignal/ui";
 import { useConfig } from "../../providers/ConfigProvider";
 import { useContextComponent, useFixedLocation } from "../../providers/RoutesProvider";
 import { useCurrentUser } from "../../providers/CurrentUser";
@@ -151,9 +151,13 @@ export const Menubar = ({ enabled, defaultOpened, defaultPinned, children, onSid
             align="right"
             content={
               <Menu>
-                <Menu.Item icon={<LsSettings />} label="Account &amp; Settings" href={pages.AccountSettingsPage.path} />
+                <Menu.Item
+                  icon={<IconSettings />}
+                  label="Account &amp; Settings"
+                  href={pages.AccountSettingsPage.path}
+                />
                 {/* <Menu.Item label="Dark Mode"/> */}
-                <Menu.Item icon={<LsDoor />} label="Log Out" href={absoluteURL("/logout")} data-external />
+                <Menu.Item icon={<IconDoor />} label="Log Out" href={absoluteURL("/logout")} data-external />
                 {showNewsletterDot && (
                   <>
                     <Menu.Divider />
@@ -204,14 +208,14 @@ export const Menubar = ({ enabled, defaultOpened, defaultPinned, children, onSid
                 <Menu.Item
                   label="GitHub"
                   href="https://github.com/HumanSignal/label-studio"
-                  icon={<LsGitHub />}
+                  icon={<IconGithub />}
                   target="_blank"
                   rel="noreferrer"
                 />
                 <Menu.Item
                   label="Slack Community"
                   href="https://slack.labelstud.io/?source=product-menu"
-                  icon={<LsSlack />}
+                  icon={<IconSlack />}
                   target="_blank"
                   rel="noreferrer"
                 />

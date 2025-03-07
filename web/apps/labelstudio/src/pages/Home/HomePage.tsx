@@ -1,7 +1,7 @@
 import type { Page } from "../types/Page";
 import { Button } from "@humansignal/shad/components/ui/button";
-import { IconFolderOpen, SimpleCard, Spinner } from "@humansignal/ui";
-import { IconExternal, IconFolderAdd, IconHumanSignal, IconUserAdd } from "@humansignal/icons";
+import { SimpleCard, Spinner } from "@humansignal/ui";
+import { IconExternal, IconFolderAdd, IconHumanSignal, IconUserAdd, IconFolderOpen } from "@humansignal/icons";
 import { HeidiTips } from "../../components/HeidiTips/HeidiTips";
 import { useQuery } from "@tanstack/react-query";
 import { useAPI } from "../../providers/ApiProvider";

@@ -9,17 +9,12 @@ export { ReactComponent as IconInterpolationRemove } from "./interpolation_remov
 export { ReactComponent as IconKeypointAdd } from "./keypoint_add.svg";
 export { ReactComponent as IconKeypointDelete } from "./keypoint_delete.svg";
 export { ReactComponent as IconKeypointDisabled } from "./keypoint_disabled.svg";
-export { ReactComponent as IconPlay } from "./play.svg";
-export { ReactComponent as IconPause } from "./pause.svg";
 export { ReactComponent as IconRewind } from "./rewind.svg";
 export { ReactComponent as IconReplay } from "./replay.svg";
 export { ReactComponent as IconFullscreen } from "./fullscreen.svg";
 export { ReactComponent as IconFullscreenExit } from "./fullscreen_exit.svg";
 export { ReactComponent as IconEyeOpened } from "./eye_opened.svg";
 export { ReactComponent as IconEyeClosed } from "./eye_closed.svg";
-export { ReactComponent as IconCross } from "./cross.svg";
-export { ReactComponent as IconCollapse } from "./collapse.svg";
-export { ReactComponent as IconExpand } from "./expand.svg";
 export { ReactComponent as IconPrev } from "./prev_step.svg";
 export { ReactComponent as IconNext } from "./next_step.svg";
 export { ReactComponent as IconConfig } from "./config.svg";

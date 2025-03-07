@@ -13,15 +13,8 @@ import {
   useRef,
   useState,
 } from "react";
-import {
-  IconArrow,
-  IconChevronLeft,
-  IconEyeClosed,
-  IconEyeOpened,
-  IconWarning,
-  LsSparks,
-  Tooltip,
-} from "@humansignal/ui";
+import { IconArrow, IconChevronLeft, IconEyeClosed, IconEyeOpened, IconWarning, IconSparks } from "@humansignal/icons";
+import { Tooltip } from "@humansignal/ui";
 import Registry from "../../../core/Registry";
 import { PER_REGION_MODES } from "../../../mixins/PerRegionModes";
 import { Block, cn, Elem } from "../../../utils/bem";
@@ -515,7 +508,7 @@ const RegionControls: FC<RegionControlsProps> = injector(
           <Tooltip title={"Confidence Score"}>
             <Elem name="control-wrapper">
               <Elem name="control" mod={{ type: "predict" }}>
-                {item?.origin === "prediction" && <LsSparks style={{ width: 18, height: 18 }} />}
+                {item?.origin === "prediction" && <IconSparks style={{ width: 18, height: 18 }} />}
               </Elem>
               <Elem name="control" mod={{ type: "score" }}>
                 {isDefined(item?.score) && item.score.toFixed(2)}
@@ -531,7 +524,7 @@ const RegionControls: FC<RegionControlsProps> = injector(
               {/* dirtyness is not implemented yet */}
             </Elem>
             <Elem name="control" mod={{ type: "predict" }}>
-              {item?.origin === "prediction" && <LsSparks style={{ width: 18, height: 18 }} />}
+              {item?.origin === "prediction" && <IconSparks style={{ width: 18, height: 18 }} />}
             </Elem>
           </>
         )}

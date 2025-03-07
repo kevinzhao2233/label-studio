@@ -1,6 +1,12 @@
 import { type FC, type MouseEvent as RMouseEvent, useCallback, useMemo, useRef, useState } from "react";
 import { Block, Elem } from "../../../utils/bem";
-import { LsChevronLeft, LsChevronRight, IconOutlinerDrag, LsCollapseSmall, LsExpandSmall } from "@humansignal/ui";
+import {
+  IconChevronLeft,
+  IconChevronRight,
+  IconOutlinerDrag,
+  IconCollapseSmall,
+  IconExpandSmall,
+} from "@humansignal/icons";
 import { useDrag } from "../../../hooks/useDrag";
 import { clamp, isDefined } from "../../../utils/utilities";
 import { DEFAULT_PANEL_HEIGHT, DEFAULT_PANEL_MIN_HEIGHT, DEFAULT_PANEL_WIDTH, PANEL_HEADER_HEIGHT } from "../constants";
@@ -311,7 +317,7 @@ export const PanelTabsBase: FC<BaseProps> = ({
                     onClick={handleGroupPanelToggle}
                     data-tooltip={`${tooltipText} Group`}
                   >
-                    {Side.left === alignment ? <LsChevronLeft /> : <LsChevronRight />}
+                    {Side.left === alignment ? <IconChevronLeft /> : <IconChevronRight />}
                   </Elem>
                 )}
                 {!collapsed && (
@@ -321,7 +327,7 @@ export const PanelTabsBase: FC<BaseProps> = ({
                     onClick={handlePanelToggle}
                     data-tooltip={tooltipText}
                   >
-                    {visible ? <LsCollapseSmall /> : <LsExpandSmall />}
+                    {visible ? <IconCollapseSmall /> : <IconExpandSmall />}
                   </Elem>
                 )}
               </Elem>

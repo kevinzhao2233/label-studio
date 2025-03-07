@@ -1,6 +1,6 @@
 import { observer } from "mobx-react";
 import { Button } from "../../common/Button/Button";
-import { LsStar, LsStarOutline, Tooltip } from "@humansignal/ui";
+import { IconStar, IconStarOutline, Tooltip } from "@humansignal/ui";
 import { BemWithSpecifiContext } from "../../utils/bem";
 import { FF_DEV_3873, isFF } from "../../utils/feature-flags";
 import "./GroundTruth.scss";
@@ -28,7 +28,7 @@ export const GroundTruth = observer(({ entity, disabled = false, size = "md" }) 
           >
             <Elem
               name="indicator"
-              tag={isFF(FF_DEV_3873) && !entity.ground_truth ? LsStarOutline : LsStar}
+              tag={isFF(FF_DEV_3873) && !entity.ground_truth ? IconStarOutline : IconStar}
               mod={{ active: entity.ground_truth, dark: isFF(FF_DEV_3873) }}
             />
           </Elem>

@@ -1,6 +1,6 @@
 import { type FC, type RefObject, useCallback, useEffect, useRef } from "react";
 import { Block, Elem } from "../../../utils/bem";
-import { IconSend } from "@humansignal/ui";
+import { IconSend } from "@humansignal/icons";
 
 import "./CommentForm.scss";
 import { TextArea } from "../../../common/TextArea/TextArea";

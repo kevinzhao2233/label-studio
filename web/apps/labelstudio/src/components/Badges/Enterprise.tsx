@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { IconSparkGradient } from "@humansignal/ui";
+import { IconSparkGradient } from "@humansignal/icons";
 import { Block, Elem } from "../../utils/bem";
 import "./Enterprise.scss";
 

@@ -10,16 +10,13 @@ import {
   IconDuplicate,
   IconLink,
   IconTrashRect,
-  LsCommentResolved,
-  LsCommentUnresolved,
-  LsSparks,
-  LsStar,
-  LsStarOutline,
-  Tooltip,
-  Userpic,
-  ToastType,
-  useToast,
-} from "@humansignal/ui";
+  IconCommentResolved,
+  IconCommentUnresolved,
+  IconSparks,
+  IconStar,
+  IconStarOutline,
+} from "@humansignal/icons";
+import { Tooltip, Userpic, ToastType, useToast } from "@humansignal/ui";
 import { TimeAgo } from "../../common/TimeAgo/TimeAgo";
 import { useDropdown } from "../../common/Dropdown/DropdownTrigger";
 
@@ -39,10 +36,10 @@ interface AnnotationButtonInterface {
 
 const renderCommentIcon = (ent: any) => {
   if (ent.unresolved_comment_count > 0) {
-    return LsCommentUnresolved;
+    return IconCommentUnresolved;
   }
   if (ent.comment_count > 0) {
-    return LsCommentResolved;
+    return IconCommentResolved;
   }
 
   return null;
@@ -172,9 +169,9 @@ export const AnnotationButton = observer(
               label: `${isGroundTruth ? "Unset " : "Set "} as Ground Truth`,
               onClick: setGroundTruth,
               icon: isGroundTruth ? (
-                <LsStar color="#FFC53D" width={iconSize} height={iconSize} />
+                <IconStar color="#FFC53D" width={iconSize} height={iconSize} />
               ) : (
-                <LsStarOutline width={iconSize} height={iconSize} />
+                <IconStarOutline width={iconSize} height={iconSize} />
               ),
               enabled: showGroundTruth,
             },
@@ -227,7 +224,7 @@ export const AnnotationButton = observer(
               mod={{ prediction: isPrediction }}
               size={24}
             >
-              {isPrediction && <LsSparks style={{ width: 18, height: 18 }} />}
+              {isPrediction && <IconSparks style={{ width: 18, height: 18 }} />}
             </Elem>
             {/* to do: return these icons when we have a better way to grab the history action type */}
             {/* {historyActionType === 'accepted' && <Elem name='status' mod={{ approved: true }}><IconCheckBold /></Elem>}

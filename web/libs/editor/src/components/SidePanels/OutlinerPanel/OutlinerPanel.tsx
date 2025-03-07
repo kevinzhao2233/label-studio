@@ -5,7 +5,7 @@ import { PanelBase, type PanelProps } from "../PanelBase";
 import { OutlinerTree } from "./OutlinerTree";
 import { ViewControls } from "./ViewControls";
 import "./OutlinerPanel.scss";
-import { IconInfo } from "@humansignal/ui";
+import { IconInfo } from "@humansignal/icons";
 import { FF_OUTLINER_OPTIM, isFF } from "../../../utils/feature-flags";
 
 interface OutlinerPanelProps extends PanelProps {

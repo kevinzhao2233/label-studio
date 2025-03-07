@@ -1,6 +1,7 @@
 import type { MouseEventHandler } from "react";
 
-import { IconCommentLinkTo, IconSend, Tooltip } from "@humansignal/ui";
+import { IconCommentLinkTo, IconSend } from "@humansignal/icons";
+import { Tooltip } from "@humansignal/ui";
 import { Block, Elem } from "../../../utils/bem";
 import "./CommentFormButtons.scss";
 

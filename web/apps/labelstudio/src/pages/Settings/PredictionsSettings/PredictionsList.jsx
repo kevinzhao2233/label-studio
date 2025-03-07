@@ -2,7 +2,8 @@ import { useCallback, useContext } from "react";
 
 import { format, formatDistanceToNow, parseISO } from "date-fns";
 import { Button, Dropdown, Menu } from "../../../components";
-import { IconInfoOutline, IconPredictions, LsEllipsis, Tooltip } from "@humansignal/ui";
+import { IconInfoOutline, IconPredictions, IconEllipsis } from "@humansignal/icons";
+import { Tooltip } from "@humansignal/ui";
 import { confirm } from "../../../components/Modal/Modal";
 import { ApiContext } from "../../../providers/ApiProvider";
 import { Block, cn } from "../../../utils/bem";
@@ -88,7 +89,7 @@ const VersionCard = ({ version, selected, onSelect, editable, onDelete }) => {
             </Menu>
           }
         >
-          <Button type="link" icon={<LsEllipsis />} style={{ padding: "15px" }} />
+          <Button type="link" icon={<IconEllipsis />} style={{ padding: "15px" }} />
         </Dropdown.Trigger>
       </div>
     </Block>

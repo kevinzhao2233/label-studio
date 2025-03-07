@@ -8,7 +8,8 @@ import { isSelectionContainsSpan } from "../../../utils/selection-tools";
 import styles from "./Paragraphs.module.scss";
 import { AuthorFilter } from "./AuthorFilter";
 import { Phrases } from "./Phrases";
-import { IconHelp, Toggle, Tooltip } from "@humansignal/ui";
+import { IconHelp } from "@humansignal/icons";
+import { Toggle, Tooltip } from "@humansignal/ui";
 import { cn } from "../../../utils/bem";
 
 const audioDefaultProps = {};

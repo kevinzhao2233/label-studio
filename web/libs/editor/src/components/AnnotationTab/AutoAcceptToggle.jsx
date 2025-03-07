@@ -1,6 +1,7 @@
 import { inject, observer } from "mobx-react";
 
-import { IconCheck, IconCross, Toggle } from "@humansignal/ui";
+import { IconCheck, IconCross } from "@humansignal/icons";
+import { Toggle } from "@humansignal/ui";
 import { Button } from "../../common/Button/Button";
 import { Block, Elem } from "../../utils/bem";
 import { Space } from "../../common/Space/Space";

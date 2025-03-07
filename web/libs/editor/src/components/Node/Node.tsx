@@ -22,8 +22,8 @@ import {
   IconText,
   IconWarning,
   IconTimelineRegion,
-  Tooltip,
-} from "@humansignal/ui";
+} from "@humansignal/icons";
+import { Tooltip } from "@humansignal/ui";
 
 const NodeViews = {
   // fake view for virtual node representing label group

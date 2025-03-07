@@ -31,7 +31,7 @@ export const Userpic = forwardRef(
       className,
       faded = false,
       showUsername,
-      size = false,
+      size,
       src,
       style = {},
       addCount,

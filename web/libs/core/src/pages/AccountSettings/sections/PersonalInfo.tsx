@@ -82,7 +82,6 @@ export const PersonalInfo = () => {
       if (!user) return;
       const body = new FormData(e.currentTarget as HTMLFormElement);
       const json = Object.fromEntries(body.entries());
-      console.log("json", json);
       const response = await updateUser(json);
 
       refetchUser();

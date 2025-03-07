@@ -33,10 +33,7 @@
 
   &.before-appear,
   &.before-disappear {
-    transition-delay: var(--transition-delay);
-    transition-property: opacity, transform;
-    transition-duration: var(--animation-duration);
-    transition-timing-function: var(--animation-curve);
+    transition: opacity var(--animation-duration) var(--animation-curve) var(--transition-delay), transform var(--animation-duration) var(--animation-curve) var(--transition-delay);
   }
 
   &.before-appear {

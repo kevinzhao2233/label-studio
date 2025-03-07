@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { Modal } from "../../../components/Modal/Modal";
+import { SampleDatasetSelect } from "@humansignal/core/blocks/SampleDatasetSelect/SampleDatasetSelect";
 import { cn } from "../../../utils/bem";
 import { cn as scn } from "@humansignal/shad/utils";
 import { unique } from "../../../utils/helpers";
@@ -337,7 +338,7 @@ export const ImportPage = ({
       {highlightCsvHandling && <div className={importClass.elem("csv-splash")} />}
       <input id="file-input" type="file" name="file" multiple onChange={onUpload} style={{ display: "none" }} />
 
-      <header>
+      <header className="flex gap-4">
         <form className={`${importClass.elem("url-form")} inline-flex`} method="POST" onSubmit={onLoadURL}>
           <Input placeholder="Dataset URL" name="url" ref={urlRef} style={{ height: 40 }} />
           <Button type="submit" look="primary">
@@ -353,6 +354,13 @@ export const ImportPage = ({
           <IconUpload width="16" height="16" className={importClass.elem("upload-icon")} />
           Upload {files.uploaded.length ? "More " : ""}Files
         </Button>
+        <SampleDatasetSelect
+          samples={[
+            { title: "sample one", description: "this is a first sample", id: "one" },
+            { title: "sample two", description: "this is a second sample", id: "two" },
+            { title: "sample three", description: "this is a third sample", id: "three" },
+          ]}
+        />
         <div
           className={importClass.elem("csv-handling").mod({ highlighted: highlightCsvHandling, hidden: !csvHandling })}
         >

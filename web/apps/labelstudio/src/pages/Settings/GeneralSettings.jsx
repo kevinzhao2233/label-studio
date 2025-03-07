@@ -39,7 +39,7 @@ export const GeneralSettings = () => {
                 <Block name="workspace-placeholder">
                   <Elem name="badge-wrapper">
                     <Elem name="title">Workspace</Elem>
-                    <EnterpriseBadge />
+                    <EnterpriseBadge className="ml-2" />
                   </Elem>
                   <Select placeholder="Select an option" disabled options={[]} />
                   <Caption>
@@ -83,7 +83,7 @@ export const GeneralSettings = () => {
                     value=""
                     label={
                       <>
-                        Uncertainty sampling <EnterpriseBadge />
+                        Uncertainty sampling <EnterpriseBadge className="ml-2" />
                       </>
                     }
                     disabled

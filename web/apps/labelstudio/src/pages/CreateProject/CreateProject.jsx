@@ -53,7 +53,7 @@ const ProjectName = ({ name, setName, onSaveName, onSubmit, error, description, 
         <div className="field field--wide">
           <label>
             Workspace
-            <EnterpriseBadge />
+            <EnterpriseBadge className="ml-2" />
           </label>
           <Select placeholder="Select an option" disabled options={[]} />
           <Caption>

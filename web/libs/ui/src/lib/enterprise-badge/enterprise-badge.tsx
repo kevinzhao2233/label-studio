@@ -5,14 +5,13 @@ import styles from "./enterprise-badge.module.scss";
 
 /* eslint-disable-next-line */
 export interface EnterpriseBadgeProps {
+  className?: string;
   filled?: boolean;
 }
 
-export const EnterpriseBadge: FC<{
-  filled?: boolean;
-}> = ({ filled }) => {
+export const EnterpriseBadge: FC<EnterpriseBadgeProps> = ({ className, filled }) => {
   return (
-    <div className={clsx(styles.badge, { [styles.filled]: filled })}>
+    <div className={clsx(styles.badge, { [styles.filled]: filled }, className)}>
       <div className={clsx(styles.label)}>
         <IconSpark className={clsx(styles.icon)} />
         Enterprise

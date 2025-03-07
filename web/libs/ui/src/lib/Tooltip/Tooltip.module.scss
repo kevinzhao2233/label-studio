@@ -1,4 +1,5 @@
 .tooltip {
+  --transition-delay: 150ms;
   --animation-duration: 100ms;
   --animation-curve: cubic-bezier(0.21, 1.04, 0.68, 1);
   --animation-start: -10px;
@@ -32,6 +33,7 @@
 
   &.before-appear,
   &.before-disappear {
+    transition-delay: var(--transition-delay);
     transition-property: opacity, transform;
     transition-duration: var(--animation-duration);
     transition-timing-function: var(--animation-curve);

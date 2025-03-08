@@ -17,9 +17,7 @@ class TestProjectSampleTask(TestCase):
 
     @property
     def url(self):
-        return reverse(
-            'projects:api:project-sample-task', kwargs={'pk': self.project.id}
-        )
+        return reverse('projects:api:project-sample-task', kwargs={'pk': self.project.id})
 
     def test_sample_task_with_happy_path(self):
         """Test that ProjectSampleTask.post successfully creates a complete sample task with annotations and predictions"""

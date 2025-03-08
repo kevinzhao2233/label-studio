@@ -11,7 +11,6 @@ from rest_framework.test import APIClient
 
 @pytest.mark.django_db
 class TestProjectSampleTask(TestCase):
-
     @classmethod
     def setUpTestData(cls):
         cls.project = ProjectFactory()
@@ -26,7 +25,7 @@ class TestProjectSampleTask(TestCase):
         """Test that ProjectSampleTask.post successfully creates a complete sample task with annotations and predictions"""
         client = APIClient()
         client.force_authenticate(user=self.project.created_by)
-        label_config = '''
+        label_config = """
         <View>
           <Text name='text' value='$text'/>
           <Choices name='sentiment' toName='text'>
@@ -35,7 +34,7 @@ class TestProjectSampleTask(TestCase):
             <Choice value='Neutral'/>
           </Choices>
         </View>
-        '''
+        """
         sample_prediction = {
             'model_version': 'sample model version',
             'result': [
@@ -74,7 +73,7 @@ class TestProjectSampleTask(TestCase):
             projects.api.LabelInterface,
             'generate_complete_sample_task',
             return_value=sample_task,
-        ) as mock_label_interface:
+        ):
             response = client.post(
                 self.url,
                 data=json.dumps({'label_config': label_config}),
@@ -90,7 +89,7 @@ class TestProjectSampleTask(TestCase):
         """Test fallback to project.get_sample_task when LabelInterface.generate_complete_sample_task fails"""
         client = APIClient()
         client.force_authenticate(user=self.project.created_by)
-        label_config = '''
+        label_config = """
         <View>
           <Text name='text' value='$text'/>
           <Choices name='sentiment' toName='text'>
@@ -99,7 +98,7 @@ class TestProjectSampleTask(TestCase):
             <Choice value='Neutral'/>
           </Choices>
         </View>
-        '''
+        """
         fallback_data = {'id': 999, 'data': {'text': 'Fallback task'}}
 
         with (
@@ -107,10 +106,8 @@ class TestProjectSampleTask(TestCase):
                 projects.api.LabelInterface,
                 'generate_complete_sample_task',
                 side_effect=ValueError('Failed to generate sample task'),
-            ) as mock_label_interface,
-            patch(
-                'projects.api.Project.get_sample_task', return_value=fallback_data
-            ) as mock_get_sample_task,
+            ),
+            patch('projects.api.Project.get_sample_task', return_value=fallback_data),
         ):
 
             response = client.post(
@@ -128,7 +125,7 @@ class TestProjectSampleTask(TestCase):
         """Test fallback to project.get_sample_task when LabelInterface.generate_sample_prediction raises an exception"""
         client = APIClient()
         client.force_authenticate(user=self.project.created_by)
-        label_config = '''
+        label_config = """
         <View>
           <Text name='text' value='$text'/>
           <Choices name='sentiment' toName='text'>
@@ -137,7 +134,7 @@ class TestProjectSampleTask(TestCase):
             <Choice value='Neutral'/>
           </Choices>
         </View>
-        '''
+        """
         fallback_data = {'id': 999, 'data': {'text': 'Fallback task'}}
 
         with (
@@ -145,12 +142,9 @@ class TestProjectSampleTask(TestCase):
                 projects.api.LabelInterface,
                 'generate_sample_prediction',
                 return_value=None,
-            ) as mock_label_interface,
-            patch(
-                'projects.api.Project.get_sample_task', return_value=fallback_data
-            ) as mock_get_sample_task,
+            ),
+            patch('projects.api.Project.get_sample_task', return_value=fallback_data),
         ):
-
             response = client.post(
                 self.url,
                 data=json.dumps({'label_config': label_config}),

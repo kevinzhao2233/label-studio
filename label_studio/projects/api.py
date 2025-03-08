@@ -836,9 +836,7 @@ class ProjectSampleTask(generics.RetrieveAPIView):
 
         try:
             label_interface = LabelInterface(label_config)
-            complete_task = label_interface.generate_complete_sample_task(
-                raise_on_failure=True
-            )
+            complete_task = label_interface.generate_complete_sample_task(raise_on_failure=True)
             return Response({'sample_task': complete_task}, status=200)
         except Exception as e:
             logger.error(
@@ -846,9 +844,7 @@ class ProjectSampleTask(generics.RetrieveAPIView):
             )
 
         # Fallback to project.get_sample_task LabelInterface.generate_complete_sample_task failed
-        return Response(
-            {'sample_task': project.get_sample_task(label_config)}, status=200
-        )
+        return Response({'sample_task': project.get_sample_task(label_config)}, status=200)
 
 
 class ProjectModelVersions(generics.RetrieveAPIView):

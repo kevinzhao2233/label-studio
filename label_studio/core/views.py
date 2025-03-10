@@ -6,7 +6,6 @@ import logging
 import mimetypes
 import os
 import posixpath
-import sys
 from pathlib import Path
 from wsgiref.util import FileWrapper
 
@@ -116,14 +115,6 @@ def editor_files(request):
     """Get last editor files"""
     response = utils.common.find_editor_files()
     return HttpResponse(json.dumps(response), status=200)
-
-
-def custom_500(request):
-    """Custom 500 page"""
-    t = loader.get_template('500.html')
-    type_, value, tb = sys.exc_info()
-    return HttpResponseServerError(t.render({'exception': value}))
-
 
 def samples_time_series(request):
     """Generate time series example for preview"""

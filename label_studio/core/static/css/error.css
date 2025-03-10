@@ -45,7 +45,14 @@ body > .ls-global-error .button {
   font-weight: 500;
 }
 
+body > .ls-global-error button:hover {
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 2px 4px 0px, rgba(0, 0, 0, 0.1) 0px -1px 0px 0px inset, rgba(0, 0, 0, 0.2) 0px 0px 0px 1px inset;
+}
+
 body > .ls-global-error button.ls-global-error__primary_button {
-  background-color: #4C5FA9;
+  background-color: #566fcf;
   color: #fff;
+}
+body > .ls-global-error button.ls-global-error__primary_button:hover {
+  background-color: #4C5FA9;
 }

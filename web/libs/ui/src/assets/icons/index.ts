@@ -122,7 +122,7 @@ export { ReactComponent as IconPropertyAngle } from "./properties/angle.svg";
 export { ReactComponent as IconBanSquare } from "./ban.svg";
 export { ReactComponent as IconCheckAlt } from "./check_alt.svg";
 export { ReactComponent as IconCrossAlt } from "./cross_alt.svg";
-export { ReactComponent as IconSparkSquare } from "./spark.svg";
+export { ReactComponent as IconSparkSquare } from "./spark-square.svg";
 export { ReactComponent as IconThumbsDown } from "./thumbs-down.svg";
 export { ReactComponent as IconThumbsUp } from "./thumbs-up.svg";
 export { ReactComponent as IconStarSquare } from "./star_square.svg";
@@ -147,7 +147,7 @@ export { ReactComponent as IconSlack } from "./slack.svg";
 export { ReactComponent as IconTerminal } from "./terminal.svg";
 export { ReactComponent as IconPencil } from "./pencil.svg";
 export { ReactComponent as IconPredictions } from "./predictions.svg";
-export { ReactComponent as IconSparkGradient } from "./spark-gradient.svg";
+export { ReactComponent as IconSpark } from "./spark.svg";
 
 export * from "./annotation";
 export * from "./outliner";

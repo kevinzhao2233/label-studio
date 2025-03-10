@@ -1,14 +1,7 @@
 import chroma from "chroma-js";
 import { observer } from "mobx-react";
 import { type FC, useMemo, useState } from "react";
-import {
-  IconRelationLink,
-  IconPlus,
-  IconTrash,
-  IconWarning,
-  IconEyeClosed,
-  IconEyeOpened,
-} from "@humansignal/icons";
+import { IconRelationLink, IconPlus, IconTrash, IconWarning, IconEyeClosed, IconEyeOpened } from "@humansignal/icons";
 import { Button, type ButtonProps } from "../../../common/Button/Button";
 import { CREATE_RELATION_MODE } from "../../../stores/Annotation/LinkingModes";
 import { Block, Elem } from "../../../utils/bem";

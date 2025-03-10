@@ -3,7 +3,7 @@ import { observer } from "mobx-react";
 import { Block, Elem } from "../../../utils/bem";
 import { Button } from "../../../common/Button/Button";
 import "./RelationsControls.scss";
-import { IconOutlinerEyeClosed, IconOutlinerEyeOpened } from "@humansignal/icons";
+import { IconOutlinerEyeClosed, IconOutlinerEyeOpened, IconSortUp, IconSortDown } from "@humansignal/icons";
 
 const RelationsControlsComponent: FC<any> = ({ relationStore }) => {
   return (

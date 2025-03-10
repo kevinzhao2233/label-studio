@@ -3,7 +3,7 @@ import { observer } from "mobx-react";
 import { Block, Elem } from "../../../utils/bem";
 import { Button } from "../../../common/Button/Button";
 import "./RelationsControls.scss";
-import { IconOutlinerEyeClosed, IconOutlinerEyeOpened, IconSortDownNew, IconSortUpNew } from "@humansignal/icons";
+import { IconOutlinerEyeClosed, IconOutlinerEyeOpened } from "@humansignal/icons";
 
 const RelationsControlsComponent: FC<any> = ({ relationStore }) => {
   return (
@@ -77,7 +77,7 @@ const ToggleRelationsOrderButton = observer<FC<ToggleRelationsOrderButtonProps>>
       disabled={isDisabled}
       mod={{ order: relationStore.order }}
       aria-label={isAsc ? "Order by oldest" : "Order by newest"}
-      icon={isAsc ? <IconSortUpNew /> : <IconSortDownNew />}
+      icon={isAsc ? <IconSortUp /> : <IconSortDown />}
       tooltip={isAsc ? "Order by oldest" : "Order by newest"}
       tooltipTheme="dark"
     />

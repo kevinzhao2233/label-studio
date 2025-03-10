@@ -6,9 +6,7 @@ import {
   IconOutlinerEyeClosed,
   IconOutlinerEyeOpened,
   IconSortDown,
-  IconSortDownNew,
   IconSortUp,
-  IconSortUpNew,
   IconBoundingBox,
   IconPredictions,
 } from "@humansignal/icons";
@@ -107,12 +105,7 @@ export const ViewControls: FC<ViewControlsProps> = observer(
       }
     }, []);
 
-    const renderOrderingDirectionIcon =
-      orderingDirection === "asc" ? (
-        <IconSortUpNew style={{ color: "#898098" }} />
-      ) : (
-        <IconSortDownNew style={{ color: "#898098" }} />
-      );
+    const renderOrderingDirectionIcon = orderingDirection === "asc" ? <IconSortUp /> : <IconSortDown />;
 
     return (
       <Block name="view-controls" mod={{ collapsed: context.locked }}>

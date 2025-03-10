@@ -1,6 +1,6 @@
 import { inject, observer } from "mobx-react";
 import { useCallback, useRef, useState } from "react";
-import { FaAngleDown, FaChevronDown, FaChevronRight, FaChevronUp, FaTrash } from "react-icons/fa";
+import { IconChevronRight, IconChevronDown, IconChevron, IconTrash } from "@humansignal/icons";
 import { Block, Elem } from "../../../utils/bem";
 import { FF_LOPS_E_10, FF_LOPS_E_3, isFF } from "../../../utils/feature-flags";
 import { Button } from "../../Common/Button/Button";
@@ -91,7 +91,7 @@ export const ActionsButton = injector(
         >
           <Elem name="titleContainer" {...(action.disabled ? { title: action.disabledReason } : {})}>
             <Elem name="title">{action.title}</Elem>
-            {hasChildren ? <Elem name="icon" tag={FaChevronRight} /> : null}
+            {hasChildren ? <Elem name="icon" tag={IconChevronRight} /> : null}
           </Elem>
         </Block>
       );
@@ -133,7 +133,7 @@ export const ActionsButton = injector(
           className={`actionButton${action.isSeparator ? "_isSeparator" : action.isTitle ? "_isTitle" : ""} ${
             action.disabled ? "actionButton_disabled" : ""
           }`}
-          icon={isDeleteAction && <FaTrash />}
+          icon={isDeleteAction && <IconTrash />}
           title={action.disabled ? action.disabledReason : null}
         >
           {action.title}
@@ -161,14 +161,10 @@ export const ActionsButton = injector(
       >
         <Button {...(isNewUI ? { className: "actionButtonPrime" } : {})} size={size} disabled={!hasSelected} {...rest}>
           {selectedCount > 0 ? `${selectedCount} ${recordTypeLabel}${selectedCount > 1 ? "s" : ""}` : "Actions"}
-          {isNewUI ? (
-            isOpen ? (
-              <FaChevronUp size="12" style={{ marginLeft: 4, marginRight: -7 }} />
-            ) : (
-              <FaChevronDown size="12" style={{ marginLeft: 4, marginRight: -7 }} />
-            )
+          {isOpen ? (
+            <IconChevron size="12" style={{ marginLeft: 4, marginRight: -7 }} />
           ) : (
-            <FaAngleDown size="16" style={{ marginLeft: 4 }} color="#566fcf" />
+            <IconChevronDown size="12" style={{ marginLeft: 4, marginRight: -7 }} />
           )}
         </Button>
       </Dropdown.Trigger>

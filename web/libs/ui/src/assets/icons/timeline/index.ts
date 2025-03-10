@@ -1,5 +1,3 @@
-export { ReactComponent as IconChevronLeft } from "./chevron_left.svg";
-export { ReactComponent as IconChevronRight } from "./chevron_right.svg";
 export { ReactComponent as IconForward } from "./forward.svg";
 export { ReactComponent as IconBackward } from "./backward.svg";
 export { ReactComponent as IconFastForward } from "./fastforward.svg";
@@ -11,6 +9,8 @@ export { ReactComponent as IconKeypointDelete } from "./keypoint_delete.svg";
 export { ReactComponent as IconKeypointDisabled } from "./keypoint_disabled.svg";
 export { ReactComponent as IconRewind } from "./rewind.svg";
 export { ReactComponent as IconReplay } from "./replay.svg";
+export { ReactComponent as IconTimelinePause } from "./pause.svg";
+export { ReactComponent as IconTimelinePlay } from "./play.svg";
 export { ReactComponent as IconFullscreen } from "./fullscreen.svg";
 export { ReactComponent as IconFullscreenExit } from "./fullscreen_exit.svg";
 export { ReactComponent as IconEyeOpened } from "./eye_opened.svg";

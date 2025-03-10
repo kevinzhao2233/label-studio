@@ -134,6 +134,10 @@ const handleError = async (
   return errorDetails.isShutdown;
 };
 
+const handleGlobalErrorMessage = (result: ApiResponse, errorFilter?: (result: ApiResponse) => boolean) => {
+  return !isDefined(errorFilter) || errorFilter(result) === false;
+};
+
 export const ApiProvider = forwardRef<ApiContextType, PropsWithChildren<any>>(({ children }, ref) => {
   const [error, setError] = useState<ApiResponse | null>(null);
   const toast = useToast();
@@ -150,11 +154,14 @@ export const ApiProvider = forwardRef<ApiContextType, PropsWithChildren<any>>(({
       setError(null);
 
       const result = await API.invoke(method, params, rest);
+      const shouldHandleGlobalErrorMessage = handleGlobalErrorMessage(result, errorFilter);
 
+      // If the error is due to a 404 and we are not handling it inline, we need to redirect to a working page
+      // and show a global error message of the resource not being found
       if (
         result &&
         "status" in result &&
-        (result.status === 401 || (IMPROVE_GLOBAL_ERROR_MESSAGES && result.status === 404))
+        (result.status === 401 || (IMPROVE_GLOBAL_ERROR_MESSAGES && result.status === 404 && shouldHandleGlobalErrorMessage))
       ) {
         apiLocked = true;
 
@@ -183,7 +190,7 @@ export const ApiProvider = forwardRef<ApiContextType, PropsWithChildren<any>>(({
         const containsValidationErrors =
           isDefined(result.response?.validation_errors) && Object.keys(result.response?.validation_errors).length > 0;
 
-        let shouldShowGlobalError = (!isDefined(errorFilter) || errorFilter(result) === false) && requestCompleted;
+        let shouldShowGlobalError = shouldHandleGlobalErrorMessage && requestCompleted;
 
         if (IMPROVE_GLOBAL_ERROR_MESSAGES && requestCompleted) {
           // We only show toast errors for 4xx errors

@@ -1,6 +1,6 @@
 {
-  "message": "docs: Add context to Video tag page (#7160)",
-  "commit": "28c8aeb226d01aaccb1dbd6a22f50e86508dad1f",
-  "date": "2025-03-03T21:27:21.000Z",
+  "message": "refactor: LEAP-1907: Migrate EnterpriseBadge to UI library (#7173)",
+  "commit": "a5927325db38e1dbdf8d2c7106dfe8eb2da4207d",
+  "date": "2025-03-10T16:01:34.000Z",
   "branch": "develop"
 }

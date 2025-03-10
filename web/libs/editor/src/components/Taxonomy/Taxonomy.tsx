@@ -1,7 +1,8 @@
 import React, { type FormEvent, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { Dropdown, Menu } from "antd";
 
-import { IconChevron, Tooltip } from "@humansignal/ui";
+import { IconChevron } from "@humansignal/icons";
+import { Tooltip } from "@humansignal/ui";
 import { useToggle } from "../../hooks/useToggle";
 import type { CNTagName } from "../../utils/bem";
 import { isArraysEqual } from "../../utils/utilities";

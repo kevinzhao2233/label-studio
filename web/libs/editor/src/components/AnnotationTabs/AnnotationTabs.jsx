@@ -1,6 +1,7 @@
 import { forwardRef } from "react";
 import { observer } from "mobx-react";
-import { IconBan, IconSparks, IconStar, Userpic } from "@humansignal/ui";
+import { IconBan, IconSparks, IconStar } from "@humansignal/icons";
+import { Userpic } from "@humansignal/ui";
 import { Space } from "../../common/Space/Space";
 import { Block, Elem } from "../../utils/bem";
 import "./AnnotationTabs.scss";

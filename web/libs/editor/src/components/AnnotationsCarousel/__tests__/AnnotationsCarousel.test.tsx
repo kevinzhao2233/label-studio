@@ -5,40 +5,28 @@ import { AnnotationsCarousel } from "../AnnotationsCarousel";
 import { annotationStore, store } from "./sampleData.js";
 import { Provider } from "mobx-react";
 
-jest.mock("@humansignal/ui", () => {
-  const { forwardRef } = jest.requireActual("react");
-  const actualCheckbox = jest.requireActual("@humansignal/ui/lib/checkbox/checkbox");
-  const actualToast = jest.requireActual("@humansignal/ui/lib/Toast/Toast");
-  const { IconChevron } = jest.requireActual("@humansignal/ui");
-
-  return {
-    __esModule: true,
-    ...actualCheckbox,
-    ...actualToast,
-    IconChevron,
-    Label: forwardRef(({ children }, ref) => {
-      return (
-        <div data-testid="label" ref={ref}>
-          {children}
-        </div>
-      );
-    }),
-    Tooltip: forwardRef(({ children }, ref) => {
-      return (
-        <div data-testid="tooltip" ref={ref}>
-          {children}
-        </div>
-      );
-    }),
-    Userpic: forwardRef(({ children }, ref) => {
-      return (
-        <div data-testid="userpic" ref={ref}>
-          {children}
-        </div>
-      );
-    }),
-  };
-});
+jest.mock("@humansignal/ui", () => ({
+  Tooltip: ({ children }: { children: React.ReactNode }) => {
+    return <div data-testid="tooltip">{children}</div>;
+  },
+  Userpic: ({ children }: { children: React.ReactNode }) => {
+    return (
+      <div
+        data-testid="userpic"
+        className="userpic--tBKCQ"
+        style={{ background: "rgb(155, 166, 211)", color: "rgb(0, 0, 0)" }}
+      >
+        {children}
+      </div>
+    );
+  },
+  ToastProvider: ({ children }: { children: React.ReactNode }) => children,
+  ToastViewport: ({ children }: { children: React.ReactNode }) => children,
+  Toast: ({ children }: { children: React.ReactNode }) => children,
+  useToast: () => ({
+    show: jest.fn(),
+  }),
+}));
 
 const mockStore = {
   hasInterface: jest.fn().mockReturnValue(true),

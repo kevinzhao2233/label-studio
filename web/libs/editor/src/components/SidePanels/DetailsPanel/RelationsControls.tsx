@@ -39,7 +39,7 @@ const ToggleRelationsVisibilityButton = observer<FC<ToggleRelationsVisibilityBut
       onClick={toggleRelationsVisibility}
       mod={{ hidden: isAllHidden }}
       aria-label={isAllHidden ? "Show all" : "Hide all"}
-      icon={isAllHidden ? <IconOutlinerEyeClosed /> : <IconOutlinerEyeOpened />}
+      icon={isAllHidden ? <IconOutlinerEyeClosed width={16} height={16} /> : <IconOutlinerEyeOpened width={16} height={16} />}
       tooltip={isAllHidden ? "Show all" : "Hide all"}
       tooltipTheme="dark"
     />

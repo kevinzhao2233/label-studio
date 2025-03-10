@@ -2,7 +2,7 @@ import chr from "chroma-js";
 import { format } from "date-fns";
 import { useMemo } from "react";
 import { NavLink } from "react-router-dom";
-import { IconBulb, IconCheck, IconEllipsis, IconMinus } from "@humansignal/icons";
+import { IconCheck, IconEllipsis, IconMinus, IconSparks } from "@humansignal/icons";
 import { Userpic } from "@humansignal/ui";
 import { Button, Dropdown, Menu, Pagination } from "../../components";
 import { Block, Elem } from "../../utils/bem";
@@ -104,7 +104,7 @@ const ProjectCard = ({ project }) => {
                   {project.skipped_annotations_number}
                 </Elem>
                 <Elem name="detail-item" mod={{ type: "predictions" }}>
-                  <Elem tag={IconBulb} name="icon" />
+                  <Elem tag={IconSparks} name="icon" />
                   {project.total_predictions_number}
                 </Elem>
               </Elem>

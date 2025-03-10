@@ -306,7 +306,7 @@ export const PanelTabsBase: FC<BaseProps> = ({
               name="header"
             >
               <Elem name="header-left">
-                {!collapsed && <Elem name="icon" style={{ pointerEvents: "none" }} tag={IconOutlinerDrag} width={8} />}
+                {!collapsed && <Elem name="icon" style={{ pointerEvents: "none" }} tag={IconOutlinerDrag} />}
                 {!visible && !collapsed && <Elem name="title">{panelViews.map((view) => view.title).join(" ")}</Elem>}
               </Elem>
               <Elem name="header-right">

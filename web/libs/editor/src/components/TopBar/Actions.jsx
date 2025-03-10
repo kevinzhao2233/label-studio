@@ -1,5 +1,5 @@
 import { Button } from "../../common/Button/Button";
-import { IconCopy, IconInfo, IconViewAll, IconSettings, IconTrash } from "@humansignal/icons";
+import { IconCopy, IconInfo, IconViewAll, IconTrash, IconSettings } from "@humansignal/icons";
 import { Tooltip } from "@humansignal/ui";
 import { Elem } from "../../utils/bem";
 import { isSelfServe } from "../../utils/billing";
@@ -24,11 +24,11 @@ export const Actions = ({ store }) => {
   return (
     <Elem name="section">
       {store.hasInterface("annotations:view-all") && !isBulkMode && (
-        <Tooltip title="View all annotations">
+        <Tooltip title="Compare all annotations">
           <Button
             icon={<IconViewAll />}
             type="text"
-            aria-label="View All"
+            aria-label="Compare all annotations"
             onClick={() => onToggleVisibility()}
             primary={isViewAll}
             style={{

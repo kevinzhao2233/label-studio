@@ -31,12 +31,12 @@ export const TopBar = observer(({ store }) => {
         <Elem name="group">
           <CurrentTask store={store} />
           {store.hasInterface("annotations:view-all") && (
-            <Tooltip title="View all annotations">
+            <Tooltip title="Compare all annotations">
               <Button
                 className={"topbar__button"}
                 icon={<IconViewAll />}
                 type="text"
-                aria-label="View All"
+                aria-label="Compare all annotations"
                 onClick={annotationStore.toggleViewingAllAnnotations}
                 primary={isViewAll}
                 style={{

@@ -18,7 +18,6 @@ export { ReactComponent as IconCommentUnresolved } from "./comment-unresolved.sv
 export { ReactComponent as IconAnnotation } from "./annotation.svg";
 export { ReactComponent as IconGrid } from "./grid.svg";
 export { ReactComponent as IconSettings } from "./settings.svg";
-export { ReactComponent as IconSettingsAlt } from "./settings-alt.svg";
 export { ReactComponent as IconStar } from "./star.svg";
 export { ReactComponent as IconStarOutline } from "./star-outline.svg";
 export { ReactComponent as IconBan } from "./ban.svg";
@@ -84,7 +83,6 @@ export { ReactComponent as IconText } from "./text.svg";
 export { ReactComponent as IconViewAll } from "./view-all.svg";
 export { ReactComponent as IconLink } from "./link.svg";
 export { ReactComponent as IconRelationLink } from "./link-relation.svg";
-export { ReactComponent as IconPlusAlt } from "./plus-alt.svg";
 export { ReactComponent as IconTrash } from "./trash.svg";
 export { ReactComponent as IconTrashAlt } from "./trash-alt.svg";
 export { ReactComponent as IconTrashRect } from "./trash-rect.svg";
@@ -98,7 +96,6 @@ export { ReactComponent as IconCursor } from "./cursor.svg";
 export { ReactComponent as IconList } from "./list.svg";
 export { ReactComponent as IconSend } from "./send.svg";
 export { ReactComponent as IconSpeed } from "./speed.svg";
-export { ReactComponent as IconTagAlt } from "./tag-alt.svg";
 export { ReactComponent as IconSortUp } from "./sort-up.svg";
 export { ReactComponent as IconSortUpNew } from "./sort-up-new.svg";
 export { ReactComponent as IconSortDown } from "./sort-down.svg";
@@ -148,6 +145,9 @@ export { ReactComponent as IconTerminal } from "./terminal.svg";
 export { ReactComponent as IconPencil } from "./pencil.svg";
 export { ReactComponent as IconPredictions } from "./predictions.svg";
 export { ReactComponent as IconSpark } from "./spark.svg";
+
+export { ReactComponent as IconBoundingBox } from "./bounding-box.svg";
+export { ReactComponent as IconClockTimeFourOutline } from "./clock-time-four-outline.svg";
 
 export * from "./annotation";
 export * from "./outliner";

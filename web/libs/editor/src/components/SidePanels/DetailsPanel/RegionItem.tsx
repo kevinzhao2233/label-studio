@@ -3,7 +3,7 @@ import { observer } from "mobx-react";
 import { type FC, useMemo, useState } from "react";
 import {
   IconRelationLink,
-  IconPlusAlt,
+  IconPlus,
   IconTrash,
   IconWarning,
   IconEyeClosed,
@@ -124,7 +124,7 @@ const RegionAction: FC<any> = observer(({ region, annotation, editMode, onEditMo
   entityButtons.push(
     <RegionActionButton
       key="meta"
-      icon={<IconPlusAlt />}
+      icon={<IconPlus />}
       primary={editMode}
       onClick={() => onEditModeChange(!editMode)}
       hotkey="region:meta"

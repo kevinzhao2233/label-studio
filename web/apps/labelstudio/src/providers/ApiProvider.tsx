@@ -134,8 +134,8 @@ const handleError = async (
   return errorDetails.isShutdown;
 };
 
-const handleGlobalErrorMessage = (result: ApiResponse, errorFilter?: (result: ApiResponse) => boolean) => {
-  return !isDefined(errorFilter) || errorFilter(result) === false;
+const handleGlobalErrorMessage = (result?: ApiResponse, errorFilter?: (result: ApiResponse) => boolean) => {
+  return result?.error && (!isDefined(errorFilter) || errorFilter(result) === false);
 };
 
 export const ApiProvider = forwardRef<ApiContextType, PropsWithChildren<any>>(({ children }, ref) => {

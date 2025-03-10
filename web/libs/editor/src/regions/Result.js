@@ -158,6 +158,24 @@ const Result = types
     get canBeSubmitted() {
       const control = self.from_name;
 
+      // Find the first node moving up in the tree with the given visibleWhen value
+      function findNodeWithVisibleWhen(control, visibleWhen) {
+        let currentControl = control;
+
+        while (currentControl) {
+          if (currentControl.visiblewhen === visibleWhen) return currentControl;
+
+          try {
+            currentControl = getParent(currentControl);
+            if (!currentControl) break;
+          } catch {
+            break;
+          }
+        }
+
+        return null;
+      }
+
       if (control.perregion) {
         const label = control.whenlabelvalue;
 
@@ -201,12 +219,8 @@ const Result = types
         return true;
       };
 
-      if (control.visiblewhen === "choice-selected") {
-        return isChoiceSelected();
-      }
-      if (control.visiblewhen === "choice-unselected") {
-        return !isChoiceSelected();
-      }
+      if (findNodeWithVisibleWhen(control, "choice-selected")) return control.isVisible && isChoiceSelected();
+      if (findNodeWithVisibleWhen(control, "choice-unselected")) return control.isVisible && !isChoiceSelected();
 
       return true;
     },

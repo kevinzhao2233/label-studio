@@ -161,7 +161,8 @@ export const ApiProvider = forwardRef<ApiContextType, PropsWithChildren<any>>(({
       if (
         result &&
         "status" in result &&
-        (result.status === 401 || (IMPROVE_GLOBAL_ERROR_MESSAGES && result.status === 404 && shouldHandleGlobalErrorMessage))
+        (result.status === 401 ||
+          (IMPROVE_GLOBAL_ERROR_MESSAGES && result.status === 404 && shouldHandleGlobalErrorMessage))
       ) {
         apiLocked = true;
 

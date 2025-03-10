@@ -24,16 +24,27 @@ describe("Visibility", () => {
     checkVisibility([0, 1], 3);
 
     l2Choice.findChoice("2A").click();
+    l3Choice.findChoice("3A").click();
     checkVisibility([0, 1, 2], 3);
 
     LabelStudio.serialize().then((result) => {
-      expect(result).to.have.lengthOf(2);
+      expect(result).to.have.lengthOf(3);
       expect(result[0]).to.include({ from_name: "level1" });
       expect(result[0].value.choices).to.have.lengthOf(1);
       expect(result[0]).to.nested.include({ "value.choices[0]": "1A" });
       expect(result[1]).to.include({ from_name: "level2" });
       expect(result[1].value.choices).to.have.lengthOf(1);
       expect(result[1]).to.nested.include({ "value.choices[0]": "2A" });
+      expect(result[2]).to.include({ from_name: "level3" });
+      expect(result[2].value.choices).to.have.lengthOf(1);
+      expect(result[2]).to.nested.include({ "value.choices[0]": "3A" });
+    });
+
+    l1Choice.findChoice("1A").click();
+    checkVisibility([0], 3);
+
+    LabelStudio.serialize().then((result) => {
+      expect(result).to.have.lengthOf(0);
     });
 
     l1Choice.findChoice("1B").click();

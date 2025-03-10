@@ -1,4 +1,3 @@
-
 export const simpleVisibleWhenConfig = `<View>
   <Text name="text" value="$text"/>
 

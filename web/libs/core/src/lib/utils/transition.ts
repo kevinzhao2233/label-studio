@@ -25,12 +25,14 @@ export const aroundTransition = (
 
       element.removeEventListener("transitionstart", onTransitionStarted);
       element.removeEventListener("transitionend", onTransitionEnded);
+      element.removeEventListener("transitioncancel", onTransitionEnded);
       resolve();
     };
 
     if (element) {
       element.addEventListener("transitionstart", onTransitionStarted);
       element.addEventListener("transitionend", onTransitionEnded);
+      element.addEventListener("transitioncancel", onTransitionEnded);
     }
 
     await beforeTransition?.(element);

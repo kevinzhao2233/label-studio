@@ -49,7 +49,7 @@ export const TopBar = observer(({ store }) => {
             </Tooltip>
           )}
           {store.hasInterface("annotations:add-new") && (
-            <Tooltip alignment="top-left" title="Create a new annotation">
+            <Tooltip alignment="top-left" title="Create a new annotation" style={{ "--offset-x": "11px" }}>
               <Button
                 icon={<IconPlus />}
                 className={"topbar__button"}

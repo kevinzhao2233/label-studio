@@ -10,7 +10,7 @@ type UserpicProps = {
   className?: string;
   faded?: boolean;
   showUsername?: boolean;
-  size?: number | false;
+  size?: number;
   src?: string;
   style?: CSSProperties;
   user?: any;
@@ -31,7 +31,7 @@ export const Userpic = forwardRef(
       className,
       faded = false,
       showUsername,
-      size = false,
+      size,
       src,
       style = {},
       addCount,

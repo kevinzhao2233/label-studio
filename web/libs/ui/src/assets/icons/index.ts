@@ -147,6 +147,8 @@ export { ReactComponent as IconSpark } from "./spark.svg";
 
 export { ReactComponent as IconBoundingBox } from "./bounding-box.svg";
 export { ReactComponent as IconClockTimeFourOutline } from "./clock-time-four-outline.svg";
+export { ReactComponent as IconQuestionOutline } from "./question-outline.svg";
+export { ReactComponent as IconCode } from "./code.svg";
 
 export * from "./annotation";
 export * from "./outliner";

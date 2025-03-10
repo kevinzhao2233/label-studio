@@ -1,6 +1,5 @@
 import { observer } from "mobx-react";
 import { createContext, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { RiCodeLine } from "react-icons/ri";
 import AutoSizer from "react-virtualized-auto-sizer";
 import { VariableSizeList } from "react-window";
 import InfiniteLoader from "react-window-infinite-loader";
@@ -9,7 +8,7 @@ import { isDefined } from "../../../utils/utils";
 import { Button } from "../Button/Button";
 import { Icon } from "../Icon/Icon";
 import { modal } from "../Modal/Modal";
-import { IconGear, IconGearNewUI } from "@humansignal/icons";
+import { IconCode, IconGear, IconGearNewUI } from "@humansignal/icons";
 import { Tooltip } from "@humansignal/ui";
 import "./Table.scss";
 import { TableCheckboxCell } from "./TableCheckbox";
@@ -145,7 +144,7 @@ export const Table = observer(
                   body: <TaskSourceView content={out} onTaskLoad={onTaskLoad} sdkType={type} />,
                 });
               }}
-              icon={<Icon icon={RiCodeLine} />}
+              icon={<Icon icon={IconCode} />}
             />
           </Tooltip>
         );

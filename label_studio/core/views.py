@@ -23,11 +23,9 @@ from django.http import (
     HttpResponse,
     HttpResponseForbidden,
     HttpResponseNotFound,
-    HttpResponseServerError,
     JsonResponse,
 )
 from django.shortcuts import redirect, render, reverse
-from django.template import loader
 from django.utils._os import safe_join
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
@@ -115,6 +113,7 @@ def editor_files(request):
     """Get last editor files"""
     response = utils.common.find_editor_files()
     return HttpResponse(json.dumps(response), status=200)
+
 
 def samples_time_series(request):
     """Generate time series example for preview"""

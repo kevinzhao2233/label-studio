@@ -96,7 +96,15 @@ export const DataManagerPage = ({ ...props }) => {
 
     Object.assign(window, { dataManager });
 
-    dataManager.on("crash", () => setCrashed());
+    dataManager.on("crash", (details) => {
+      if (details?.error?.startsWith("Task ID:")) {
+        sessionStorage.setItem("redirectMessage", details.error);
+        history.push(buildLink("/", { id: params.id }));
+      } else if (details?.error?.startsWith("Project ID:")) {
+        sessionStorage.setItem("redirectMessage", details.error);
+        history.push("/projects");
+      }
+    });
 
     dataManager.on("settingsClicked", () => {
       history.push(buildLink("/settings/labeling", { id: params.id }));
@@ -122,7 +130,7 @@ export const DataManagerPage = ({ ...props }) => {
       const target = route.replace(/^projects/, "");
 
       if (target) history.push(buildLink(target, { id: params.id }));
-      else history.push("/projects/");
+      else history.push("/projects");
     });
 
     if (interactiveBacked) {

@@ -163,7 +163,7 @@ const Tab = ({
       name="tab"
       mod={{ active: locked ? tabIndex === breakPointActiveTab : active }}
     >
-      {!locked && <Elem name="icon" tag={IconOutlinerDrag} width={8} />}
+      {!locked && <Elem name="icon" tag={IconOutlinerDrag} />}
       {tabText}
     </Elem>
   );

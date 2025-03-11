@@ -32,8 +32,6 @@ export const Actions = ({ store }) => {
             onClick={() => onToggleVisibility()}
             primary={isViewAll}
             style={{
-              height: 36,
-              width: 36,
               padding: 0,
             }}
           />

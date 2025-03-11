@@ -40,15 +40,16 @@ export const TopBar = observer(({ store }) => {
                 onClick={annotationStore.toggleViewingAllAnnotations}
                 primary={isViewAll}
                 style={{
-                  height: 36,
-                  width: 36,
+                  height: 24,
+                  width: 24,
                   padding: 0,
+                  marginRight: "var(--spacing-small, 8px)",
                 }}
               />
             </Tooltip>
           )}
           {store.hasInterface("annotations:add-new") && (
-            <Tooltip alignment="top-left" title="Create a new annotation" style={{ "--offset-x": "11px" }}>
+            <Tooltip title="Create a new annotation" style={{ "--offset-x": "11px" }}>
               <Button
                 icon={<IconPlus />}
                 className={"topbar__button"}
@@ -61,10 +62,10 @@ export const TopBar = observer(({ store }) => {
                   store.annotationStore.selectAnnotation(created.id);
                 }}
                 style={{
-                  height: 36,
-                  width: 36,
+                  height: 24,
+                  width: 24,
                   padding: 0,
-                  marginRight: 4,
+                  marginRight: "var(--spacing-small, 8px)",
                 }}
               />
             </Tooltip>

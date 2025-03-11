@@ -74,10 +74,7 @@ class TestProjectSampleTask(TestCase):
         ):
             response = client.post(
                 self.url,
-                data=json.dumps({
-                    'label_config': label_config, 
-                    'include_annotation_and_prediction': True
-                }),
+                data=json.dumps({'label_config': label_config, 'include_annotation_and_prediction': True}),
                 content_type='application/json',
             )
 
@@ -113,10 +110,7 @@ class TestProjectSampleTask(TestCase):
 
             response = client.post(
                 self.url,
-                data=json.dumps({
-                    'label_config': label_config,
-                    'include_annotation_and_prediction': True
-                }),
+                data=json.dumps({'label_config': label_config, 'include_annotation_and_prediction': True}),
                 content_type='application/json',
             )
 
@@ -151,10 +145,7 @@ class TestProjectSampleTask(TestCase):
         ):
             response = client.post(
                 self.url,
-                data=json.dumps({
-                    'label_config': label_config,
-                    'include_annotation_and_prediction': True
-                }),
+                data=json.dumps({'label_config': label_config, 'include_annotation_and_prediction': True}),
                 content_type='application/json',
             )
 
@@ -178,15 +169,13 @@ class TestProjectSampleTask(TestCase):
         </View>
         """
 
-        with patch('projects.api.Project.get_sample_task', return_value=None) as mock_get_sample_task, \
-            patch.object(projects.api.LabelInterface, 'generate_complete_sample_task', return_value=None) as mock_generate_complete:  # Shouldn't be called
+        with patch('projects.api.Project.get_sample_task', return_value=None) as mock_get_sample_task, patch.object(
+                projects.api.LabelInterface, 'generate_complete_sample_task', return_value=None
+        ) as mock_generate_complete:  # Shouldn't be called
 
             client.post(
                 self.url,
-                data=json.dumps({
-                    'label_config': label_config,
-                    'include_annotation_and_prediction': False
-                }),
+                data=json.dumps({'label_config': label_config, 'include_annotation_and_prediction': False}),
                 content_type='application/json',
             )
 
@@ -208,17 +197,15 @@ class TestProjectSampleTask(TestCase):
         </View>
         """
         
-        with patch('projects.api.Project.get_sample_task', return_value=None) as mock_get_sample_task, \
-            patch.object(projects.api.LabelInterface, 'generate_complete_sample_task', return_value=None) as mock_generate_complete:  # Shouldn't be called
+        with patch('projects.api.Project.get_sample_task', return_value=None) as mock_get_sample_task, patch.object(
+                projects.api.LabelInterface, 'generate_complete_sample_task', return_value=None
+        ) as mock_generate_complete:  # Shouldn't be called
 
             client.post(
                 self.url,
-                data=json.dumps({
-                    'label_config': label_config,
-                }),
+                data=json.dumps({'label_config': label_config}),
                 content_type='application/json',
             )
 
             mock_get_sample_task.assert_called_once()
             mock_generate_complete.assert_not_called()
-           

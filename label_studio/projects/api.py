@@ -830,7 +830,7 @@ class ProjectSampleTask(generics.RetrieveAPIView):
     def post(self, request, *args, **kwargs):
         label_config = self.request.data.get('label_config')
         include_annotation_and_prediction = self.request.data.get('include_annotation_and_prediction', False)
-        
+
         if not label_config:
             raise RestValidationError('Label config is not set or is empty')
 

@@ -10,8 +10,8 @@ import { triggerResizeEvent } from "../../utils/utilities";
 
 import EditorSettings from "../../core/settings/editorsettings";
 import * as TagSettings from "./TagSettings";
-import { Checkbox, IconClose } from "@humansignal/icons";
-import { Toggle } from "@humansignal/ui";
+import { IconClose } from "@humansignal/icons";
+import { Checkbox, Toggle } from "@humansignal/ui";
 import { FF_DEV_3873, isFF } from "../../utils/feature-flags";
 
 const HotkeysDescription = () => {

@@ -74,7 +74,10 @@ class TestProjectSampleTask(TestCase):
         ):
             response = client.post(
                 self.url,
-                data=json.dumps({'label_config': label_config}),
+                data=json.dumps({
+                    'label_config': label_config, 
+                    'include_annotation_and_prediction': True
+                }),
                 content_type='application/json',
             )
 
@@ -110,7 +113,10 @@ class TestProjectSampleTask(TestCase):
 
             response = client.post(
                 self.url,
-                data=json.dumps({'label_config': label_config}),
+                data=json.dumps({
+                    'label_config': label_config,
+                    'include_annotation_and_prediction': True
+                }),
                 content_type='application/json',
             )
 
@@ -145,7 +151,10 @@ class TestProjectSampleTask(TestCase):
         ):
             response = client.post(
                 self.url,
-                data=json.dumps({'label_config': label_config}),
+                data=json.dumps({
+                    'label_config': label_config,
+                    'include_annotation_and_prediction': True
+                }),
                 content_type='application/json',
             )
 
@@ -153,3 +162,63 @@ class TestProjectSampleTask(TestCase):
             response_data = response.json()
             assert 'sample_task' in response_data
             assert response_data['sample_task'] == fallback_data
+
+    def test_sample_task_with_include_annotation_and_prediction_false(self):
+        """Test that setting include_annotation_and_prediction=False bypasses LabelInterface.generate_complete_sample_task"""
+        client = APIClient()
+        client.force_authenticate(user=self.project.created_by)
+        label_config = """
+        <View>
+          <Text name='text' value='$text'/>
+          <Choices name='sentiment' toName='text'>
+            <Choice value='Positive'/>
+            <Choice value='Negative'/>
+            <Choice value='Neutral'/>
+          </Choices>
+        </View>
+        """
+
+        with patch('projects.api.Project.get_sample_task', return_value=None) as mock_get_sample_task, \
+            patch.object(projects.api.LabelInterface, 'generate_complete_sample_task', return_value=None) as mock_generate_complete:  # Shouldn't be called
+
+            client.post(
+                self.url,
+                data=json.dumps({
+                    'label_config': label_config,
+                    'include_annotation_and_prediction': False
+                }),
+                content_type='application/json',
+            )
+
+            mock_get_sample_task.assert_called_once()
+            mock_generate_complete.assert_not_called()
+
+    def test_sample_task_default_behavior(self):
+        """Test that omitting include_annotation_and_prediction defaults to False and uses simple sample task"""
+        client = APIClient()
+        client.force_authenticate(user=self.project.created_by)
+        label_config = """
+        <View>
+          <Text name='text' value='$text'/>
+          <Choices name='sentiment' toName='text'>
+            <Choice value='Positive'/>
+            <Choice value='Negative'/>
+            <Choice value='Neutral'/>
+          </Choices>
+        </View>
+        """
+        
+        with patch('projects.api.Project.get_sample_task', return_value=None) as mock_get_sample_task, \
+            patch.object(projects.api.LabelInterface, 'generate_complete_sample_task', return_value=None) as mock_generate_complete:  # Shouldn't be called
+
+            client.post(
+                self.url,
+                data=json.dumps({
+                    'label_config': label_config,
+                }),
+                content_type='application/json',
+            )
+
+            mock_get_sample_task.assert_called_once()
+            mock_generate_complete.assert_not_called()
+           

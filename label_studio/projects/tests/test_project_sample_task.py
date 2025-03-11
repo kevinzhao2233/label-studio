@@ -170,7 +170,7 @@ class TestProjectSampleTask(TestCase):
         """
 
         with patch('projects.api.Project.get_sample_task', return_value=None) as mock_get_sample_task, patch.object(
-                projects.api.LabelInterface, 'generate_complete_sample_task', return_value=None
+            projects.api.LabelInterface, 'generate_complete_sample_task', return_value=None
         ) as mock_generate_complete:  # Shouldn't be called
 
             client.post(
@@ -198,7 +198,7 @@ class TestProjectSampleTask(TestCase):
         """
         
         with patch('projects.api.Project.get_sample_task', return_value=None) as mock_get_sample_task, patch.object(
-                projects.api.LabelInterface, 'generate_complete_sample_task', return_value=None
+            projects.api.LabelInterface, 'generate_complete_sample_task', return_value=None
         ) as mock_generate_complete:  # Shouldn't be called
 
             client.post(

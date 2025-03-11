@@ -54,16 +54,18 @@ class JWTSettingsAPI(CreateAPIView):
         jwt_settings = request.user.active_organization.jwt
         # Check if user has view permission
         if not jwt_settings.has_view_permission(request.user):
-            return Response({"detail": "You do not have permission to view JWT settings"}, 
-                           status=status.HTTP_403_FORBIDDEN)
+            return Response(
+                {"detail": "You do not have permission to view JWT settings"}, status=status.HTTP_403_FORBIDDEN
+            )
         return Response(self.get_serializer(jwt_settings).data)
 
     def post(self, request, *args, **kwargs):
         jwt_settings = request.user.active_organization.jwt
         # Check if user has modify permission
         if not jwt_settings.has_modify_permission(request.user):
-            return Response({"detail": "You do not have permission to modify JWT settings"}, 
-                           status=status.HTTP_403_FORBIDDEN)
+            return Response(
+                {"detail": "You do not have permission to modify JWT settings"}, status=status.HTTP_403_FORBIDDEN
+            )
         serializer = self.get_serializer(data=request.data, instance=jwt_settings)
         serializer.is_valid(raise_exception=True)
         serializer.save()

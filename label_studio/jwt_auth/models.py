@@ -37,13 +37,13 @@ class JWTSettings(models.Model):
     def has_view_permission(self, user):
         """Any member of the organization can view JWT settings."""
         return self.organization.has_permission(user)
-    
+
     def has_modify_permission(self, user):
         """Only organization owners/admins can modify JWT settings."""
         if not self.organization.has_permission(user):
             return False
         return user.is_owner or (hasattr(user, 'is_administrator') and user.is_administrator)
-    
+
     def has_permission(self, user):
         """Only organization owners/admins can modify JWT settings."""
         return self.has_modify_permission(user)

@@ -21,7 +21,7 @@ def test_jwt_settings_permissions():
 
     # Any member should be able to view
     assert org.jwt.has_view_permission(user)
-    
+
     # Only owners and administrators can modify
     user.is_owner = True
     user.save()

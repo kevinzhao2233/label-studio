@@ -47,8 +47,8 @@ class TokenExistsError(APIException):
 )
 class JWTSettingsAPI(CreateAPIView):
     queryset = JWTSettings.objects.all()
-    permission_required = all_permissions.organizations_change
     serializer_class = JWTSettingsSerializer
+    permission_required = all_permissions.organizations_view
 
     def get(self, request, *args, **kwargs):
         jwt_settings = request.user.active_organization.jwt

@@ -63,8 +63,7 @@ export const TopBar = observer(({ store }) => {
                 }}
                 style={{
                   height: 24,
-                  width: 24,
-                  padding: 0,
+                  padding: "0 var(--spacing-small-x, 4px)",
                   marginRight: "var(--spacing-small, 8px)",
                 }}
               />

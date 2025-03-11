@@ -71,7 +71,6 @@ export const instruments = {
   },
   columns: ({ size }) => {
     const iconProps = {
-      size: 16,
       style: {
         marginRight: 4,
       },

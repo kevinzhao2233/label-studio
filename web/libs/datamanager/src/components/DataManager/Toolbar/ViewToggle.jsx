@@ -10,7 +10,7 @@ const viewInjector = inject(({ store }) => ({
 export const ViewToggle = viewInjector(
   observer(({ view, size, ...rest }) => {
     return (
-      <RadioGroup size={size} value={view.type} onChange={(e) => view.setType(e.target.value)} {...rest}>
+      <RadioGroup size={size} value={view.type} onChange={(e) => view.setType(e.target.value)} {...rest} style={{"--button-padding": "0 var(--spacing-small-x, 4px)"}}>
         <Tooltip title="List view">
           <div>
             <RadioGroup.Button value="list">

@@ -162,9 +162,9 @@ export const ActionsButton = injector(
         <Button {...(isNewUI ? { className: "actionButtonPrime" } : {})} size={size} disabled={!hasSelected} {...rest}>
           {selectedCount > 0 ? `${selectedCount} ${recordTypeLabel}${selectedCount > 1 ? "s" : ""}` : "Actions"}
           {isOpen ? (
-            <IconChevron size="12" style={{ marginLeft: 4, marginRight: -7 }} />
+            <IconChevron style={{ marginLeft: 4, marginRight: -7 }} />
           ) : (
-            <IconChevronDown size="12" style={{ marginLeft: 4, marginRight: -7 }} />
+            <IconChevronDown style={{ marginLeft: 4, marginRight: -7 }} />
           )}
         </Button>
       </Dropdown.Trigger>

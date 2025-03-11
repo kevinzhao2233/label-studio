@@ -32,10 +32,9 @@ export const Actions = ({ store }) => {
             onClick={() => onToggleVisibility()}
             primary={isViewAll}
             style={{
-              height: 24,
-              width: 24,
+              height: 36,
+              width: 36,
               padding: 0,
-              marginRight: "var(--spacing-small, 8px)",
             }}
           />
         </Tooltip>

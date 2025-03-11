@@ -40,10 +40,9 @@ export const TopBar = observer(({ store }) => {
                 onClick={annotationStore.toggleViewingAllAnnotations}
                 primary={isViewAll}
                 style={{
-                  height: 24,
-                  width: 24,
+                  height: 36,
+                  width: 36,
                   padding: 0,
-                  marginRight: "var(--spacing-small, 8px)",
                 }}
               />
             </Tooltip>
@@ -62,8 +61,9 @@ export const TopBar = observer(({ store }) => {
                   store.annotationStore.selectAnnotation(created.id);
                 }}
                 style={{
-                  height: 24,
-                  padding: "0 var(--spacing-small-x, 4px)",
+                  height: 36,
+                  width: 36,
+                  padding: 0,
                   marginRight: "var(--spacing-small, 8px)",
                 }}
               />

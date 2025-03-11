@@ -1,14 +1,18 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { Modal } from "../../../components/Modal/Modal";
 import { SampleDatasetSelect } from "@humansignal/core/blocks/SampleDatasetSelect/SampleDatasetSelect";
+import samples from "./samples.json";
 import { cn } from "../../../utils/bem";
 import { cn as scn } from "@humansignal/shad/utils";
+import { Badge } from "@humansignal/shad/components/ui/badge";
 import { unique } from "../../../utils/helpers";
 import "./Import.scss";
 import { IconError, IconInfo, IconUpload } from "../../../assets/icons";
-import { useAPI } from "../../../providers/ApiProvider";
+import { API, useAPI } from "../../../providers/ApiProvider";
 import Input from "libs/datamanager/src/components/Common/Input/Input";
 import { Button } from "apps/labelstudio/src/components";
+import { ff } from "@humansignal/core";
+import { IconTrash } from "libs/editor/src/assets/icons";
 
 const importClass = cn("upload_page");
 const dropzoneClass = cn("dropzone");
@@ -57,6 +61,36 @@ function traverseFileTree(item, path) {
     }
   });
 }
+
+export const importFiles = async ({
+  files,
+  body,
+  project,
+  onUploadStart,
+  onUploadFinish,
+  onFinish,
+  onError,
+  dontCommitToProject,
+}) => {
+  onUploadStart?.(files);
+
+  const query = dontCommitToProject ? { commit_to_project: "false" } : {};
+
+  const contentType =
+    body instanceof FormData
+      ? "multipart/form-data" // usual multipart for usual files
+      : "application/x-www-form-urlencoded"; // chad urlencoded for URL uploads
+  const res = await API.invoke(
+    "importFiles",
+    { pk: project.id, ...query },
+    { headers: { "Content-Type": contentType }, body },
+  );
+
+  if (res && !res.error) onFinish?.(res);
+  else onError?.(res?.response);
+
+  onUploadFinish?.(files);
+};
 
 function getFiles(files) {
   // @todo this can be not a files, but text or any other draggable stuff
@@ -150,9 +184,11 @@ const ErrorMessage = ({ error }) => {
 
 export const ImportPage = ({
   project,
+  sample,
   show = true,
   onWaiting,
   onFileListUpdate,
+  onSampleDatasetSelect,
   highlightCsvHandling,
   dontCommitToProject = false,
   csvHandling,
@@ -183,7 +219,7 @@ export const ImportPage = ({
   };
 
   const [files, dispatch] = useReducer(processFiles, { uploaded: [], uploading: [], ids: [] });
-  const showList = Boolean(files.uploaded?.length || files.uploading?.length);
+  const showList = Boolean(files.uploaded?.length || files.uploading?.length || sample);
 
   const loadFilesList = useCallback(
     async (file_upload_ids) => {
@@ -239,27 +275,18 @@ export const ImportPage = ({
     [addColumns, loadFilesList, setLoading],
   );
 
-  const importFiles = useCallback(
+  const importFilesImmediately = useCallback(
     async (files, body) => {
-      dispatch({ sending: files });
-
-      const query = dontCommitToProject ? { commit_to_project: "false" } : {};
-      // @todo use json for dataset uploads by URL
-      const contentType =
-        body instanceof FormData
-          ? "multipart/form-data" // usual multipart for usual files
-          : "application/x-www-form-urlencoded"; // chad urlencoded for URL uploads
-      const res = await api.callApi("importFiles", {
-        params: { pk: project.id, ...query },
-        headers: { "Content-Type": contentType },
+      importFiles({
+        files,
         body,
-        errorFilter: () => true,
+        project,
+        onError,
+        onFinish,
+        onUploadStart: (files) => dispatch({ sending: files }),
+        onUploadFinish: (files) => dispatch({ sent: files }),
+        dontCommitToProject,
       });
-
-      if (res && !res.error) onFinish?.(res);
-      else onError?.(res?.response);
-
-      dispatch({ sent: files });
     },
     [project, onFinish],
   );
@@ -278,9 +305,9 @@ export const ImportPage = ({
         }
         fd.append(f.name, f);
       }
-      return importFiles(files, fd);
+      return importFilesImmediately(files, fd);
     },
-    [importFiles, onStart],
+    [importFilesImmediately, onStart],
   );
 
   const onUpload = useCallback(
@@ -305,9 +332,9 @@ export const ImportPage = ({
       onWaiting?.(true);
       const body = new URLSearchParams({ url });
 
-      importFiles([{ name: url }], body);
+      importFilesImmediately([{ name: url }], body);
     },
-    [importFiles],
+    [importFilesImmediately],
   );
 
   useEffect(() => {
@@ -354,13 +381,9 @@ export const ImportPage = ({
           <IconUpload width="16" height="16" className={importClass.elem("upload-icon")} />
           Upload {files.uploaded.length ? "More " : ""}Files
         </Button>
-        <SampleDatasetSelect
-          samples={[
-            { title: "sample one", description: "this is a first sample", id: "one" },
-            { title: "sample two", description: "this is a second sample", id: "two" },
-            { title: "sample three", description: "this is a third sample", id: "three" },
-          ]}
-        />
+        {ff.isFF(ff.FF_SAMPLE_DATASETS) && (
+          <SampleDatasetSelect samples={samples} sample={sample} onSampleApplied={onSampleDatasetSelect} />
+        )}
         <div
           className={importClass.elem("csv-handling").mod({ highlighted: highlightCsvHandling, hidden: !csvHandling })}
         >
@@ -423,10 +446,33 @@ export const ImportPage = ({
           {showList && (
             <table>
               <tbody>
+                {sample && (
+                  <tr key={sample.url}>
+                    <td>
+                      <div className="flex items-center gap-2">
+                        {sample.title}
+                        <Badge variant="info" className="h-5 text-xs rounded-sm">
+                          Sample
+                        </Badge>
+                      </div>
+                    </td>
+                    <td>{sample.description}</td>
+                    <td>
+                      <Button
+                        size="icon"
+                        look="destructive"
+                        style={{ height: 26, width: 26, padding: 0 }}
+                        onClick={() => onSampleDatasetSelect(undefined)}
+                      >
+                        <IconTrash style={{ width: 12, height: 12 }} />
+                      </Button>
+                    </td>
+                  </tr>
+                )}
                 {files.uploading.map((file, idx) => (
                   <tr key={`${idx}-${file.name}`}>
                     <td>{file.name}</td>
-                    <td>
+                    <td colSpan={2}>
                       <span className={importClass.elem("file-status").mod({ uploading: true })} />
                     </td>
                   </tr>

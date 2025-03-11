@@ -1,5 +1,5 @@
 import { EnterpriseBadge } from "@humansignal/ui";
-import React from "react";
+import React, { useCallback } from "react";
 import { useHistory } from "react-router";
 import { Button, ToggleItems } from "../../components";
 import { Modal } from "../../components/Modal/Modal";
@@ -9,7 +9,7 @@ import { useAPI } from "../../providers/ApiProvider";
 import { cn } from "../../utils/bem";
 import { ConfigPage } from "./Config/Config";
 import "./CreateProject.scss";
-import { ImportPage } from "./Import/Import";
+import { importFiles, ImportPage } from "./Import/Import";
 import { useImportPage } from "./Import/useImportPage";
 import { useDraftProject } from "./utils/useDraftProject";
 import { Input, Select, TextArea } from "../../components/Form";
@@ -90,6 +90,8 @@ export const CreateProject = ({ onClose, redirect = true }) => {
   const [error, setError] = React.useState();
   const [description, setDescription] = React.useState("");
   const [config, setConfig] = React.useState("<View></View>");
+  const [sample, setSample] = React.useState(null);
+
   const setStep = React.useCallback((step) => {
     _setStep(step);
     const eventNameMap = {
@@ -104,7 +106,7 @@ export const CreateProject = ({ onClose, redirect = true }) => {
     setError(null);
   }, [name]);
 
-  const { columns, uploading, uploadDisabled, finishUpload, pageProps } = useImportPage(project);
+  const { columns, uploading, uploadDisabled, finishUpload, pageProps } = useImportPage(project, sample);
 
   const rootClass = cn("create-project");
   const tabClass = rootClass.elem("tab");
@@ -126,6 +128,18 @@ export const CreateProject = ({ onClose, redirect = true }) => {
     }),
     [name, description, config],
   );
+  const uploadSample = useCallback(
+    async (sample) => {
+      const url = sample.url;
+      const body = new URLSearchParams({ url });
+      await importFiles({
+        files: [{ name: url }],
+        body,
+        project,
+      });
+    },
+    [project],
+  );
 
   const onCreate = React.useCallback(async () => {
     const imported = await finishUpload();
@@ -133,6 +147,10 @@ export const CreateProject = ({ onClose, redirect = true }) => {
     if (!imported) return;
 
     setWaitingStatus(true);
+
+    if (sample) {
+      await uploadSample(sample);
+    }
     const response = await api.callApi("updateProject", {
       params: {
         pk: project.id,
@@ -209,7 +227,13 @@ export const CreateProject = ({ onClose, redirect = true }) => {
           setDescription={setDescription}
           show={step === "name"}
         />
-        <ImportPage project={project} show={step === "import"} {...pageProps} />
+        <ImportPage
+          project={project}
+          show={step === "import"}
+          sample={sample}
+          onSampleDatasetSelect={setSample}
+          {...pageProps}
+        />
         <ConfigPage
           project={project}
           onUpdate={setConfig}

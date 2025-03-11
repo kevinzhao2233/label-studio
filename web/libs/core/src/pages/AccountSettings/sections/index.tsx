@@ -35,14 +35,12 @@ export const accountSettingsSections = (settings: AuthTokenSettings): SectionTyp
       isFF(FF_AUTH_TOKENS) && {
         title: "Personal Access Token",
         id: "personal-access-token",
-        // component: PersonalAccessToken,
         component: PersonalJWTToken,
         description: PersonalAccessTokenDescription,
       },
     settings.legacy_api_tokens_enabled && {
       title: isFF(FF_AUTH_TOKENS) ? "Legacy Token" : "Access Token",
       id: "legacy-token",
-      // component: PersonalAccessToken,
       component: PersonalAccessToken,
       description: PersonalAccessTokenDescription,
     },

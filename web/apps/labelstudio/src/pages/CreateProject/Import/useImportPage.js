@@ -4,7 +4,7 @@ import { unique } from "../../../utils/helpers";
 
 const DEFAULT_COLUMN = "$undefined$";
 
-export const useImportPage = (project) => {
+export const useImportPage = (project, sample) => {
   const [uploading, setUploadingStatus] = React.useState(false);
   const [fileIds, setFileIds] = React.useState([]);
   const [_columns, _setColumns] = React.useState([]);

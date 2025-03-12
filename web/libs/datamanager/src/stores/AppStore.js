@@ -483,11 +483,11 @@ export const AppStore = types
 
       try {
         const newProject = yield self.apiCall("project", params);
-        const projectLength = Object.entries(self.project ?? {}).length;
-        const newProjectLength = Object.entries(newProject ?? {}).length;
+        const hasExistingProjectData = Object.entries(self.project ?? {}).length > 0;
+        const hasNewProjectData = Object.entries(newProject ?? {}).length > 0;
 
         self.needsDataFetch =
-          options.force !== true && projectLength > 0 && newProjectLength > 0
+          options.force !== true && hasExistingProjectData && hasNewProjectData
             ? self.project.task_count !== newProject.task_count ||
               self.project.task_number !== newProject.task_number ||
               self.project.annotation_count !== newProject.annotation_count ||

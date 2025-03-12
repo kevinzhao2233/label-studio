@@ -1,8 +1,6 @@
 import { useChoices, LabelStudio, Textarea, ImageView, Sidebar, Choices } from "@humansignal/frontend-test/helpers/LSF";
 import {
   multipleChainedViewsVisibilityConfig,
-  perRegionConditionalVisibilityConfig,
-  perRegionConditionalVisibilityResult,
   perRegionVisibilityConfig,
   perRegionVisibilityResult,
   simpleUnselectedVisibilityConfig,

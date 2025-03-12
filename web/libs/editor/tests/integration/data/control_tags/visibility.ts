@@ -218,22 +218,22 @@ export const perRegionConditionalVisibilityConfig = `
 
 export const perRegionConditionalVisibilityResult = [
   {
-    "original_width": 600,
-    "original_height": 403,
-    "image_rotation": 0,
-    "value": {
-        "x": 22.72106824925816,
-        "y": 47.18100890207715,
-        "width": 21.126607319485665,
-        "height": 31.157270029673583,
-        "rotation": 0
+    original_width: 600,
+    original_height: 403,
+    image_rotation: 0,
+    value: {
+      x: 22.72106824925816,
+      y: 47.18100890207715,
+      width: 21.126607319485665,
+      height: 31.157270029673583,
+      rotation: 0,
     },
-    "id": "fgWSL6Nor_",
-    "from_name": "rect",
-    "to_name": "image",
-    "type": "rectangle",
-    "origin": "manual"
-  }
+    id: "fgWSL6Nor_",
+    from_name: "rect",
+    to_name: "image",
+    type: "rectangle",
+    origin: "manual",
+  },
 ];
 
 export const visibilityTextData = {

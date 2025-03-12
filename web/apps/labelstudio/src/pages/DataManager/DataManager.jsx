@@ -112,7 +112,7 @@ export const DataManagerPage = ({ ...props }) => {
       }
 
       if (isMissingTaskError) {
-        history.push(buildLink("/", { id: params.id }));
+        history.push(buildLink("", { id: params.id }));
       } else if (isMissingProjectError) {
         history.push("/projects");
       }

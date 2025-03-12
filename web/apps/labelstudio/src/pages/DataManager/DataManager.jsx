@@ -14,7 +14,7 @@ import { isDefined } from "../../utils/helpers";
 import { ImportModal } from "../CreateProject/Import/ImportModal";
 import { ExportPage } from "../ExportPage/ExportPage";
 import { APIConfig } from "./api-config";
-import { ToastContext } from "@humansignal/ui";
+import { ToastContext, ToastType } from "@humansignal/ui";
 import { FF_OPTIC_2, isFF } from "../../utils/feature-flags";
 
 import "./DataManager.scss";
@@ -97,11 +97,21 @@ export const DataManagerPage = ({ ...props }) => {
     Object.assign(window, { dataManager });
 
     dataManager.on("crash", (details) => {
-      if (details?.error?.startsWith("Task ID:")) {
-        sessionStorage.setItem("redirectMessage", details.error);
+      const error = details?.error;
+      const isMissingTaskError = error?.startsWith("Task ID:");
+      const isMissingProjectError = error?.startsWith("Project ID:");
+
+      if (isMissingTaskError || isMissingProjectError) {
+        toast.show({
+          message: `The ${isMissingTaskError ? "task" : "project"} you are trying to access does not exist or is no longer available.`,
+          type: ToastType.error,
+          duration: 10000,
+        });
+      }
+
+      if (isMissingTaskError) {
         history.push(buildLink("/", { id: params.id }));
-      } else if (details?.error?.startsWith("Project ID:")) {
-        sessionStorage.setItem("redirectMessage", details.error);
+      } else if (isMissingProjectError) {
         history.push("/projects");
       }
     });

@@ -102,10 +102,12 @@ export const DataManagerPage = ({ ...props }) => {
       const isMissingProjectError = error?.startsWith("Project ID:");
 
       if (isMissingTaskError || isMissingProjectError) {
+        const message = `The ${
+          isMissingTaskError ? "task" : "project"
+        } you are trying to access does not exist or is no longer available.`;
+
         toast.show({
-          message: `The ${
-            isMissingTaskError ? "task" : "project"
-          } you are trying to access does not exist or is no longer available.`,
+          message,
           type: ToastType.error,
           duration: 10000,
         });

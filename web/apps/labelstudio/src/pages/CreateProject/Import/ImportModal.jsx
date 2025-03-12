@@ -8,7 +8,7 @@ import { ProjectProvider, useProject } from "../../../providers/ProjectProvider"
 import { useFixedLocation } from "../../../providers/RoutesProvider";
 import { Elem } from "../../../utils/bem";
 import { useRefresh } from "../../../utils/hooks";
-import { ImportPage } from "./Import";
+import { importFiles, ImportPage } from "./Import";
 import { useImportPage } from "./useImportPage";
 
 export const Inner = () => {
@@ -18,6 +18,7 @@ export const Inner = () => {
   const refresh = useRefresh();
   const { project } = useProject();
   const [waiting, setWaitingStatus] = useState(false);
+  const [sample, setSample] = useState(null);
   const api = useAPI();
 
   const { uploading, uploadDisabled, finishUpload, fileIds, pageProps } = useImportPage(project);
@@ -29,6 +30,22 @@ export const Inner = () => {
 
     return refresh(pathname);
   }, [location, history]);
+
+  const uploadSample = useCallback(
+    async (sample) => {
+      if (!sample) return;
+      setWaitingStatus(true);
+      const url = sample.url;
+      const body = new URLSearchParams({ url });
+      await importFiles({
+        files: [{ name: url }],
+        body,
+        project,
+      });
+      setWaitingStatus(false);
+    },
+    [project],
+  );
 
   const onCancel = useCallback(async () => {
     setWaitingStatus(true);
@@ -46,11 +63,12 @@ export const Inner = () => {
   }, [modal, project, fileIds, backToDM]);
 
   const onFinish = useCallback(async () => {
+    await uploadSample(sample);
     const imported = await finishUpload();
 
     if (!imported) return;
     backToDM();
-  }, [backToDM, finishUpload]);
+  }, [backToDM, finishUpload, sample]);
 
   return (
     <Modal
@@ -76,7 +94,7 @@ export const Inner = () => {
           </Button>
         </Space>
       </Modal.Header>
-      <ImportPage project={project} {...pageProps} />
+      <ImportPage project={project} sample={sample} onSampleDatasetSelect={setSample} {...pageProps} />
     </Modal>
   );
 };

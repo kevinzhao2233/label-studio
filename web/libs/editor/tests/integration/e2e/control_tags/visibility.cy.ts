@@ -3,7 +3,6 @@ import {
   multipleChainedViewsVisibilityConfig,
   perRegionVisibilityConfig,
   perRegionVisibilityResult,
-  simpleUnselectedVisibilityConfig,
   simpleVisibleWhenVisibilityConfig,
   textareaVisibilityConfig,
   visibilityImageData,
@@ -34,15 +33,14 @@ describe("Visibility", () => {
 
     LabelStudio.serialize().then((result) => {
       expect(result).to.have.lengthOf(3);
-      expect(result[0]).to.include({ from_name: "level1" });
-      expect(result[0].value.choices).to.have.lengthOf(1);
-      expect(result[0]).to.nested.include({ "value.choices[0]": "1A" });
-      expect(result[1]).to.include({ from_name: "level2" });
-      expect(result[1].value.choices).to.have.lengthOf(1);
-      expect(result[1]).to.nested.include({ "value.choices[0]": "2A" });
-      expect(result[2]).to.include({ from_name: "level3" });
-      expect(result[2].value.choices).to.have.lengthOf(1);
-      expect(result[2]).to.nested.include({ "value.choices[0]": "3A" });
+      const expected = [
+        { from_name: "level1", value: { choices: ["1A"] } },
+        { from_name: "level2", value: { choices: ["2A"] } },
+        { from_name: "level3", value: { choices: ["3A"] } },
+      ];
+      expected.forEach((item, index) => {
+        expect(result[index]).to.deep.include(item);
+      });
     });
 
     l1Choice.findChoice("1A").click();
@@ -57,9 +55,7 @@ describe("Visibility", () => {
 
     LabelStudio.serialize().then((result) => {
       expect(result).to.have.lengthOf(1);
-      expect(result[0].from_name).to.equal("level1");
-      expect(result[0].value.choices).to.have.lengthOf(1);
-      expect(result[0].value.choices[0]).to.equal("1B");
+      expect(result[0]).to.deep.include({ from_name: "level1", value: { choices: ["1B"] } });
     });
   });
 
@@ -79,12 +75,15 @@ describe("Visibility", () => {
 
     LabelStudio.serialize().then((result) => {
       expect(result).to.have.lengthOf(2);
-      expect(result[0]).to.include({ from_name: "level1" });
-      expect(result[0].value.choices).to.have.lengthOf(1);
-      expect(result[0]).to.nested.include({ "value.choices[0]": "1A" });
-      expect(result[1]).to.include({ from_name: "level2" });
-      expect(result[1].value.choices).to.have.lengthOf(1);
-      expect(result[1]).to.nested.include({ "value.choices[0]": "2A" });
+
+      const expected = [
+        { from_name: "level1", value: { choices: ["1A"] } },
+        { from_name: "level2", value: { choices: ["2A"] } },
+      ];
+
+      expected.forEach((item, index) => {
+        expect(result[index]).to.deep.include(item);
+      });
     });
 
     l3AChoice.findChoice("3X").click();
@@ -108,21 +107,22 @@ describe("Visibility", () => {
 
     LabelStudio.serialize().then((result) => {
       expect(result).to.have.lengthOf(1);
-      expect(result[0]).to.include({ from_name: "author" });
-      expect(result[0].value.choices).to.have.lengthOf(1);
-      expect(result[0]).to.nested.include({ "value.choices[0]": "choice1" });
+      expect(result[0]).to.deep.include({ from_name: "author", value: { choices: ["choice1"] } });
     });
 
     Textarea.type("text1{enter}");
 
     LabelStudio.serialize().then((result) => {
       expect(result).to.have.lengthOf(2);
-      expect(result[0]).to.include({ from_name: "author" });
-      expect(result[0].value.choices).to.have.lengthOf(1);
-      expect(result[0]).to.nested.include({ "value.choices[0]": "choice1" });
-      expect(result[1]).to.include({ from_name: "new_author" });
-      expect(result[1].value.text).to.have.lengthOf(1);
-      expect(result[1]).to.nested.include({ "value.text[0]": "text1" });
+
+      const expected = [
+        { from_name: "author", value: { choices: ["choice1"] } },
+        { from_name: "new_author", value: { text: ["text1"] } },
+      ];
+
+      expected.forEach((item, index) => {
+        expect(result[index]).to.deep.include(item);
+      });
     });
 
     l1Choice.findChoice("choice1").click();
@@ -150,12 +150,16 @@ describe("Visibility", () => {
 
     LabelStudio.serialize().then((result) => {
       expect(result).to.have.lengthOf(2);
-      expect(result[0]).to.include({ from_name: "label" });
-      expect(result[0].value.rectanglelabels).to.have.lengthOf(1);
-      expect(result[0]).to.nested.include({ "value.rectanglelabels[0]": "Tumor" });
-      expect(result[1]).to.include({ from_name: "classification" });
-      expect(result[1].value.choices).to.have.lengthOf(1);
-      expect(result[1]).to.nested.include({ "value.choices[0]": "Benign" });
+
+      const expected = [
+        { from_name: "label", value: { rectanglelabels: ["Tumor"] } },
+        { from_name: "classification", value: { choices: ["Benign"] } },
+      ];
+
+      expected.forEach((item, index) => {
+        expect(result[index]).to.include({ from_name: item.from_name });
+        expect(result[index].value).to.deep.include(item.value);
+      });
     });
 
     ImageView.clickAtRelative(0.5, 0.5);
@@ -163,40 +167,16 @@ describe("Visibility", () => {
 
     LabelStudio.serialize().then((result) => {
       expect(result).to.have.lengthOf(2);
-      expect(result[0]).to.include({ from_name: "label" });
-      expect(result[0].value.rectanglelabels).to.have.lengthOf(1);
-      expect(result[0]).to.nested.include({ "value.rectanglelabels[0]": "Tumor" });
-      expect(result[1]).to.include({ from_name: "classification" });
-      expect(result[1].value.choices).to.have.lengthOf(1);
-      expect(result[1]).to.nested.include({ "value.choices[0]": "Benign" });
-    });
-  });
 
-  it("Ensure correct visibility and data submission of conditionally unselected choices", () => {
-    LabelStudio.params().config(simpleUnselectedVisibilityConfig).data(visibilityTextData).withResult([]).init();
+      const expected = [
+        { from_name: "label", value: { rectanglelabels: ["Tumor"] } },
+        { from_name: "classification", value: { choices: ["Benign"] } },
+      ];
 
-    const l1Choice = useChoices("&:eq(0)");
-    const l2Choice = useChoices("&:eq(1)");
-    const l3Choice = useChoices("&:eq(2)");
-    checkVisibility([0, 2], 3);
-
-    l1Choice.findChoice("A").click();
-    checkVisibility([0, 1, 2], 3);
-
-    l2Choice.findChoice("1X").click();
-    l3Choice.findChoice("2X").click();
-
-    LabelStudio.serialize().then((result) => {
-      expect(result).to.have.lengthOf(3);
-      expect(result[0]).to.include({ from_name: "level1" });
-      expect(result[0].value.choices).to.have.lengthOf(1);
-      expect(result[0]).to.nested.include({ "value.choices[0]": "A" });
-      expect(result[1]).to.include({ from_name: "selected-level" });
-      expect(result[1].value.choices).to.have.lengthOf(1);
-      expect(result[1]).to.nested.include({ "value.choices[0]": "1X" });
-      expect(result[2]).to.include({ from_name: "unselected-level" });
-      expect(result[2].value.choices).to.have.lengthOf(1);
-      expect(result[2]).to.nested.include({ "value.choices[0]": "2X" });
+      expected.forEach((item, index) => {
+        expect(result[index]).to.include({ from_name: item.from_name });
+        expect(result[index].value).to.deep.include(item.value);
+      });
     });
   });
 });

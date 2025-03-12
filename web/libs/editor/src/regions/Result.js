@@ -223,16 +223,14 @@ const Result = types
       if (control.perregion && control.visiblewhen === "choice-selected") {
         return isChoiceSelected();
       }
-      if (control.perregion && control.visiblewhen === "choice-unselected") {
+
+      if (control.visiblewhen === "choice-unselected") {
         return !isChoiceSelected();
       }
 
       // We need to check if there is any node up in the tree with visibility restrictions so we can determine
       // if the element is selected considering its own visibility
-      if (
-        findParentWithVisibleWhen(control, "choice-selected") ||
-        findParentWithVisibleWhen(control, "choice-unselected")
-      ) {
+      if (findParentWithVisibleWhen(control, "choice-selected")) {
         return control.isVisible === false ? false : isChoiceSelected();
       }
 

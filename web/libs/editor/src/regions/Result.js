@@ -159,7 +159,7 @@ const Result = types
       const control = self.from_name;
 
       // Find the first node moving up in the tree with the given visibleWhen value
-      function findNodeWithVisibleWhen(control, visibleWhen) {
+      function findParentWithVisibleWhen(control, visibleWhen) {
         let currentControl = control;
 
         while (currentControl) {
@@ -219,8 +219,22 @@ const Result = types
         return true;
       };
 
-      if (findNodeWithVisibleWhen(control, "choice-selected")) return control.isVisible && isChoiceSelected();
-      if (findNodeWithVisibleWhen(control, "choice-unselected")) return control.isVisible && !isChoiceSelected();
+      // When perregion is used, we must ignore the visibility of the components and focus only on the selection
+      if (control.perregion && control.visiblewhen === "choice-selected") {
+        return isChoiceSelected();
+      }
+      if (control.perregion && control.visiblewhen === "choice-unselected") {
+        return !isChoiceSelected();
+      }
+
+      // We need to check if there is any node up in the tree with visibility restrictions so we can determine
+      // if the element is selected considering its own visibility
+      if (
+        findParentWithVisibleWhen(control, "choice-selected") ||
+        findParentWithVisibleWhen(control, "choice-unselected")
+      ) {
+        return control.isVisible === false ? false : isChoiceSelected();
+      }
 
       return true;
     },

@@ -7,10 +7,5 @@
     "@radix-ui/react-select": "^2.1.6"
   },
   "main": "src/index.ts",
-  "files": [
-    "src/tailwind.css",
-    "src/shad/components",
-    "src/ui/assets",
-    "src/ui/typography"
-  ]
+  "files": ["src/tailwind.css", "src/shad/components", "src/ui/assets", "src/ui/typography"]
 }

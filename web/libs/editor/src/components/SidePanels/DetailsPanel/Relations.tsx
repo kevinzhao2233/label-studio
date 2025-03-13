@@ -107,7 +107,11 @@ const RelationItem: FC<{ relation: any }> = observer(({ relation }) => {
                 onClick={relation.toggleVisibility}
                 aria-label={`${relation.visible ? "Hide" : "Show"} Relation`}
               >
-                {relation.visible ? <IconEyeOpened style={{ width: 20, height: 20 }} /> : <IconEyeClosed style={{ width: 20, height: 20 }} />}
+                {relation.visible ? (
+                  <IconEyeOpened style={{ width: 20, height: 20 }} />
+                ) : (
+                  <IconEyeClosed style={{ width: 20, height: 20 }} />
+                )}
               </Button>
             )}
           </Elem>

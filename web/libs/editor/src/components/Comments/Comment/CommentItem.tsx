@@ -271,7 +271,7 @@ export const CommentItem: FC<CommentItemProps> = observer(
                   </Menu>
                 }
               >
-                <Button size="small" type="text" icon={<IconEllipsis />} />
+                <Button size="small" type="text" icon={<IconEllipsis width={20} height={20} />} />
               </Dropdown.Trigger>
             )}
           </Elem>

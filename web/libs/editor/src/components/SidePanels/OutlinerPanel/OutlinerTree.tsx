@@ -546,11 +546,11 @@ const RegionControls: FC<RegionControlsProps> = injector(
           <Elem name="control" mod={{ type: "visibility" }}>
             {isFF(FF_DEV_3873) ? (
               <RegionControlButton onClick={onToggleHidden} style={hidden ? undefined : { display: "none" }}>
-                {hidden ? <IconEyeClosed /> : <IconEyeOpened />}
+                {hidden ? <IconEyeClosed style={{ width: 20, height: 20 }} /> : <IconEyeOpened style={{ width: 20, height: 20 }} />}
               </RegionControlButton>
             ) : (
               <RegionControlButton onClick={onToggleHidden}>
-                {hidden ? <IconEyeClosed /> : <IconEyeOpened />}
+                {hidden ? <IconEyeClosed style={{ width: 20, height: 20 }} /> : <IconEyeOpened style={{ width: 20, height: 20 }} />}
               </RegionControlButton>
             )}
           </Elem>

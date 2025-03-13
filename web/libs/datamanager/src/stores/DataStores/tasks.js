@@ -145,11 +145,8 @@ export const create = (columns) => {
 
         self.setLoading(taskID);
 
-        const taskData = yield self.root.apiCall("task", { taskID }, undefined, { allowToCancel: true });
+        const taskData = yield self.root.apiCall("task", { taskID });
 
-        if (taskData.isCanceled) {
-          return null;
-        }
         if (taskData.status === 404) {
           self.finishLoading(taskID);
           getRoot(self).SDK.invoke("crash", {

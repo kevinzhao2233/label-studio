@@ -34,15 +34,17 @@ export const TopBar = observer(({ store }) => {
             <Tooltip title="Compare all annotations">
               <Button
                 className={"topbar__button"}
-                icon={<IconViewAll />}
+                icon={<IconViewAll width={20} height={20} />}
                 type="text"
                 aria-label="Compare all annotations"
                 onClick={annotationStore.toggleViewingAllAnnotations}
                 primary={isViewAll}
+                size="medium"
                 style={{
-                  height: 36,
-                  width: 36,
+                  height: 28,
+                  width: 28,
                   padding: 0,
+                  marginRight: "var(--spacing-small, 8px)",
                 }}
               />
             </Tooltip>
@@ -61,8 +63,8 @@ export const TopBar = observer(({ store }) => {
                   store.annotationStore.selectAnnotation(created.id);
                 }}
                 style={{
-                  height: 36,
-                  width: 36,
+                  height: 28,
+                  width: 28,
                   padding: 0,
                   marginRight: "var(--spacing-small, 8px)",
                 }}

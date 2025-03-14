@@ -21,7 +21,7 @@ export const Inner = () => {
   const [sample, setSample] = useState(null);
   const api = useAPI();
 
-  const { uploading, uploadDisabled, finishUpload, fileIds, pageProps } = useImportPage(project);
+  const { uploading, uploadDisabled, finishUpload, fileIds, pageProps } = useImportPage(project, sample);
 
   const backToDM = useCallback(() => {
     const path = location.pathname.replace(ImportModal.path, "");

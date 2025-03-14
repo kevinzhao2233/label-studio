@@ -1,12 +1,12 @@
 [
   {
-    "title": "Sample",
-    "description": "Contains a set of airplanes and cars images.",
-    "url": "https://data.heartex.net/q/7162eba8e4.json"
+    "title": "COCO 2017 Images",
+    "description": "A 100-image subset of the COCO image segmentation benchmark dataset.",
+    "url": "https://hs-sandbox-pub.s3.us-east-1.amazonaws.com/sample_data/coco_2017_val_100tasks.json"
   },
   {
-    "title": "Sample 2",
-    "description": "Contains a images of cats and dogs.",
-    "url": "https://data.heartex.net/q/b89733bbd8.json"
+    "title": "CoNLL 2012 NER",
+    "description": "The CoNLL dataset of 13k sentences for Named Entity Recognition.",
+    "url": "https://hs-sandbox-pub.s3.us-east-1.amazonaws.com/sample_data/conll_2012.json"
   }
 ]

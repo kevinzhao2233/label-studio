@@ -29,12 +29,12 @@ export function SampleDatasetSelect({
 
   return (
     <div className="flex gap-3 items-center">
-      <span>or use a sample dataset</span>
-      <Select value={sample?.url} onValueChange={onSelect}>
-        <SelectTrigger className="h-10 min-w-52 rounded-sm border-lsNeutralBorderBold text-lsNeutralContentSubtler bg-lsNeutralSurfaceActive">
+      <span className="text-lsNeutralContentSubtler">or use a sample dataset</span>
+      <Select value={sample?.url ?? undefined} onValueChange={onSelect}>
+        <SelectTrigger className="h-10 min-w-52 rounded-sm border-lsNeutralBorderBold data-[placeholder]:text-[#000] text-[16px] [&_svg]:stroke-[#000]">
           {title}
         </SelectTrigger>
-        <SelectContent className="z-99999">
+        <SelectContent className="z-99999 min-w-90">
           {samples.map((sample) => (
             <SelectItem value={sample.url} key={sample.url}>
               <div className=" font-bold">{sample.title}</div>

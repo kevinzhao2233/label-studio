@@ -44,6 +44,7 @@ export const useImportPage = (project, sample) => {
     setCsvHandling,
     onFileListUpdate: setFileIds,
     dontCommitToProject: true,
+    sample,
   };
 
   return { columns, uploading, uploadDisabled, finishUpload, fileIds, pageProps };

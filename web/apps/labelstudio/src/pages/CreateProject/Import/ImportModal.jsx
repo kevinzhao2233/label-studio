@@ -67,8 +67,21 @@ export const Inner = () => {
     const imported = await finishUpload();
 
     if (!imported) return;
+    
+    // If we have a sample with a label_config, update the project's label config
+    if (sample && sample.label_config) {
+      await api.callApi("updateProject", {
+        params: {
+          pk: project.id,
+        },
+        body: {
+          label_config: sample.label_config,
+        },
+      });
+    }
+    
     backToDM();
-  }, [backToDM, finishUpload, sample]);
+  }, [backToDM, finishUpload, sample, api, project]);
 
   return (
     <Modal

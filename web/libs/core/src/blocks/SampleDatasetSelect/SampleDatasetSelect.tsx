@@ -6,6 +6,7 @@ type Sample = {
   title: string;
   url: string;
   description: string;
+  label_config?: string;
 };
 
 export function SampleDatasetSelect({

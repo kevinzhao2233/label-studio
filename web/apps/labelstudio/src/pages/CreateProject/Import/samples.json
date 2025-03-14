@@ -2,11 +2,13 @@
   {
     "title": "COCO 2017 Images",
     "description": "A 100-image subset of the COCO image segmentation benchmark dataset.",
-    "url": "https://hs-sandbox-pub.s3.us-east-1.amazonaws.com/sample_data/coco_2017_val_100tasks.json"
+    "url": "https://hs-sandbox-pub.s3.us-east-1.amazonaws.com/sample_data/coco_2017_val_100tasks.json",
+    "label_config": "<View><Image name=\"image\" value=\"$image\"/><Text name=\"text\" value=\"$text\"/><View name=\"label\"/></View>"
   },
   {
     "title": "CoNLL 2012 NER",
     "description": "The CoNLL dataset of 13k sentences for Named Entity Recognition.",
-    "url": "https://hs-sandbox-pub.s3.us-east-1.amazonaws.com/sample_data/conll_2012.json"
+    "url": "https://hs-sandbox-pub.s3.us-east-1.amazonaws.com/sample_data/conll_2012.json",
+    "label_config": "<View>  <Labels name=\"label\" toName=\"text\">    <Label value=\"PER\" background=\"red\"/>    <Label value=\"ORG\" background=\"darkorange\"/>    <Label value=\"LOC\" background=\"orange\"/>    <Label value=\"MISC\" background=\"green\"/>  </Labels>  <Text name=\"text\" value=\"$text\"/></View>"
   }
 ]

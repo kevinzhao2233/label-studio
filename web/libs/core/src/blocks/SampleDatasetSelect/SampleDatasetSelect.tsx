@@ -1,5 +1,6 @@
 import { Select, SelectContent, SelectItem, SelectTrigger } from "@humansignal/shad/components/ui/select";
 import { useCallback, useMemo } from "react";
+import { IconWarning } from "@humansignal/ui/assets/icons";
 
 type Sample = {
   title: string;
@@ -11,10 +12,12 @@ export function SampleDatasetSelect({
   samples,
   sample,
   onSampleApplied,
+  warningMessage,
 }: {
   samples: Sample[];
   sample?: Sample;
   onSampleApplied: (sample?: Sample) => void;
+  warningMessage?: string;
 }) {
   const title = useMemo(() => {
     return sample?.title ?? "Select sample";
@@ -28,21 +31,29 @@ export function SampleDatasetSelect({
   );
 
   return (
-    <div className="flex gap-3 items-center">
-      <span className="text-lsNeutralContentSubtler">or use a sample dataset</span>
-      <Select value={sample?.url ?? undefined} onValueChange={onSelect}>
-        <SelectTrigger className="h-10 min-w-52 rounded-sm border-lsNeutralBorderBold data-[placeholder]:text-[#000] text-[16px] [&_svg]:stroke-[#000]">
-          {title}
-        </SelectTrigger>
-        <SelectContent className="z-99999 min-w-90">
-          {samples.map((sample) => (
-            <SelectItem value={sample.url} key={sample.url}>
-              <div className=" font-bold">{sample.title}</div>
-              <div className="mt-2">{sample.description}</div>
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+    <div className="flex flex-col gap-3">
+      {warningMessage && (
+        <div className="flex items-center gap-2 p-2 text-red-600 bg-red-50 border border-red-200 rounded-sm">
+          <IconWarning className="w-5 h-5 fill-red-600" />
+          <span>{warningMessage}</span>
+        </div>
+      )}
+      <div className="flex gap-3 items-center">
+        <span className="text-lsNeutralContentSubtler">or use a sample dataset</span>
+        <Select value={sample?.url ?? undefined} onValueChange={onSelect}>
+          <SelectTrigger className="h-10 min-w-52 rounded-sm border-lsNeutralBorderBold data-[placeholder]:text-[#000] text-[16px] [&_svg]:stroke-[#000]">
+            {title}
+          </SelectTrigger>
+          <SelectContent className="z-99999 min-w-90">
+            {samples.map((sample) => (
+              <SelectItem value={sample.url} key={sample.url}>
+                <div className=" font-bold">{sample.title}</div>
+                <div className="mt-2">{sample.description}</div>
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
     </div>
   );
 }

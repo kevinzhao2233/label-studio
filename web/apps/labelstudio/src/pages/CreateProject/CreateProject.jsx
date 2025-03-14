@@ -8,6 +8,7 @@ import { HeidiTips } from "../../components/HeidiTips/HeidiTips";
 import { useAPI } from "../../providers/ApiProvider";
 import { cn } from "../../utils/bem";
 import { ConfigPage } from "./Config/Config";
+import { EMPTY_CONFIG } from "./Config/Template";
 import "./CreateProject.scss";
 import { importFiles, ImportPage } from "./Import/Import";
 import { useImportPage } from "./Import/useImportPage";
@@ -89,7 +90,7 @@ export const CreateProject = ({ onClose, redirect = true }) => {
   const [name, setName] = React.useState("");
   const [error, setError] = React.useState();
   const [description, setDescription] = React.useState("");
-  const [config, setConfig] = React.useState("<View></View>");
+  const [config, setConfig] = React.useState(EMPTY_CONFIG);
   const [sample, setSample] = React.useState(null);
 
   const setStep = React.useCallback((step) => {
@@ -232,6 +233,9 @@ export const CreateProject = ({ onClose, redirect = true }) => {
           show={step === "import"}
           sample={sample}
           onSampleDatasetSelect={setSample}
+          hasLabelConfig={
+            config && config !== EMPTY_CONFIG 
+          }
           {...pageProps}
         />
         <ConfigPage

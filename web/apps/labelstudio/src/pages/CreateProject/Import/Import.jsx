@@ -7,6 +7,7 @@ import { cn as scn } from "@humansignal/shad/utils";
 import { Badge } from "@humansignal/shad/components/ui/badge";
 import { unique } from "../../../utils/helpers";
 import "./Import.scss";
+import { EMPTY_CONFIG } from "../Config/Template";
 import { IconError, IconInfo, IconUpload } from "../../../assets/icons";
 import { API, useAPI } from "../../../providers/ApiProvider";
 import Input from "libs/datamanager/src/components/Common/Input/Input";
@@ -194,6 +195,7 @@ export const ImportPage = ({
   csvHandling,
   setCsvHandling,
   addColumns,
+  hasLabelConfig,
 }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState();
@@ -382,7 +384,16 @@ export const ImportPage = ({
           Upload {files.uploaded.length ? "More " : ""}Files
         </Button>
         {ff.isFF(ff.FF_SAMPLE_DATASETS) && (
-          <SampleDatasetSelect samples={samples} sample={sample} onSampleApplied={onSampleDatasetSelect} />
+          <SampleDatasetSelect 
+            samples={samples} 
+            sample={sample} 
+            onSampleApplied={onSampleDatasetSelect}
+            warningMessage={
+              hasLabelConfig || (project?.label_config && project.label_config !== EMPTY_CONFIG)
+              ? "Selecting a sample dataset will overwrite your current labeling configuration." : 
+              undefined
+            }
+          />
         )}
         <div
           className={importClass.elem("csv-handling").mod({ highlighted: highlightCsvHandling, hidden: !csvHandling })}

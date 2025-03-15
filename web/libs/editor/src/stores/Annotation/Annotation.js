@@ -662,7 +662,8 @@ const _Annotation = types
       const areas = Array.from(self.areas.values());
       const filtered = areas.filter((area) => area.isDrawing);
 
-      self.regionStore.selection._updateResultsFromRegions(filtered);
+      // An unfinished region takes control if it exists.
+      if (filtered.length) self.regionStore.selection._updateResultsFromRegions(filtered);
     },
     updateAppearenceFromState() {
       self.areas.forEach((area) => area.updateAppearenceFromState?.());

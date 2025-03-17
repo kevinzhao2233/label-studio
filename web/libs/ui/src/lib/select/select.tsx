@@ -25,9 +25,11 @@ export const Select = forwardRef(function <T, A extends SelectOption<T>[]>(
   { label, description, options = [], validate, required, skip, labelProps, defaultValue, searchable, searchPlaceholder, value: externalValue, disabled = false, ...props }: SelectProps<T, A>,
   ref: ForwardedRef<HTMLSelectElement>,
 ) {
-  const internalRef = createRef<HTMLSelectElement>();
   const [query, setQuery] = useState<string>("");
   const [value, setValue] = useState<string>(defaultValue?.value ?? defaultValue ?? externalValue?.value ?? externalValue);
+  useEffect(() => {
+    setValue(externalValue?.value ?? externalValue);
+  }, [externalValue]);
   const _onChange= useCallback((val: string) => {
     if (disabled) return;
     setValue(val);
@@ -68,7 +70,6 @@ export const Select = forwardRef(function <T, A extends SelectOption<T>[]>(
           const children = option?.children;
 
           if (children) {
-            console.log("children", option, value, label, children);
             return (
               <SelectGroup key={index}>
                 <SelectLabel>{label}</SelectLabel>

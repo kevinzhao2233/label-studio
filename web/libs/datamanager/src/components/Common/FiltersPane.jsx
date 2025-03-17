@@ -63,6 +63,7 @@ export const FiltersPane = injector(
         disabled={sidebarEnabled}
         content={<Filters />}
         openUpwardForShortViewport={false}
+        closeOnClickOutside={false}
       >
         <FiltersButton {...rest} size={size} />
       </Dropdown.Trigger>

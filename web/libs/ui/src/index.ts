@@ -5,6 +5,7 @@ export * from "./lib/InputFile/InputFile";
 export * from "./lib/Card/Card";
 export * from "./lib/label/label";
 export * from "./lib/toggle/toggle";
+export * from "./lib/select/select";
 export * from "./lib/Tooltip/Tooltip";
 export * from "./lib/Userpic/Userpic";
 

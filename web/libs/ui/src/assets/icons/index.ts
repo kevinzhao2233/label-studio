@@ -219,6 +219,7 @@ export { ReactComponent as IconLsReview } from "./ls-review.svg";
 export { ReactComponent as IconModel } from "./model.svg";
 export { ReactComponent as IconAllProjects } from "./all-projects.svg";
 export { ReactComponent as IconSync } from "./sync.svg";
+export { ReactComponent as IconSyncDisabled } from "./sync-disabled.svg";
 
 // full-color icons
 export { ReactComponent as IconPlaylistStarFullcolor } from "./full_color_playlist_star.svg";

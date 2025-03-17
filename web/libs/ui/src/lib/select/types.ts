@@ -49,6 +49,9 @@ export type SelectProps<T, A extends SelectOption<T>[]> = {
   onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void | false;
   setValue?: (value: ExtractOption<A>) => void;
   header?: string | FC | JSX.Element;
+  multiple?: boolean;
+  disabled?: boolean;
+  triggerProps?: any;
 } & SelectVirtualizedProps &
   Omit<React.SelectHTMLAttributes<HTMLSelectElement>, "value" | "placeholder">;
 

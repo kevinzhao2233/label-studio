@@ -47,7 +47,7 @@ export const Select = forwardRef(function <T, A extends SelectOption<T>[]>(
   return (
     <SelectComponent value={value} onValueChange={_onChange} {...props}>
       {label && <Label {...labelProps}>{label}</Label>}
-      <SelectTrigger disabled={disabled} className="w-[180px]">
+      <SelectTrigger disabled={disabled} {...(props?.triggerProps ?? {})}>
         <SelectValue placeholder={props?.placeholder} />
       </SelectTrigger>
       <SelectContent>

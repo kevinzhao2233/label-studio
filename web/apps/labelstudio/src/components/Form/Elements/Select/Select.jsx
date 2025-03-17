@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { cn } from "../../../../utils/bem";
 import { FormField } from "../../FormField";
 import { default as Label } from "../Label/Label";
+import { Select as SelectUI } from "@humansignal/ui";
 import "./Select.scss";
 
 const SelectOption = ({ value, label, disabled = false, hidden = false, ...props }) => {
@@ -34,6 +35,19 @@ const Select = ({ label, className, options, validate, required, skip, labelProp
     setValue(initialValue);
   }, [initialValue]);
 
+  const selectOptions = useMemo(() => {
+    return Object.keys(grouped).map((group) => {
+      return group === "NoGroup" ? (
+        grouped[group]
+      ) : (
+        grouped[group] = {
+          label: group,
+          children: grouped[group],
+        }
+      );
+    }).flat();
+  }, [grouped]);
+
   const selectWrapper = (
     <FormField
       name={props.name}
@@ -46,32 +60,16 @@ const Select = ({ label, className, options, validate, required, skip, labelProp
     >
       {(ref) => {
         return (
-          <div className={classList}>
-            <select
-              {...props}
-              value={value}
-              onChange={(e) => {
-                setValue(e.target.value);
-                props.onChange?.(e);
-              }}
-              ref={ref}
-              className={rootClass.elem("list")}
-            >
-              {props.placeholder && (!props.defaulValue || !props.value) && (
-                <option value="" disabled hidden>
-                  {props.placeholder}
-                </option>
-              )}
-
-              {Object.keys(grouped).map((group) => {
-                return group === "NoGroup" ? (
-                  grouped[group].map(renderOptions)
-                ) : (
-                  <optgroup label={group}>{grouped[group].map(renderOptions)}</optgroup>
-                );
-              })}
-            </select>
-          </div>
+          <SelectUI
+            {...props}
+            value={value}
+            onChange={(val) => {
+              setValue(val);
+              props.onChange?.(val);
+            }}
+            ref={ref}
+            options={selectOptions}
+            />
         );
       }}
     </FormField>

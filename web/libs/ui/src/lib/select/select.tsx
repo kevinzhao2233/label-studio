@@ -65,15 +65,22 @@ export const Select = forwardRef(function <T, A extends SelectOption<T>[]>(
         {_options.map((option, index) => {
           const value = option?.value ?? option;
           const label = option?.label ?? value;
-          if (option?.children) {
+          const children = option?.children;
+
+          if (children) {
+            console.log("children", option, value, label, children);
             return (
               <SelectGroup key={index}>
                 <SelectLabel>{label}</SelectLabel>
-                {option.children.map((item, i) => (
-                  <SelectItem key={i} value={item?.value ?? item}>
-                    {item?.label ?? item?.value ?? item}
-                  </SelectItem>
-                ))}
+                {children.map((item, i) => {
+                  const val = item?.value ?? item;
+                  const lab = item?.label ?? val;
+                  return (
+                    <SelectItem key={`${lab}_${i}`} value={val}>
+                      {lab}
+                    </SelectItem>
+                  );
+                })}
               </SelectGroup>
             );
           }

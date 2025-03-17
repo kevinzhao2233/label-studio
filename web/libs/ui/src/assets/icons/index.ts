@@ -30,6 +30,7 @@ export { ReactComponent as IconCollapse } from "./collapse.svg";
 export { ReactComponent as IconCollapseSmall } from "./collapse-small.svg";
 export { ReactComponent as IconDate } from "./date.svg";
 export { ReactComponent as IconClose } from "./close.svg";
+export { ReactComponent as IconCloseCircleOutline } from "./close-circle-outline.svg";
 export { ReactComponent as IconPlusCircle } from "./plus-circle.svg";
 export { ReactComponent as IconSlow } from "./slow.svg";
 export { ReactComponent as IconFast } from "./fast.svg";
@@ -43,6 +44,7 @@ export { ReactComponent as IconHelp } from "./help.svg";
 
 export { ReactComponent as IconCheck } from "./check.svg";
 export { ReactComponent as IconCheckBold } from "./check-bold.svg";
+export { ReactComponent as IconCheckCircleOutline } from "./check-circle-outline.svg";
 export { ReactComponent as IconCross } from "./cross.svg";
 export { ReactComponent as IconCrossBold } from "./cross-bold.svg";
 

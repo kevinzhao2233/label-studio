@@ -34,6 +34,7 @@ export { ReactComponent as IconCloseCircleOutline } from "./close-circle-outline
 export { ReactComponent as IconPlusCircle } from "./plus-circle.svg";
 export { ReactComponent as IconSlow } from "./slow.svg";
 export { ReactComponent as IconFast } from "./fast.svg";
+export { ReactComponent as IconFileUpload } from "./file-upload.svg";
 export { ReactComponent as IconDuplicate } from "./duplicate.svg";
 export { ReactComponent as IconEllipsis } from "./ellipsis.svg";
 export { ReactComponent as IconEllipsisVertical } from "./ellipsis-vertical.svg";

@@ -47,7 +47,7 @@ export const Select = forwardRef(function <T, A extends SelectOption<T>[]>(
     });
   }, [options, searchable, query]);
   return (
-    <SelectComponent value={value} onValueChange={_onChange} {...props}>
+    <SelectComponent value={value} onValueChange={_onChange} disabled={disabled} {...props}>
       {label && <Label {...labelProps}>{label}</Label>}
       <SelectTrigger disabled={disabled} {...(props?.triggerProps ?? {})}>
         <SelectValue placeholder={props?.placeholder} />

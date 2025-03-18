@@ -28,7 +28,7 @@ export const RefreshButton = injector(({ store, needsDataFetch, projectFetch, si
       }}
       {...rest}
     >
-      <IconRefresh />
+      <IconRefresh width={24} height={24}/>
     </Button>
   );
 });

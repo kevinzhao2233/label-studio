@@ -1,5 +1,5 @@
 import { observer } from "mobx-react";
-import { FaCaretDown } from "react-icons/fa";
+import { IconChevronDown } from "@humansignal/icons";
 import { Icon } from "../Common/Icon/Icon";
 import { Select } from "@humansignal/ui";
 import { Tag } from "../Common/Tag/Tag";
@@ -36,6 +36,7 @@ export const FilterDropdown = observer(
         value={value}
         onChange={(value) => onChange(outputFormat?.(value) ?? value)}
         disabled={disabled}
+        size="small"
         options={options}
       />
     );

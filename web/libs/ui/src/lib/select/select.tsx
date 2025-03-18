@@ -9,22 +9,22 @@ import {
   useRef,
   useState,
 } from "react";
-import {
-  Select as SelectComponent,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectLabel,
-  SelectItem,
-  SelectGroup,
-} from "@humansignal/shad/components/ui/select";
+// import {
+//   Select as SelectComponent,
+//   SelectTrigger,
+//   SelectValue,
+//   SelectContent,
+//   SelectLabel,
+//   SelectItem,
+//   SelectGroup,
+// } from "@humansignal/shad/components/ui/select";
 import type { SelectOption, SelectProps } from "./types.ts";
 import { Checkbox, Label } from "@humansignal/ui";
 import { IconChevronDown, IconCheck } from "@humansignal/icons";
-import { Button } from "@humansignal/shad/components/ui/button.js";
-import { Popover, PopoverContent, PopoverTrigger } from "@humansignal/shad/components/ui/popover.js";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@humansignal/shad/components/ui/command.js";
-import { cn } from "@humansignal/shad/utils/index.js";
+// import { Button } from "@humansignal/shad/components/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@humansignal/shad/components/ui/popover";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@humansignal/shad/components/ui/command";
+import clsx from "clsx";
 
 export const Select = forwardRef(function <T, A extends SelectOption<T>[]>(
   { label, description, options = [], validate, required, skip, labelProps, defaultValue, searchable, searchPlaceholder, value: externalValue, disabled = false, multiple = false, ...props }: SelectProps<T, A>,
@@ -71,17 +71,17 @@ export const Select = forwardRef(function <T, A extends SelectOption<T>[]>(
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
-        <Button
+        <button
           variant="outline"
           role="combobox"
           aria-expanded={isOpen}
           className="w-[200px] justify-between"
         >
           {value
-            ? options.find((option) => option.value === value)?.label
+            ? options.find((option) => (option.value ?? option) === value)?.label
             : (props?.placeholder ?? "")}
           <IconChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-        </Button>
+        </button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
         <Command>
@@ -103,7 +103,7 @@ export const Select = forwardRef(function <T, A extends SelectOption<T>[]>(
                   >
                     {multiple ? (
                       <Checkbox
-                        className={cn(
+                        className={clsx(
                           "mr-2 h-4 w-4",
                           value === optionValue ? "opacity-100" : "opacity-0"
                         )}

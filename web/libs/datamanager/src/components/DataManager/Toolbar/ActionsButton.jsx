@@ -1,6 +1,6 @@
 import { inject, observer } from "mobx-react";
-import { useCallback, useRef, useState } from "react";
-import { IconChevronRight, IconChevronDown, IconChevron, IconTrash } from "@humansignal/icons";
+import { useCallback, useRef } from "react";
+import { IconChevronRight, IconChevronDown, IconTrash } from "@humansignal/icons";
 import { Block, Elem } from "../../../utils/bem";
 import { FF_LOPS_E_3, isFF } from "../../../utils/feature-flags";
 import { Button } from "../../Common/Button/Button";

@@ -11,12 +11,14 @@ import globalStyles from "../../styles/global.module.scss";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { Block, Elem } from "../../utils/bem";
 import "./Relations.scss";
+import { useMemo } from "react";
 
 const { Option } = Select;
 
 const RelationMeta = observer(({ rl }) => {
   const r = rl.relations;
   const selected = r.getSelected().map((v) => v.value);
+  const options = useMemo(() => r.children.map((c) => ({ value: c.value, style: {background: c.background} })), [r.children]);
 
   return (
     <div style={{ marginTop: "10px" }}>
@@ -32,6 +34,7 @@ const RelationMeta = observer(({ rl }) => {
           r.unselectAll();
           values.forEach((v) => r.findRelation(v).setSelected(true));
         }}
+        options={options}
       >
         {r.children.map((c) => (
           <Option key={c.value} style={{ background: c.background }}>

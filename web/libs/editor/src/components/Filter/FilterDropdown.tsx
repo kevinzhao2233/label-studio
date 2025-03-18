@@ -1,5 +1,5 @@
-import type { FC } from "react";
-import { Select } from "../../common/Select/Select";
+import { useMemo, type FC } from "react";
+import { Select } from "@humansignal/ui";
 
 interface FilterDropdownInterface {
   items: any[];
@@ -12,16 +12,6 @@ interface FilterDropdownInterface {
   style?: any;
 }
 
-const renderOptions = (item: any, index: number) => {
-  const value = item.key ?? item.label;
-  const key = index;
-
-  return (
-    <Select.Option key={`${key}`} value={value} style={{ fontSize: 12 }} title={value}>
-      {item.label}
-    </Select.Option>
-  );
-};
 
 export const FilterDropdown: FC<FilterDropdownInterface> = ({
   placeholder,
@@ -32,6 +22,14 @@ export const FilterDropdown: FC<FilterDropdownInterface> = ({
   value,
   onChange,
 }) => {
+  const options = useMemo(() => {
+    return items.map((item) => {
+      return {
+        ...item,
+        value: item.key ?? item.label,
+      };
+    });
+  }, [items]);
   return (
     <Select
       placeholder={placeholder}
@@ -46,8 +44,7 @@ export const FilterDropdown: FC<FilterDropdownInterface> = ({
       }}
       onChange={(value) => onChange(value)}
       size="small"
-    >
-      {items.map(renderOptions)}
-    </Select>
+      options={options}
+    />
   );
 };

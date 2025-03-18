@@ -143,6 +143,7 @@ const RelationMeta: FC<any> = observer(({ relation }) => {
     },
     [relation],
   );
+  const options = useMemo(() => children.map((c: any) => ({ value: c.value, style: {background: c.background} })), [children]);
 
   return (
     <Block name="relation-meta">
@@ -152,13 +153,8 @@ const RelationMeta: FC<any> = observer(({ relation }) => {
         placeholder="Select labels"
         value={selectedValues}
         onChange={onChange}
-      >
-        {children.map((c: any) => (
-          <Select.Option key={c.value} value={c.value} style={{ background: c.background }}>
-            {c.value}
-          </Select.Option>
-        ))}
-      </Select>
+        options={options}
+      />
     </Block>
   );
 });

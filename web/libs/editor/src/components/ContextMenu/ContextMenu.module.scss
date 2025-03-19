@@ -5,7 +5,7 @@
 
 .seperator {
   height: 1px;
-  background-color: var(--sand_100);
+  background-color: var(--color-neutral-border);
 }
 
 .icon {
@@ -37,24 +37,24 @@
   height: 36px;
 
   &:hover {
-    background-color: var(--grape_0);
-    color: var(--grape_500);
+    background-color: var(--color-primary-emphasis-subtle);
+    color: var(--color-neutral-content);
   }
 }
 
 .danger {
-  color: var(--danger_color);
+  color: var(--color-negative-content);
 
   &:hover {
-    background-color: var(--red_1);
-    color: var(--danger_color);
+    background-color: var(--color-negative-emphasis-subtle);
+    color: var(--color-neutral-content);
   }
 }
 
 .trigger {
   &.open {
-    background-color: var(--grape_0);
-    color: var(--grape_500);
+    background-color: var(--color-primary-emphasis);
+    color: var(--color-neutral-content);
     border-radius: 4px;
   }
 }

@@ -734,7 +734,7 @@ function generateCssContent(result) {
   content += "}\n\n";
 
   // Dark mode variables
-  content += '[data-theme="dark"] {\n';
+  content += '[data-color-scheme="dark"] {\n';
   result.cssVariables.dark.forEach((variable) => {
     content += `  ${variable}\n`;
   });

@@ -32,13 +32,7 @@ export function SampleDatasetSelect({
   );
 
   return (
-    <div className="flex flex-col gap-3">
-      {warningMessage && (
-        <div className="flex items-center gap-2 p-2 text-red-600 bg-red-50 border border-red-200 rounded-sm">
-          <IconWarning className="w-5 h-5 fill-red-600" />
-          <span>{warningMessage}</span>
-        </div>
-      )}
+    <div className="flex flex-row items-start gap-4">
       <div className="flex gap-3 items-center">
         <span className="text-lsNeutralContentSubtler">or use a sample dataset</span>
         <Select value={sample?.url ?? undefined} onValueChange={onSelect}>
@@ -55,6 +49,13 @@ export function SampleDatasetSelect({
           </SelectContent>
         </Select>
       </div>
+      
+      {warningMessage && (
+        <div className="flex items-start gap-2 p-2 text-red-600 bg-red-50 border border-red-200 rounded-sm max-w-xs">
+          <IconWarning className="w-5 h-5 fill-red-600 flex-shrink-0 mt-0.5" />
+          <span className="text-sm leading-tight">{warningMessage}</span>
+        </div>
+      )}
     </div>
   );
 }

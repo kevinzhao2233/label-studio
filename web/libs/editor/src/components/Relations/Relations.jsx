@@ -17,7 +17,10 @@ import { Select } from "@humansignal/ui";
 const RelationMeta = observer(({ rl }) => {
   const r = rl.relations;
   const selected = r.getSelected().map((v) => v.value);
-  const options = useMemo(() => r.children.map((c) => ({ value: c.value, style: {background: c.background} })), [r.children]);
+  const options = useMemo(
+    () => r.children.map((c) => ({ value: c.value, style: { background: c.background } })),
+    [r.children],
+  );
 
   return (
     <div style={{ marginTop: "10px" }}>

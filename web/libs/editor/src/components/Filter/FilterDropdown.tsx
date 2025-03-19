@@ -12,7 +12,6 @@ interface FilterDropdownInterface {
   style?: any;
 }
 
-
 export const FilterDropdown: FC<FilterDropdownInterface> = ({
   placeholder,
   defaultValue,

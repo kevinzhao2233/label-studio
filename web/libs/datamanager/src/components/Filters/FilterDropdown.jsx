@@ -1,8 +1,5 @@
 import { observer } from "mobx-react";
-import { IconChevronDown } from "@humansignal/icons";
-import { Icon } from "../Common/Icon/Icon";
 import { Select } from "@humansignal/ui";
-import { Tag } from "../Common/Tag/Tag";
 import { useMemo } from "react";
 
 export const FilterDropdown = observer(
@@ -20,14 +17,14 @@ export const FilterDropdown = observer(
     outputFormat,
   }) => {
     const parseItems = (item) => {
-      return ({
-        ...(item?.options ? {children: item?.options.map(parseItems)} : {}), 
-        ...(item?.title ? {label: item?.title} : {}),
-        ...item
-      });
+      return {
+        ...(item?.options ? { children: item?.options.map(parseItems) } : {}),
+        ...(item?.title ? { label: item?.title } : {}),
+        ...item,
+      };
     };
     const options = useMemo(() => items.map(parseItems), [items, optionRender]);
-    
+
     return (
       <Select
         multiple={multiple}

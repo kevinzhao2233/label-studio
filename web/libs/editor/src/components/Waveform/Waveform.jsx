@@ -481,8 +481,6 @@ export default class Waveform extends React.Component {
   };
 
   render() {
-    
-
     return (
       <div>
         <div id="wave" ref={this.setWaveformRef} className={styles.wave} />

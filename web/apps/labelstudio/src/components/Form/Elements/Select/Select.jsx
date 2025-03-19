@@ -36,16 +36,14 @@ const Select = ({ label, className, options, validate, required, skip, labelProp
   }, [initialValue]);
 
   const selectOptions = useMemo(() => {
-    return Object.keys(grouped).map((group) => {
-      return group === "NoGroup" ? (
-        grouped[group]
-      ) : (
-        grouped[group] = {
-          label: group,
-          children: grouped[group],
-        }
-      );
-    }).flat();
+    return Object.keys(grouped).flatMap((group) => {
+      return group === "NoGroup"
+        ? grouped[group]
+        : (grouped[group] = {
+            label: group,
+            children: grouped[group],
+          });
+    });
   }, [grouped]);
 
   const selectWrapper = (
@@ -69,7 +67,7 @@ const Select = ({ label, className, options, validate, required, skip, labelProp
             }}
             ref={ref}
             options={selectOptions}
-            />
+          />
         );
       }}
     </FormField>

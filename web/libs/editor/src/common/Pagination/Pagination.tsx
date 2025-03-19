@@ -59,10 +59,10 @@ export const Pagination: FC<PaginationProps> = forwardRef<any, PaginationProps>(
 
     const options = useMemo(() => {
       return pageSizeOptions.map((obj: number, index: number) => {
-        return ({
+        return {
           value: obj,
           label: `${obj} per page`,
-        });
+        };
       });
     }, [pageSizeOptions]);
 
@@ -149,7 +149,7 @@ export const Pagination: FC<PaginationProps> = forwardRef<any, PaginationProps>(
         </Elem>
         {pageSizeSelectable && (
           <Elem name="page-size">
-            <Select value={pageSize} onChange={handleChangeSelect} options={options}/>
+            <Select value={pageSize} onChange={handleChangeSelect} options={options} />
           </Elem>
         )}
       </Block>

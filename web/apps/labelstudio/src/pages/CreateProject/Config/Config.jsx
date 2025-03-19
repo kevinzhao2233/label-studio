@@ -164,7 +164,7 @@ const ConfigureSettings = ({ template }) => {
         };
         return (
           <li key={key}>
-            <Select className="border" value={value} onChange={onChange} options={options.type} label={options.title}/>
+            <Select className="border" value={value} onChange={onChange} options={options.type} label={options.title} />
           </li>
         );
       case Boolean:
@@ -239,7 +239,6 @@ const ConfigureColumn = ({ template, obj, columns }) => {
   };
 
   const selectValue = (value) => {
-
     if (value === "-") {
       setIsManual(true);
       return;
@@ -273,7 +272,7 @@ const ConfigureColumn = ({ template, obj, columns }) => {
       return {
         value: col,
         label: col === DEFAULT_COLUMN ? "<imported file>" : `$${col}`,
-      }
+      };
     });
     if (!columns?.length) {
       cols.push({ value, label: "<imported file>" });
@@ -288,7 +287,13 @@ const ConfigureColumn = ({ template, obj, columns }) => {
       {template.objects > 1 && ` for ${obj.getAttribute("name")}`}
       {" from "}
       {columns?.length > 0 && columns[0] !== DEFAULT_COLUMN && "field "}
-      <Select className="border" onChange={selectValue} value={isManual ? "-" : value} options={columnsList} triggerProps={{className:"w-[180px]"}} />
+      <Select
+        className="border"
+        onChange={selectValue}
+        value={isManual ? "-" : value}
+        options={columnsList}
+        triggerProps={{ className: "w-[180px]" }}
+      />
       {isManual && <Input value={newValue} onChange={handleChange} onBlur={handleBlur} onKeyDown={handleKeyDown} />}
     </p>
   );

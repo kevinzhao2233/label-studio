@@ -154,7 +154,10 @@ const RelationMeta: FC<any> = observer(({ relation }) => {
     },
     [relation],
   );
-  const options = useMemo(() => children.map((c: any) => ({ value: c.value, style: {background: c.background} })), [children]);
+  const options = useMemo(
+    () => children.map((c: any) => ({ value: c.value, style: { background: c.background } })),
+    [children],
+  );
 
   return (
     <Block name="relation-meta">

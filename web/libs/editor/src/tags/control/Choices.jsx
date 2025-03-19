@@ -20,7 +20,6 @@ import DynamicChildrenMixin from "../../mixins/DynamicChildrenMixin";
 import { FF_LSDV_4583, isFF } from "../../utils/feature-flags";
 import { ReadOnlyControlMixin } from "../../mixins/ReadOnlyMixin";
 import SelectedChoiceMixin from "../../mixins/SelectedChoiceMixin";
-import { HintTooltip } from "../../components/Taxonomy/Taxonomy";
 import ClassificationBase from "./ClassificationBase";
 import PerItemMixin from "../../mixins/PerItem";
 import Infomodal from "../../components/Infomodal/Infomodal";
@@ -252,11 +251,18 @@ const ChoicesModel = types.compose(
 );
 
 const ChoicesSelectLayout = observer(({ item }) => {
-  const options = useMemo(() => item.tiedChildren.map((i) => ({ value: i._value, label: (
-    <Tooltip title={i.hint}>
-      <span>{i._value}</span>
-    </Tooltip>
-  ) })), [item.tiedChildren]);
+  const options = useMemo(
+    () =>
+      item.tiedChildren.map((i) => ({
+        value: i._value,
+        label: (
+          <Tooltip title={i.hint}>
+            <span>{i._value}</span>
+          </Tooltip>
+        ),
+      })),
+    [item.tiedChildren],
+  );
   return (
     <Select
       style={{ width: "100%" }}

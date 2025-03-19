@@ -75,4 +75,3 @@ type SelectVirtualizedProps =
   | ({
       virtualized: true;
     } & VirtualizedProps);
-

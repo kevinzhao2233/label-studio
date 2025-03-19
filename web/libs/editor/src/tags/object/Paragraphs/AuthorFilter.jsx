@@ -32,16 +32,15 @@ const renderMultipleSelected = (selected) => {
 
 export const AuthorFilter = observer(({ item, onChange }) => {
   const placeholder = useMemo(() => <span className={styles.authorFilter__placeholder}>Show all authors</span>, []);
-  const initialValue = {value: "all", label: "Show all authors"};
-  const options = useMemo(
-    () => {
-      const authorOptions = item._value.reduce((all, v) => (all.includes(v[item.namekey]) ? all : [...all, v[item.namekey]]), []).sort();
-      authorOptions.unshift(initialValue);
-      return authorOptions;
-    },
-    [item._value, item.namekey, initialValue],
-  );
-  
+  const initialValue = { value: "all", label: "Show all authors" };
+  const options = useMemo(() => {
+    const authorOptions = item._value
+      .reduce((all, v) => (all.includes(v[item.namekey]) ? all : [...all, v[item.namekey]]), [])
+      .sort();
+    authorOptions.unshift(initialValue);
+    return authorOptions;
+  }, [item._value, item.namekey, initialValue]);
+
   const filteredOptions = item.searchAuthor
     ? options.filter((o) => o.toLowerCase().includes(item.searchAuthor.toLowerCase()))
     : options;
@@ -53,7 +52,7 @@ export const AuthorFilter = observer(({ item, onChange }) => {
         item.setAuthorFilter([]);
       } else if (nextVal) {
         item.setAuthorFilter(nextVal);
-      } 
+      }
 
       onChange?.();
     },

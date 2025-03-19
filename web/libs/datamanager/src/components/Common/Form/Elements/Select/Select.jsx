@@ -45,7 +45,7 @@ const Select = ({
             }}
             className={rootClass.elem("list")}
             option={options}
-            />
+          />
         );
       }}
     </FormField>

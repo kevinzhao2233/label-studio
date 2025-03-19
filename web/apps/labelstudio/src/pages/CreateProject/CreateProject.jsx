@@ -1,3 +1,4 @@
+import { EnterpriseBadge } from "@humansignal/ui";
 import React from "react";
 import { useHistory } from "react-router";
 import { Button, ToggleItems } from "../../components";
@@ -11,8 +12,7 @@ import "./CreateProject.scss";
 import { ImportPage } from "./Import/Import";
 import { useImportPage } from "./Import/useImportPage";
 import { useDraftProject } from "./utils/useDraftProject";
-import { Select } from "../../components/Form";
-import { EnterpriseBadge } from "../../components/Badges/Enterprise";
+import { Input, Select, TextArea } from "../../components/Form";
 import { Caption } from "../../components/Caption/Caption";
 import { FF_LSDV_E_297, isFF } from "../../utils/feature-flags";
 import { createURL } from "../../components/HeidiTips/utils";
@@ -28,7 +28,7 @@ const ProjectName = ({ name, setName, onSaveName, onSubmit, error, description, 
     >
       <div className="field field--wide">
         <label htmlFor="project_name">Project Name</label>
-        <input
+        <Input
           name="name"
           id="project_name"
           value={name}
@@ -40,11 +40,12 @@ const ProjectName = ({ name, setName, onSaveName, onSubmit, error, description, 
       </div>
       <div className="field field--wide">
         <label htmlFor="project_description">Description</label>
-        <textarea
+        <TextArea
           name="description"
           id="project_description"
           placeholder="Optional description of your project"
           rows="4"
+          style={{ minHeight: 100 }}
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           className="project-description"
@@ -54,7 +55,7 @@ const ProjectName = ({ name, setName, onSaveName, onSubmit, error, description, 
         <div className="field field--wide">
           <label>
             Workspace
-            <EnterpriseBadge />
+            <EnterpriseBadge className="ml-2" />
           </label>
           <Select placeholder="Select an option" disabled options={[]} />
           <Caption>
@@ -79,7 +80,7 @@ const ProjectName = ({ name, setName, onSaveName, onSubmit, error, description, 
     </form>
   );
 
-export const CreateProject = ({ onClose }) => {
+export const CreateProject = ({ onClose, redirect = true }) => {
   const [step, _setStep] = React.useState("name"); // name | import | config
   const [waiting, setWaitingStatus] = React.useState(false);
 
@@ -174,9 +175,9 @@ export const CreateProject = ({ onClose }) => {
         },
       });
     setWaitingStatus(false);
-    history.replace("/projects");
+    redirect && history.replace("/projects");
     onClose?.();
-  }, [project]);
+  }, [project, redirect]);
 
   return (
     <Modal onHide={onDelete} closeOnClickOutside={false} allowToInterceptEscape fullscreen visible bare>

@@ -1,5 +1,5 @@
 import chroma from "chroma-js";
-import { observer } from "mobx-react";
+import { inject, observer } from "mobx-react";
 import Tree from "rc-tree";
 import {
   createContext,
@@ -16,20 +16,20 @@ import {
 import { IconWarning, LsSparks } from "../../../assets/icons";
 import { IconChevronLeft, IconEyeClosed, IconEyeOpened } from "../../../assets/icons/timeline";
 import { IconArrow } from "../../../assets/icons/tree";
-import { Tooltip } from "../../../common/Tooltip/Tooltip";
+import { Tooltip } from "@humansignal/ui";
 import Registry from "../../../core/Registry";
 import { PER_REGION_MODES } from "../../../mixins/PerRegionModes";
 import { Block, cn, Elem } from "../../../utils/bem";
-import { FF_DEV_2755, FF_DEV_3873, FF_OUTLINER_OPTIM, FF_PER_FIELD_COMMENTS, isFF } from "../../../utils/feature-flags";
+import { FF_DEV_2755, FF_DEV_3873, FF_PER_FIELD_COMMENTS, isFF } from "../../../utils/feature-flags";
 import { flatten, isDefined, isMacOS } from "../../../utils/utilities";
 import { NodeIcon } from "../../Node/Node";
 import { LockButton } from "../Components/LockButton";
 import { RegionControlButton } from "../Components/RegionControlButton";
+import { RegionContextMenu } from "../Components/RegionContextMenu";
 import "./TreeView.scss";
 import ResizeObserver from "../../../utils/resize-observer";
 import type { EventDataNode, Key } from "rc-tree/es/interface";
 import { RegionLabel } from "./RegionLabel";
-
 const { localStorage } = window;
 const localStoreName = "collapsed-label-pos";
 const MIN_REGIONS_TREE_ROW_HEIGHT = 34;
@@ -164,8 +164,8 @@ const OutlinerInnerTreeComponent: FC<OutlinerInnerTreeProps> = observer(({ regio
   }
 
   return (
-    <Block name="outliner-tree" {...(isFF(FF_OUTLINER_OPTIM) ? { ref: setRef } : {})}>
-      {(!!height || !isFF(FF_OUTLINER_OPTIM)) && (
+    <Block name="outliner-tree" ref={setRef}>
+      {!!height && (
         <Tree
           key={regions.group}
           draggable={regions.group === "manual"}
@@ -180,13 +180,9 @@ const OutlinerInnerTreeComponent: FC<OutlinerInnerTreeProps> = observer(({ regio
           selectedKeys={selectedKeys}
           icon={iconGetter}
           switcherIcon={switcherIconGetter}
-          {...(isFF(FF_OUTLINER_OPTIM)
-            ? {
-                virtual: true,
-                itemHeight: MIN_REGIONS_TREE_ROW_HEIGHT,
-                height,
-              }
-            : {})}
+          virtual
+          itemHeight={MIN_REGIONS_TREE_ROW_HEIGHT}
+          height={height}
           {...eventHandlers}
           {...(isPersistCollapseEnabled
             ? {
@@ -464,8 +460,14 @@ interface RegionControlsProps {
   toggleCollapsed: (e: any) => void;
 }
 
-const RegionControls: FC<RegionControlsProps> = observer(
-  ({ hovered, item, entity, collapsed, regions, hasControls, type, toggleCollapsed }) => {
+const injector = inject(({ store }) => {
+  return {
+    store,
+  };
+});
+
+const RegionControls: FC<RegionControlsProps> = injector(
+  observer(({ hovered, item, entity, collapsed, regions, hasControls, type, toggleCollapsed, store }) => {
     const { regions: regionStore } = useContext(OutlinerContext);
 
     const hidden = useMemo(() => {
@@ -526,6 +528,11 @@ const RegionControls: FC<RegionControlsProps> = observer(
           </>
         )}
         <Elem name={"wrapper"}>
+          {store.hasInterface("annotations:copy-link") && isDefined(item?.annotation?.pk) && (
+            <Elem name="control" mod={{ type: "menu" }}>
+              <RegionContextMenu item={item} />
+            </Elem>
+          )}
           <Elem name="control" mod={{ type: "lock" }}>
             <LockButton
               item={item}
@@ -560,7 +567,7 @@ const RegionControls: FC<RegionControlsProps> = observer(
         </Elem>
       </Elem>
     );
-  },
+  }),
 );
 
 interface RegionItemOCSProps {

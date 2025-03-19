@@ -4,7 +4,6 @@ import { PersonalAccessToken, PersonalAccessTokenDescription } from "./PersonalA
 import { MembershipInfo } from "./MembershipInfo";
 import type React from "react";
 import { PersonalJWTToken } from "./PersonalJWTToken";
-import "./index.raw.css";
 import type { AuthTokenSettings } from "../types";
 import { FF_AUTH_TOKENS, isFF } from "@humansignal/core/lib/utils/feature-flags";
 
@@ -42,7 +41,7 @@ export const accountSettingsSections = (settings: AuthTokenSettings): SectionTyp
       },
     settings.legacy_api_tokens_enabled && {
       title: isFF(FF_AUTH_TOKENS) ? "Legacy Token" : "Access Token",
-      id: "personal-access-token",
+      id: "legacy-token",
       // component: PersonalAccessToken,
       component: PersonalAccessToken,
       description: PersonalAccessTokenDescription,

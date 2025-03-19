@@ -2,7 +2,7 @@ import React, { createContext, useContext } from "react";
 import { createPortal } from "react-dom";
 import { IconCross } from "@humansignal/ui";
 import { BemWithSpecifiContext, cn } from "../../utils/bem";
-import { aroundTransition } from "../../utils/transition";
+import { aroundTransition } from "@humansignal/core/lib/utils/transition";
 import { Button } from "../Button/Button";
 import "./Modal.scss";
 
@@ -12,6 +12,10 @@ const ModalContext = createContext();
 
 export class Modal extends React.Component {
   modalRef = React.createRef();
+
+  get visible() {
+    return this.state.visible;
+  }
 
   constructor(props) {
     super(props);
@@ -204,8 +208,8 @@ Modal.Header = ({ children, divided }) => (
   </Elem>
 );
 
-Modal.Footer = ({ children, bare }) => (
-  <Elem name="footer" mod={{ bare }}>
+Modal.Footer = ({ children, bare, style, className }) => (
+  <Elem name="footer" mod={{ bare }} mix={className} style={style}>
     {children}
   </Elem>
 );

@@ -76,7 +76,7 @@
       color: var(--color-neutral-content);
     }
 
-    & .annotation-button__ellipsisIcon {
+    & .annotation-button__trigger {
       visibility: visible;
     }
   }
@@ -92,7 +92,7 @@
       border-color: var(--color-neutral-border);
     }
 
-    & .annotation-button__ellipsisIcon {
+    & .annotation-button__trigger {
       visibility: visible;
     }
 
@@ -120,19 +120,19 @@
     }
   }
 
-  &__ellipsisIcon {
+  &__trigger {
     transform: rotate(90deg);
     display: flex;
     border-radius: 4px;
     color: var(--color-neutral-content-subtler);
     visibility: hidden;
     transition: all 150ms ease-out;
-    border:1px solid transparent;
+    border: 1px solid transparent;
 
     &:hover {
       color: var(--color-neutral-content);
       background: var(--color-primary-emphasis-subtle);
-      border:1px solid var(--color-primary-border-subtle);
+      border: 1px solid var(--color-primary-border-subtle);
     }
   }
 
@@ -167,82 +167,6 @@
 
       svg {
         display: block;
-      }
-    }
-  }
-
-  &__contextMenu {
-    cursor: pointer;
-  }
-
-  &_contextMenuOpen {
-    .annotation-button__ellipsisIcon {
-      color: var(--color-neutral-content);
-      background: var(--color-primary-emphasis);
-      visibility: visible;
-    }
-  }
-}
-
-.AnnotationButtonContextMenu {
-  border-radius: 4px;
-  box-shadow: 0 1px 3px 1px #26262626, 0 1px 2px 0 #2626264D;
-
-  &__seperator {
-    height: 1px;
-    background-color: var(--color-neutral-border);
-  }
-
-  &__option {
-    display: flex;
-    margin: 8px;
-    align-items: center;
-    white-space: nowrap;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 22px;
-    border-radius: 4px;
-    padding: 4px 8px;
-    min-width: 200px;
-    gap: 8px;
-    transition: all 150ms ease-out;
-    color: var(--color-neutral-content-subtle);
-
-    &:hover {
-      background-color: var(--color-primary-emphasis-subtle);
-      color: var(--color-neutral-content);
-    }
-
-    .AnnotationButtonContextMenu__icon {
-      height: 24px;
-      width: 24px;
-      transition: all 150ms ease-out;
-    }
-
-    &_duplicate {
-      padding-top: 6px;
-      padding-bottom: 6px;
-
-      .AnnotationButtonContextMenu__icon {
-        display: flex;
-        align-items: center;
-      }
-    }
-
-    &_delete {
-      color: var(--color-negative-content);
-
-      &:hover {
-        background-color: var(--color-negative-emphasis-subtle);
-        color: var(--color-neutral-content);
-      }
-
-      & .AnnotationButtonContextMenu__icon {
-        height: 24px;
-        width: 24px;
-        display: flex;
-        align-items: center;
       }
     }
   }

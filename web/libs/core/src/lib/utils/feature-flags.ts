@@ -13,10 +13,6 @@ export const FF_DEV_1682 = "ff_front_dev_1682_model_version_dropdown_070622_shor
 export const FF_LSDV_4711 = "fflag_fix_all_lsdv_4711_cors_errors_accessing_task_data_short";
 // Enables "Enterprise Awareness" features
 export const FF_LSDV_E_297 = "fflag_feat_front_lsdv_e_297_increase_oss_to_enterprise_adoption_short";
-/**
- * Improve load time performance of Dashboard Members page
- */
-export const FF_OPTIC_2 = "fflag_feat_optic_2_ensure_draft_saved_short";
 
 /**
  * Prompter workflow
@@ -37,12 +33,15 @@ export const FF_UNSAVED_CHANGES = "fflag_feat_front_leap_1198_unsaved_changes_18
  */
 export const FF_AUTH_TOKENS = "fflag__feature_develop__prompts__dia_1829_jwt_token_auth";
 
+export const FF_IMPROVE_GLOBAL_ERROR_MESSAGES = "fflag_feat_front_optic_1746_improve_global_error_messages_short";
+/**
+ * Enable new home page for LSO and LSE
+ */
+export const FF_HOMEPAGE = "fflag_all_feat_dia_1777_ls_homepage_short";
+
 export function isFF(id: string) {
   // TODO: remove the override + if statement once LSE and LSO start building react the same way and fflag_fix_front_lsdv_4620_memory_leaks_100723_short is removed
-  const override: Record<string, boolean> = {
-    fflag_fix_front_lsdv_4620_memory_leaks_100723_short: false,
-    // [FF_AUTH_TOKENS]: false,
-  };
+  const override: Record<string, boolean> = {};
   if (window?.APP_SETTINGS?.sentry_environment === "opensource" && id in override) {
     return override[id];
   }

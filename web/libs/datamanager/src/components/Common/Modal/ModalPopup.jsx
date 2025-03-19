@@ -89,7 +89,7 @@ export class Modal extends React.Component {
                     tag={Button}
                     name="close"
                     type="text"
-                    icon={<Icon size="18" color="#617ADA" icon={IconCross} />}
+                    icon={<Icon size="24" color="#617ADA" icon={IconCross} />}
                   />
                 )}
               </Modal.Header>

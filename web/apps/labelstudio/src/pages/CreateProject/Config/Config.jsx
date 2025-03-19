@@ -154,11 +154,11 @@ const ConfigureSettings = ({ template }) => {
 
     switch (type) {
       case Array:
-        onChange = (e) => {
+        onChange = (val) => {
           if (typeof options.param === "function") {
-            options.param($tag, e.target.value);
+            options.param($tag, val);
           } else {
-            $object.setAttribute(options.param, e.target.value);
+            $object.setAttribute(options.param, val);
           }
           template.render();
         };

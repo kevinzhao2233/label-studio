@@ -1,6 +1,5 @@
 import { observer } from "mobx-react";
 import { useCallback, useMemo } from "react";
-// import { Select } from "../../../common/Select/Select";
 import { Select } from "@humansignal/ui";
 import ColorScheme from "pleasejs";
 import Utils from "../../../utils";
@@ -33,16 +32,16 @@ const renderMultipleSelected = (selected) => {
 
 export const AuthorFilter = observer(({ item, onChange }) => {
   const placeholder = useMemo(() => <span className={styles.authorFilter__placeholder}>Show all authors</span>, []);
-  const value = null;
+  const initialValue = {value: "all", label: "Show all authors"};
   const options = useMemo(
     () => {
       const authorOptions = item._value.reduce((all, v) => (all.includes(v[item.namekey]) ? all : [...all, v[item.namekey]]), []).sort();
-      authorOptions.unshift({value: false, label: "Show all authors"});
+      authorOptions.unshift(initialValue);
       return authorOptions;
     },
-    [item._value, item.namekey],
+    [item._value, item.namekey, initialValue],
   );
-  console.log("options", options);
+  
   const filteredOptions = item.searchAuthor
     ? options.filter((o) => o.toLowerCase().includes(item.searchAuthor.toLowerCase()))
     : options;
@@ -50,7 +49,7 @@ export const AuthorFilter = observer(({ item, onChange }) => {
     (next) => {
       const nextVal = next?.value ?? next;
       // ensure this is cleared if any action promoting an empty value change is made
-      if (!nextVal || nextVal?.includes(null)) {
+      if (!nextVal || nextVal?.includes("all")) {
         item.setAuthorFilter([]);
       } else if (nextVal) {
         item.setAuthorFilter(nextVal);
@@ -64,15 +63,12 @@ export const AuthorFilter = observer(({ item, onChange }) => {
   return (
     <div className={styles.authorFilter}>
       <Select
-        placeholder={"Show all authors"}
-        value={value}
+        placeholder={placeholder}
+        defaultValue={initialValue}
         options={options}
         onChange={onFilterChange}
-        // renderMultipleSelected={renderMultipleSelected}
         size="compact"
-        // variant="rounded"
-        // surface="emphasis"
-        multiple={true}
+        // multiple={true}
         searchable={true}
       />
     </div>

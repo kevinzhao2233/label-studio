@@ -384,14 +384,14 @@ export const ImportPage = ({
           Upload {files.uploaded.length ? "More " : ""}Files
         </Button>
         {ff.isFF(ff.FF_SAMPLE_DATASETS) && (
-          <SampleDatasetSelect 
-            samples={samples} 
-            sample={sample} 
+          <SampleDatasetSelect
+            samples={samples}
+            sample={sample}
             onSampleApplied={onSampleDatasetSelect}
             warningMessage={
               hasLabelConfig || (project?.label_config && project.label_config !== EMPTY_CONFIG)
-              ? "Selecting a sample dataset will overwrite your current labeling configuration." : 
-              undefined
+                ? "Selecting a sample dataset will overwrite your current labeling configuration."
+                : undefined
             }
           />
         )}

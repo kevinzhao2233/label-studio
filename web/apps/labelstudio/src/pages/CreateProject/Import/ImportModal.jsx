@@ -67,7 +67,7 @@ export const Inner = () => {
     const imported = await finishUpload();
 
     if (!imported) return;
-    
+
     // If we have a sample with a label_config, update the project's label config
     if (sample && sample.label_config) {
       await api.callApi("updateProject", {
@@ -79,7 +79,7 @@ export const Inner = () => {
         },
       });
     }
-    
+
     backToDM();
   }, [backToDM, finishUpload, sample, api, project]);
 

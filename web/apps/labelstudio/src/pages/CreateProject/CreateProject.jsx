@@ -125,7 +125,7 @@ export const CreateProject = ({ onClose, redirect = true }) => {
     () => ({
       title: name,
       description,
-      label_config: (sample && sample.label_config) ? sample.label_config : config,
+      label_config: sample && sample.label_config ? sample.label_config : config,
     }),
     [name, description, config, sample],
   );
@@ -238,9 +238,7 @@ export const CreateProject = ({ onClose, redirect = true }) => {
               setConfig(selectedSample.label_config);
             }
           }}
-          hasLabelConfig={
-            config && config !== EMPTY_CONFIG 
-          }
+          hasLabelConfig={config && config !== EMPTY_CONFIG}
           {...pageProps}
         />
         <ConfigPage

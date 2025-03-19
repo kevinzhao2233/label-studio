@@ -177,7 +177,7 @@ const Model = types
     const date = new Date();
     const getYear = (minmax) => {
       if (minmax === "current") return date.getFullYear();
-      if (minmax.length === 4) return minmax;
+      if (minmax.length === 4) return parseInt(minmax);
       return self.parseDateTime(minmax)?.getFullYear();
     };
     const minYear = getYear(self.min ?? "2000");
@@ -374,8 +374,8 @@ const HtxDateTime = inject("store")(
             disabled={disabled}
             value={item.month}
             placeholder="Month..."
-            onChange={disabled ? undefined : item.onMonthChange}
-            options={item.months.map((month, index) => ({ value: index + 1, label: month }))}
+            onChange={(val) => disabled ? undefined : item.onMonthChange(val)}
+            options={item.months.map((month, index) => ({ value: (index + 1), label: month }))}
           />
         )}
         {item.showYear && (
@@ -385,7 +385,7 @@ const HtxDateTime = inject("store")(
             disabled={disabled}
             value={item.year || ""}
             placeholder="Year..."
-            onChange={disabled ? undefined : item.onYearChange}
+            onChange={(val) => disabled ? undefined : item.onYearChange(val)}
             options={item.years}
           />
         )}

@@ -127,7 +127,7 @@ export const Select = forwardRef(
       <SelectComponent value={value} onValueChange={_onChange} disabled={disabled} {...props}>
         {label && <Label {...labelProps}>{label}</Label>}
         <SelectTrigger disabled={disabled} {...(props?.triggerProps ?? {})}>
-          <SelectValue placeholder={props?.placeholder} />
+          <SelectValue placeholder={props?.placeholder}  data-testid="select"/>
         </SelectTrigger>
         <SelectContent>
           {searchable && (

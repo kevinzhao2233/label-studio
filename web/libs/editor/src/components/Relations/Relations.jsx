@@ -1,4 +1,4 @@
-import { Button, List, Select } from "antd";
+import { Button, List } from "antd";
 import { getRoot, isValidReference } from "mobx-state-tree";
 import { observer } from "mobx-react";
 import { ArrowLeftOutlined, ArrowRightOutlined, DeleteOutlined, MoreOutlined, SwapOutlined } from "@ant-design/icons";
@@ -12,8 +12,7 @@ import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { Block, Elem } from "../../utils/bem";
 import "./Relations.scss";
 import { useMemo } from "react";
-
-const { Option } = Select;
+import { Select } from "@humansignal/ui";
 
 const RelationMeta = observer(({ rl }) => {
   const r = rl.relations;
@@ -24,7 +23,7 @@ const RelationMeta = observer(({ rl }) => {
     <div style={{ marginTop: "10px" }}>
       <h4 className={styles.header}>LABELS</h4>
       <Select
-        mode={r.choice === "multiple" ? "multiple" : ""}
+        multiple={r.choice === "multiple"}
         style={{ width: "100%" }}
         placeholder="Please select"
         defaultValue={selected}
@@ -35,13 +34,7 @@ const RelationMeta = observer(({ rl }) => {
           values.forEach((v) => r.findRelation(v).setSelected(true));
         }}
         options={options}
-      >
-        {r.children.map((c) => (
-          <Option key={c.value} style={{ background: c.background }}>
-            {c.value}
-          </Option>
-        ))}
-      </Select>
+      />
     </div>
   );
 });

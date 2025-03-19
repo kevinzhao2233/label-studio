@@ -15,6 +15,7 @@ import { ReadOnlyControlMixin } from "../../mixins/ReadOnlyMixin";
 import ClassificationBase from "./ClassificationBase";
 import PerItemMixin from "../../mixins/PerItem";
 import { FF_LSDV_4583, isFF } from "../../utils/feature-flags";
+import { Select } from "@humansignal/ui";
 
 const FORMAT_FULL = "%Y-%m-%dT%H:%M";
 const FORMAT_DATE = "%Y-%m-%d";
@@ -253,13 +254,13 @@ const Model = types
       }
     },
 
-    onMonthChange(e) {
-      self.month = +e.target.value || undefined;
+    onMonthChange(val) {
+      self.month = +val || undefined;
       self.updateResult();
     },
 
-    onYearChange(e) {
-      self.year = +e.target.value || undefined;
+    onYearChange(val) {
+      self.year = +val || undefined;
       self.updateResult();
     },
 
@@ -367,36 +368,26 @@ const HtxDateTime = inject("store")(
     return (
       <div className="htx-datetime" style={visibleStyle} ref={item.elementRef}>
         {item.showMonth && (
-          <select
+          <Select
             {...visual}
             name={`${item.name}-date`}
             disabled={disabled}
             value={item.month}
+            placeholder="Month..."
             onChange={disabled ? undefined : item.onMonthChange}
-          >
-            <option value="">Month...</option>
-            {item.months.map((month, index) => (
-              <option key={month} value={index + 1}>
-                {month}
-              </option>
-            ))}
-          </select>
+            options={item.months.map((month, index) => ({ value: index + 1, label: month }))}
+          />
         )}
         {item.showYear && (
-          <select
+          <Select
             {...visual}
             name={`${item.name}-year`}
             disabled={disabled}
             value={item.year || ""}
+            placeholder="Year..."
             onChange={disabled ? undefined : item.onYearChange}
-          >
-            <option value="">Year...</option>
-            {item.years.map((year) => (
-              <option key={year} value={year}>
-                {year}
-              </option>
-            ))}
-          </select>
+            options={item.years}
+          />
         )}
         {item.showDate && (
           <input

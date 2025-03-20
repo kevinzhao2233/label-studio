@@ -119,7 +119,7 @@ function processPrimitiveSpacing(spacingObj, result) {
     if (spacingObj[key].$type === "number" && spacingObj[key].$value !== undefined) {
       const name = key.replace("$", "");
       const value = spacingObj[key].$value;
-      const cssVarName = `--spacing-primitive-${name}`;
+      const cssVarName = `--spacing-${name}`;
 
       // Add to CSS variables
       result.cssVariables.light.push(`${cssVarName}: ${convertToRem(value)};`);
@@ -149,7 +149,7 @@ function processPrimitiveTypography(typographyObj, result) {
       ) {
         const name = key.replace("$", "");
         const value = typographyObj["$font-size"][key].$value;
-        const cssVarName = `--font-size-primitive-${name}`;
+        const cssVarName = `--font-size-${name}`;
 
         // Add to CSS variables
         result.cssVariables.light.push(`${cssVarName}: ${convertToRem(value)};`);
@@ -175,7 +175,7 @@ function processPrimitiveTypography(typographyObj, result) {
       ) {
         const name = key.replace("$", "");
         const value = typographyObj["$font-weight"][key].$value;
-        const cssVarName = `--font-weight-primitive-${name}`;
+        const cssVarName = `--font-weight-${name}`;
 
         // Add to CSS variables
         result.cssVariables.light.push(`${cssVarName}: ${value};`);
@@ -201,7 +201,7 @@ function processPrimitiveTypography(typographyObj, result) {
       ) {
         const name = key.replace("$", "");
         const value = typographyObj["$line-height"][key].$value;
-        const cssVarName = `--line-height-primitive-${name}`;
+        const cssVarName = `--line-height-${name}`;
 
         // Add to CSS variables
         result.cssVariables.light.push(`${cssVarName}: ${convertToRem(value)};`);
@@ -227,7 +227,7 @@ function processPrimitiveTypography(typographyObj, result) {
       ) {
         const name = key.replace("$", "");
         const value = typographyObj["$letter-spacing"][key].$value;
-        const cssVarName = `--letter-spacing-primitive-${name}`;
+        const cssVarName = `--letter-spacing-${name}`;
 
         // Add to CSS variables
         result.cssVariables.light.push(`${cssVarName}: ${convertToRem(value)};`);
@@ -255,7 +255,7 @@ function processPrimitiveCornerRadius(cornerRadiusObj, result) {
     if (cornerRadiusObj[key].$type === "number" && cornerRadiusObj[key].$value !== undefined) {
       const name = key.replace("$", "");
       const value = cornerRadiusObj[key].$value;
-      const cssVarName = `--corner-radius-primitive-${name}`;
+      const cssVarName = `--corner-radius-${name}`;
 
       let resolvedValue;
       if (typeof value === "string" && value.startsWith("{") && value.endsWith("}")) {
@@ -266,7 +266,7 @@ function processPrimitiveCornerRadius(cornerRadiusObj, result) {
         if (parts[0] === "@primitives") {
           const collectionKey = parts[1].replace("$", "");
           const valueKey = parts[2].replace("$", "");
-          resolvedValue = `var(--${collectionKey}-primitive-${valueKey})`;
+          resolvedValue = `var(--${collectionKey}-${valueKey})`;
           result.cssVariables.light.push(`${cssVarName}: ${resolvedValue};`);
         } else {
           // Otherwise, try to resolve the value normally
@@ -495,7 +495,7 @@ function processCornerRadiusTokens(cornerRadiusObj, result, variables) {
         if (parts[0] === "@primitives") {
           const collectionKey = parts[1].replace("$", "");
           const valueKey = parts[2].replace("$", "");
-          resolvedValue = `var(--${collectionKey}-primitive-${valueKey})`;
+          resolvedValue = `var(--${collectionKey}-${valueKey})`;
           result.cssVariables.light.push(`${cssVarName}: ${resolvedValue};`);
         } else {
           // Otherwise, try to resolve the value normally
@@ -582,10 +582,11 @@ function processPrimitiveColors(primitiveColors, result, variables) {
         if (primitiveColors[colorFamily][shade].$type === "color" && primitiveColors[colorFamily][shade].$value) {
           const name = `${familyName}-${shade}`;
           const value = primitiveColors[colorFamily][shade].$value;
-          const cssVarName = `--color-primitive-${name}`;
+          const cssVarName = `--color-${name}`;
 
-          // Add to CSS variables
-          result.cssVariables.light.push(`${cssVarName}: ${value};`);
+          // Add to CSS variables, converting to RGB format for opacity support
+          const rgbValue = hexToRgb(value);
+          result.cssVariables.light.push(`${cssVarName}: ${rgbValue};`);
 
           // Add to JavaScript tokens
           if (!result.jsTokens.colors.primitive) {
@@ -605,6 +606,42 @@ function processPrimitiveColors(primitiveColors, result, variables) {
 }
 
 /**
+ * Convert hex color to RGB format for opacity support
+ * @param {string} hex - Hex color code
+ * @returns {string} - RGB color format as rgb(r, g, b)
+ */
+function hexToRgb(hex) {
+  // Check if it's already in rgb/rgba format
+  if (hex.startsWith("rgb")) {
+    return hex;
+  }
+
+  // Remove # if present
+  hex = hex.replace(/^#/, "");
+
+  // Parse the hex values
+  let r;
+  let g;
+  let b;
+  if (hex.length === 3) {
+    // Convert 3-digit hex to 6-digit
+    r = Number.parseInt(hex[0] + hex[0], 16);
+    g = Number.parseInt(hex[1] + hex[1], 16);
+    b = Number.parseInt(hex[2] + hex[2], 16);
+  } else if (hex.length === 6) {
+    r = Number.parseInt(hex.substring(0, 2), 16);
+    g = Number.parseInt(hex.substring(2, 4), 16);
+    b = Number.parseInt(hex.substring(4, 6), 16);
+  } else {
+    // Invalid hex, return as is
+    return hex;
+  }
+
+  // Return RGB format
+  return `rgb(${r}, ${g}, ${b})`;
+}
+
+/**
  * Resolve color values, handling references to other variables
  * @param {String} value - The color value to resolve
  * @param {Object} variables - The variables object for reference resolution
@@ -620,10 +657,15 @@ function resolveColor(value, variables, asCssVariable = true) {
     const parts = reference.split(".");
 
     if (asCssVariable) {
+      // Remove 'primitive' from CSS variable references
+      if (reference.startsWith("@primitives.$color")) {
+        return `var(--color-${reference.replace("@primitives.$color.", "").replace(/[$\.]/g, "-").substring(1)})`;
+      }
       return `var(--color-${reference
-        .replace("@primitives.", "primitive")
+        .replace("@primitives.", "")
         .replace("$color.", "")
-        .replace(/[$\.]/g, "-")})`;
+        .replace(/[$\.]/g, "-")
+        .substring(1)})`;
     }
 
     // Navigate through the object to find the referenced value
@@ -633,18 +675,22 @@ function resolveColor(value, variables, asCssVariable = true) {
         current = current[part];
       } else {
         // If we can't resolve, return the CSS variable equivalent
+        if (reference.startsWith("@primitives.$color")) {
+          return `var(--color-${reference.replace("@primitives.$color.", "").replace(/[$\.]/g, "-").substring(1)})`;
+        }
         return `var(--color-${reference.replace(/[@$\.]/g, "-").substring(1)})`;
       }
     }
 
     if (current.$value) {
-      return current.$value;
+      return hexToRgb(current.$value);
     }
 
     return value;
   }
 
-  return value;
+  // Convert direct color values to RGB
+  return hexToRgb(value);
 }
 
 /**

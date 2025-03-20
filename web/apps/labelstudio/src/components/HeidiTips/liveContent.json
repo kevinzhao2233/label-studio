@@ -185,14 +185,14 @@
       }
     },
     {
-      "title": "Prompt Engineering",
-      "description": "Manage, evaluate, and iterate on LLM prompts against human-labelled golden datasets.",
+      "title": "TODO: Model eval & comparison",
+      "description": "TODO",
       "link": {
         "label": "Learn more",
-        "url": "https://docs.humansignal.com/guide/prompts_overview#Prompt-evaluation-and-fine-tuning",
+        "url": "https://docs.humansignal.com/",
         "params": {
           "experiment": "login_revamp",
-          "treatment": "prompt_engineering_live"
+          "treatment": "model_eval_live"
         }
       }
     },
@@ -205,6 +205,18 @@
         "params": {
           "experiment": "login_revamp",
           "treatment": "multi_image_live"
+        }
+      }
+    },
+    {
+      "title": "TODO Bulk labelling",
+      "description": "TODO",
+      "link": {
+        "label": "Learn more",
+        "url": "https://labelstud.io",
+        "params": {
+          "experiment": "login_revamp",
+          "treatment": "bulk_labelling_live"
         }
       }
     },

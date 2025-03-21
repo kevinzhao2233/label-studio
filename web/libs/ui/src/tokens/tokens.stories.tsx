@@ -830,7 +830,7 @@ const TokenCategorized = () => {
 };
 
 const meta: Meta = {
-  title: "UI/Design Tokens",
+  title: "Design/Tokens",
   parameters: {
     layout: "fullscreen",
     docs: {
@@ -843,9 +843,21 @@ const meta: Meta = {
 
 export default meta;
 
-export const AllTokens = {
+export const Tokens = {
+  render: () => <TokenCategorized />,
+  name: "Index",
+  parameters: {
+    docs: {
+      description: {
+        story: "Design tokens organized by their categories for easier navigation.",
+      },
+    },
+  },
+};
+
+export const Catalog = {
   render: () => <TokenCatalog />,
-  name: "All Tokens",
+  name: "Catalog",
   parameters: {
     docs: {
       description: {
@@ -855,14 +867,3 @@ export const AllTokens = {
   },
 };
 
-export const CategorizedTokens = {
-  render: () => <TokenCategorized />,
-  name: "Categorized",
-  parameters: {
-    docs: {
-      description: {
-        story: "Design tokens organized by their categories for easier navigation.",
-      },
-    },
-  },
-};

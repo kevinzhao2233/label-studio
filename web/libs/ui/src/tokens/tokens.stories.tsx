@@ -56,7 +56,7 @@ const TokenValue = ({ token, tokenName }: { token: string; tokenName: string }) 
 
   const handleCopy = (e: React.MouseEvent<HTMLDivElement>) => {
     // Copy token name to clipboard
-    navigator.clipboard.writeText(tokenName);
+    navigator.clipboard.writeText(token);
 
     // Find and show the copy indicator
     const parent = e.currentTarget;

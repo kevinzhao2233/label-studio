@@ -32,10 +32,9 @@ const TokenValue = ({ token, tokenName }: { token: string; tokenName: string }) 
   // Determine token type
   const isColor = typeof token === "string" && token.includes("--color-");
   const isSpacing = typeof token === "string" && token.includes("--spacing-");
-  const isTypography = typeof token === "string" &&
-    (token.includes("--font-size-") ||
-     token.includes("--line-height-") ||
-     token.includes("--letter-spacing-"));
+  const isTypography =
+    typeof token === "string" &&
+    (token.includes("--font-size-") || token.includes("--line-height-") || token.includes("--letter-spacing-"));
   const isCornerRadius = typeof token === "string" && token.includes("--corner-radius-");
 
   const handleCopy = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -48,7 +47,7 @@ const TokenValue = ({ token, tokenName }: { token: string; tokenName: string }) 
 
     if (copyIndicator) {
       copyIndicator.style.bottom = "8px";
-      copyIndicator.style.opacity = "0.8";
+      copyIndicator.style.opacity = "1";
 
       // Hide after a delay
       setTimeout(() => {
@@ -176,22 +175,26 @@ const TokenValue = ({ token, tokenName }: { token: string; tokenName: string }) 
           )}
 
           {token.includes("--line-height-") && (
-            <div style={{
-              position: "relative",
-              width: "100%",
-              height: "40px",
-            }}>
-              <div style={{
-                width: "100%",
-                height: token,
-                backgroundColor: "rgba(99, 102, 241, 0.2)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: "12px",
-                color: "#6366F1",
+            <div
+              style={{
                 position: "relative",
-              }}>
+                width: "100%",
+                height: "40px",
+              }}
+            >
+              <div
+                style={{
+                  width: "100%",
+                  height: token,
+                  backgroundColor: "rgba(99, 102, 241, 0.2)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "12px",
+                  color: "#6366F1",
+                  position: "relative",
+                }}
+              >
                 Line Height
                 <span
                   style={{
@@ -209,12 +212,14 @@ const TokenValue = ({ token, tokenName }: { token: string; tokenName: string }) 
           )}
 
           {token.includes("--letter-spacing-") && (
-            <div style={{
-              letterSpacing: token,
-              fontSize: "14px",
-              position: "relative",
-              padding: "0 16px",
-            }}>
+            <div
+              style={{
+                letterSpacing: token,
+                fontSize: "14px",
+                position: "relative",
+                padding: "0 16px",
+              }}
+            >
               LETTER SPACING
               <span
                 style={{
@@ -246,7 +251,7 @@ const TokenValue = ({ token, tokenName }: { token: string; tokenName: string }) 
         >
           <div
             style={{
-              width: "80%",
+              width: "60%",
               height: "40px",
               backgroundColor: "rgba(99, 102, 241, 0.2)",
               borderRadius: token,
@@ -269,40 +274,46 @@ const TokenValue = ({ token, tokenName }: { token: string; tokenName: string }) 
 
       {/* Token information */}
       <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <div style={{ flex: "1" }}>
+        <div style={{ flex: "1", display: "flex", flexDirection: "column", gap: "4px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div
+              className="token-name"
+              style={{
+                color: "#000",
+                fontSize: "14px",
+                fontWeight: "bold",
+                wordBreak: "break-word",
+              }}
+            >
+              {tokenName.split(".").pop() || tokenName}
+            </div>
+            <div
+              className="token-path"
+              style={{
+                fontSize: "10px",
+                color: "#888",
+              }}
+            >
+              {tokenName.split(".").slice(0, -1).join(".")}
+            </div>
+          </div>
+
           <div
-            className="token-name"
+            className="token-value"
             style={{
-              fontSize: "14px",
+              fontSize: "12px",
               fontWeight: "bold",
-              marginBottom: "4px",
-              wordBreak: "break-word",
+              color: "#555",
+              textAlign: "center",
+              wordBreak: "break-all",
+              flexShrink: 0,
+              backgroundColor: "rgb(247 246 246)",
+              padding: "1px 2px",
+              borderRadius: "4px",
             }}
           >
-            {tokenName.split('.').pop() || tokenName}
+            {token.replace("var(", "").replace(")", "")}
           </div>
-          <div
-            className="token-path"
-            style={{
-              fontSize: "10px",
-              color: "#888",
-              marginBottom: "4px",
-            }}
-          >
-            {tokenName}
-          </div>
-        </div>
-        <div
-          className="token-value"
-          style={{
-            fontSize: "12px",
-            color: "#666",
-            textAlign: "right",
-            wordBreak: "break-all",
-            maxWidth: "40%",
-          }}
-        >
-          {token}
         </div>
       </div>
 
@@ -358,7 +369,8 @@ const TokenCatalog = () => {
   // Filter tokens based on search and category filters
   const filteredTokens = Object.entries(allTokens).filter(([name, value]) => {
     // Filter by search term
-    const matchesSearch = searchTerm === "" ||
+    const matchesSearch =
+      searchTerm === "" ||
       name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       String(value).toLowerCase().includes(searchTerm.toLowerCase());
 
@@ -369,32 +381,33 @@ const TokenCatalog = () => {
     const matchesColorSubcategory =
       !name.startsWith("colors") ||
       activeColorSubcategory === "all" ||
-      (
-        activeColorSubcategory === "primitives"
-          ? !name.startsWith("colors.neutral") &&
-            !name.startsWith("colors.primary") &&
-            !name.startsWith("colors.negative") &&
-            !name.startsWith("colors.positive") &&
-            !name.startsWith("colors.warning") &&
-            !name.startsWith("colors.accent") &&
-            name.startsWith("colors.")
-          : name.startsWith(`colors.${activeColorSubcategory}`)
-      );
+      (activeColorSubcategory === "primitives"
+        ? !name.startsWith("colors.neutral") &&
+          !name.startsWith("colors.primary") &&
+          !name.startsWith("colors.negative") &&
+          !name.startsWith("colors.positive") &&
+          !name.startsWith("colors.warning") &&
+          !name.startsWith("colors.accent") &&
+          name.startsWith("colors.")
+        : name.startsWith(`colors.${activeColorSubcategory}`));
 
     return matchesSearch && matchesCategory && matchesColorSubcategory;
   });
 
   // Group filtered tokens by their top-level category
-  const groupedTokens: Record<string, Array<[string, string]>> = filteredTokens.reduce((acc, [name, value]) => {
-    const topCategory = name.split('.')[0];
+  const groupedTokens: Record<string, Array<[string, string]>> = filteredTokens.reduce(
+    (acc, [name, value]) => {
+      const topCategory = name.split(".")[0];
 
-    if (!acc[topCategory]) {
-      acc[topCategory] = [];
-    }
+      if (!acc[topCategory]) {
+        acc[topCategory] = [];
+      }
 
-    acc[topCategory].push([name, value]);
-    return acc;
-  }, {} as Record<string, Array<[string, string]>>);
+      acc[topCategory].push([name, value]);
+      return acc;
+    },
+    {} as Record<string, Array<[string, string]>>,
+  );
 
   return (
     <div className="token-catalog p-8">
@@ -627,15 +640,9 @@ const TokenCategorized = () => {
   const generateTypographyPreview = () => {
     return (
       <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginTop: "16px" }}>
-        <div style={{ fontSize: "var(--font-size-12)", lineHeight: "var(--line-height-16)" }}>
-          Font Size 12px
-        </div>
-        <div style={{ fontSize: "var(--font-size-14)", lineHeight: "var(--line-height-20)" }}>
-          Font Size 14px
-        </div>
-        <div style={{ fontSize: "var(--font-size-16)", lineHeight: "var(--line-height-24)" }}>
-          Font Size 16px
-        </div>
+        <div style={{ fontSize: "var(--font-size-12)", lineHeight: "var(--line-height-16)" }}>Font Size 12px</div>
+        <div style={{ fontSize: "var(--font-size-14)", lineHeight: "var(--line-height-20)" }}>Font Size 14px</div>
+        <div style={{ fontSize: "var(--font-size-16)", lineHeight: "var(--line-height-24)" }}>Font Size 16px</div>
       </div>
     );
   };
@@ -700,7 +707,10 @@ const TokenCategorized = () => {
             {getCategoryPreview(category)}
 
             {category === "colors" && (
-              <div className="color-subcategories" style={{ display: "flex", flexWrap: "wrap", gap: "16px", marginTop: "24px" }}>
+              <div
+                className="color-subcategories"
+                style={{ display: "flex", flexWrap: "wrap", gap: "16px", marginTop: "24px" }}
+              >
                 {Object.entries(colorSubcategoryDescriptions).map(([subCategory, subDescription]) => (
                   <div
                     key={subCategory}
@@ -757,13 +767,17 @@ const TokenCategorized = () => {
                       >
                         <div style={{ display: "flex" }}>
                           <div style={{ width: "20px", height: "20px", backgroundColor: "var(--color-grape-500)" }} />
-                          <div style={{ width: "20px", height: "20px", backgroundColor: "var(--color-blueberry-500)" }} />
+                          <div
+                            style={{ width: "20px", height: "20px", backgroundColor: "var(--color-blueberry-500)" }}
+                          />
                           <div style={{ width: "20px", height: "20px", backgroundColor: "var(--color-kale-500)" }} />
                         </div>
                         <div style={{ display: "flex" }}>
                           <div style={{ width: "20px", height: "20px", backgroundColor: "var(--color-kiwi-500)" }} />
                           <div style={{ width: "20px", height: "20px", backgroundColor: "var(--color-mango-500)" }} />
-                          <div style={{ width: "20px", height: "20px", backgroundColor: "var(--color-persimmon-500)" }} />
+                          <div
+                            style={{ width: "20px", height: "20px", backgroundColor: "var(--color-persimmon-500)" }}
+                          />
                         </div>
                         <div style={{ display: "flex" }}>
                           <div style={{ width: "20px", height: "20px", backgroundColor: "var(--color-plum-500)" }} />
@@ -821,8 +835,7 @@ const meta: Meta = {
     layout: "fullscreen",
     docs: {
       description: {
-        component:
-          "A catalog of all available design tokens in the system. Click on any token to copy its path.",
+        component: "A catalog of all available design tokens in the system. Click on any token to copy its path.",
       },
     },
   },
@@ -853,4 +866,3 @@ export const CategorizedTokens = {
     },
   },
 };
-

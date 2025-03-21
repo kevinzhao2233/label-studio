@@ -1,5 +1,5 @@
 import type React from "react";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import type { Meta } from "@storybook/react";
 // @ts-ignore: JS module without types
 import designTokens from "./tokens";
@@ -37,6 +37,23 @@ const TokenValue = ({ token, tokenName }: { token: string; tokenName: string }) 
     (token.includes("--font-size-") || token.includes("--line-height-") || token.includes("--letter-spacing-"));
   const isCornerRadius = typeof token === "string" && token.includes("--corner-radius-");
 
+  // Create a ref to access computed values
+  const [computedValue, setComputedValue] = useState<string>("");
+  const elementRef = useRef<HTMLDivElement>(null);
+
+  // Get the computed value when the component mounts
+  useEffect(() => {
+    if (elementRef.current && token.includes("var(")) {
+      // Extract the CSS variable name from the token string
+      const varName = token.match(/var\((.*?)\)/)?.[1] || "";
+      if (varName) {
+        // Get the computed style for the variable
+        const computedStyle = getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+        setComputedValue(computedStyle);
+      }
+    }
+  }, [token]);
+
   const handleCopy = (e: React.MouseEvent<HTMLDivElement>) => {
     // Copy token name to clipboard
     navigator.clipboard.writeText(tokenName);
@@ -59,6 +76,7 @@ const TokenValue = ({ token, tokenName }: { token: string; tokenName: string }) 
 
   return (
     <div
+      ref={elementRef}
       className="token-item"
       onClick={handleCopy}
       style={{
@@ -133,7 +151,7 @@ const TokenValue = ({ token, tokenName }: { token: string; tokenName: string }) 
                 color: "#666",
               }}
             >
-              {token.replace("var(--spacing-", "").replace(")", "")}
+              {computedValue || "..."}
             </div>
           </div>
         </div>
@@ -169,7 +187,7 @@ const TokenValue = ({ token, tokenName }: { token: string; tokenName: string }) 
                   right: "4px",
                 }}
               >
-                {token.replace("var(--font-size-", "").replace(")", "")}px
+                {computedValue || "..."}
               </span>
             </div>
           )}
@@ -205,7 +223,7 @@ const TokenValue = ({ token, tokenName }: { token: string; tokenName: string }) 
                     right: "4px",
                   }}
                 >
-                  {token.replace("var(--line-height-", "").replace(")", "")}px
+                  {computedValue || "..."}
                 </span>
               </div>
             </div>
@@ -230,7 +248,7 @@ const TokenValue = ({ token, tokenName }: { token: string; tokenName: string }) 
                   right: "4px",
                 }}
               >
-                {token.replace("var(--letter-spacing-", "").replace(")", "")}
+                {computedValue || "..."}
               </span>
             </div>
           )}
@@ -267,7 +285,7 @@ const TokenValue = ({ token, tokenName }: { token: string; tokenName: string }) 
               right: "4px",
             }}
           >
-            {token.replace("var(--corner-radius-", "").replace(")", "")}
+            {computedValue || "..."}
           </span>
         </div>
       )}
@@ -313,6 +331,9 @@ const TokenValue = ({ token, tokenName }: { token: string; tokenName: string }) 
             }}
           >
             {token.replace("var(", "").replace(")", "")}
+            {computedValue && token.includes("var(") && (
+              <span style={{ color: "#888", marginLeft: "4px" }}>→ {computedValue}</span>
+            )}
           </div>
         </div>
       </div>

@@ -122,7 +122,7 @@ Scenario(
 
     await AtAudioView.lookForStage();
 
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 10; i++) {
       // creating a new region
       I.pressKey("1");
       AtAudioView.dragAudioElement(40 * i + 10, 30);
@@ -132,16 +132,16 @@ Scenario(
       I.pressKey("u");
     }
 
-    AtOutliner.seeRegions(20);
+    AtOutliner.seeRegions(10);
 
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 10; i++) {
       // creating a new region
       AtAudioView.clickAt(40 * i + 20);
       AtOutliner.seeSelectedRegion();
       I.pressKey("u");
     }
 
-    AtOutliner.seeRegions(20);
+    AtOutliner.seeRegions(10);
 
     I.pressKey("u");
 

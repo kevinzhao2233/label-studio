@@ -65,7 +65,7 @@ const annotationWithPerRegion = {
 const image =
   "https://htx-pub.s3.us-east-1.amazonaws.com/examples/images/nick-owuor-astro-nic-visuals-wDifg5xc9Z4-unsplash.jpg";
 
-Scenario("Check Rect region for Image", async ({ I, AtImageView, AtSidebar }) => {
+Scenario("Check Rect region for Image", async ({ I, AtImageView, AtOutliner }) => {
   const params = {
     config,
     data: { image },
@@ -78,7 +78,7 @@ Scenario("Check Rect region for Image", async ({ I, AtImageView, AtSidebar }) =>
   AtImageView.waitForImage();
   await AtImageView.lookForStage();
   I.executeScript(waitForImage);
-  AtSidebar.seeRegions(1);
+  AtOutliner.seeRegions(1);
   // select first and only region
   I.click(locate('[aria-label="region"]'));
   I.see("Labels:");
@@ -89,7 +89,7 @@ Scenario("Check Rect region for Image", async ({ I, AtImageView, AtSidebar }) =>
   I.dontSee("Labels:");
 });
 
-Scenario("Image with perRegion tags", async ({ I, AtImageView, AtSidebar }) => {
+Scenario("Image with perRegion tags", async ({ I, AtImageView, AtOutliner }) => {
   let result;
   const params = {
     config: perRegionConfig,
@@ -102,7 +102,7 @@ Scenario("Image with perRegion tags", async ({ I, AtImageView, AtSidebar }) => {
 
   AtImageView.waitForImage();
   I.executeScript(waitForImage);
-  AtSidebar.seeRegions(1);
+  AtOutliner.seeRegions(1);
   // select first and only region
   I.click(locate('[aria-label="region"]'));
   I.see("Labels:");
@@ -154,7 +154,7 @@ outOfBoundsFFs.add([false]);
 
 Data(outOfBoundsFFs).Scenario(
   "Can't create rectangles outside of canvas",
-  async ({ I, AtLabels, AtSidebar, AtImageView, LabelStudio, current }) => {
+  async ({ I, AtLabels, AtOutliner, AtImageView, LabelStudio, current }) => {
     LabelStudio.setFeatureFlags({
       fflag_fix_front_dev_3793_relative_coords_short: current.FF_DEV_3793,
     });
@@ -192,7 +192,7 @@ Data(outOfBoundsFFs).Scenario(
     AtLabels.clickLabel("Planet");
     AtImageView.drawByDrag(stage.width - 100, stage.height - 100, stage.width + 100, stage.height + 100);
 
-    AtSidebar.seeRegions(4);
+    AtOutliner.seeRegions(4);
 
     const result = await LabelStudio.serialize();
 
@@ -218,7 +218,7 @@ Data(outOfBoundsFFs).Scenario(
 
 Data(outOfBoundsFFs).Scenario(
   "Can't create ellipses outside of canvas",
-  async ({ I, AtLabels, AtSidebar, AtImageView, LabelStudio, current }) => {
+  async ({ I, AtLabels, AtOutliner, AtImageView, LabelStudio, current }) => {
     LabelStudio.setFeatureFlags({
       fflag_fix_front_dev_3793_relative_coords_short: current.FF_DEV_3793,
     });
@@ -256,7 +256,7 @@ Data(outOfBoundsFFs).Scenario(
       AtImageView.drawByDrag(...ellipse);
     }
 
-    AtSidebar.seeRegions(4);
+    AtOutliner.seeRegions(4);
 
     const result = await LabelStudio.serialize();
     const radiusX = (100 / stage.width) * 100;

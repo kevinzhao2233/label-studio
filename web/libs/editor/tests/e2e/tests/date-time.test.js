@@ -51,7 +51,7 @@ const params = { config, data };
 
 Scenario(
   "Check DateTime holds state between annotations and saves result",
-  async ({ I, AtDateTime, AtLabels, AtSidebar, LabelStudio }) => {
+  async ({ I, AtDateTime, AtLabels, AtOutliner, LabelStudio }) => {
     I.amOnPage("/");
 
     LabelStudio.init(params);
@@ -115,13 +115,13 @@ Scenario(
     I.click("OK");
 
     // invalid region is selected on validation to reveal per-region control with error
-    AtSidebar.seeSelectedRegion(regions[0].label);
+    AtOutliner.seeSelectedRegion(regions[0].label);
     I.fillField("input[name=date-date]", formatDateValue(regions[0].dateValue, format));
     I.updateAnnotation();
     // next region with empty required date is selected and error is shown
     I.see('DateTime "date" is required');
     I.click("OK");
-    AtSidebar.seeSelectedRegion(regions[1].label);
+    AtOutliner.seeSelectedRegion(regions[1].label);
 
     I.say("Fill all per-region date fields and check it's all good");
     regions.forEach((region) => {

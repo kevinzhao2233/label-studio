@@ -122,7 +122,7 @@ for (const shapeName of Object.keys(shapes)) {
 
 Data(shapesTable).Scenario(
   "Check transformer existing for different shapes, their amount and modes.",
-  async ({ I, LabelStudio, AtImageView, AtSidebar, current }) => {
+  async ({ I, LabelStudio, AtImageView, AtOutliner, current }) => {
     const { shapeName } = current;
     const Shape = shapes[shapeName];
 
@@ -144,16 +144,16 @@ Data(shapesTable).Scenario(
 
     LabelStudio.init(getParamsWithLabels(shapeName));
     AtImageView.waitForImage();
-    AtSidebar.seeRegions(0);
+    AtOutliner.seeRegions(0);
     await AtImageView.lookForStage();
 
     // Draw two regions
     I.pressKey("1");
     drawShapeByBbox(Shape, bbox1.x, bbox1.y, bbox1.width, bbox1.height, AtImageView);
-    AtSidebar.seeRegions(1);
+    AtOutliner.seeRegions(1);
     I.pressKey("1");
     drawShapeByBbox(Shape, bbox2.x, bbox2.y, bbox2.width, bbox2.height, AtImageView);
-    AtSidebar.seeRegions(2);
+    AtOutliner.seeRegions(2);
 
     // Check that it wasn't a cause to show a transformer
     isTransformerExist = await AtImageView.isTransformerExist();
@@ -161,7 +161,7 @@ Data(shapesTable).Scenario(
 
     // Select the first region
     AtImageView.clickAt(...getCenter(bbox1));
-    AtSidebar.seeSelectedRegion();
+    AtOutliner.seeSelectedRegion();
 
     // Match if transformer exist with expectations in single selected mode
     isTransformerExist = await AtImageView.isTransformerExist();
@@ -203,14 +203,14 @@ Data(shapesTable).Scenario(
 
 Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMoveToolTransformer)).Scenario(
   "Resizing a single region",
-  async ({ I, LabelStudio, AtImageView, AtSidebar, current }) => {
+  async ({ I, LabelStudio, AtImageView, AtOutliner, current }) => {
     const { shapeName } = current;
     const Shape = shapes[shapeName];
 
     I.amOnPage("/");
     LabelStudio.init(getParamsWithShape(shapeName, Shape.params));
     AtImageView.waitForImage();
-    AtSidebar.seeRegions(0);
+    AtOutliner.seeRegions(0);
     await AtImageView.lookForStage();
     const canvasSize = await AtImageView.getCanvasSize();
     const convertToImageSize = Helpers.getSizeConvertor(canvasSize.width, canvasSize.height);
@@ -218,11 +218,11 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMoveToolTransfor
     // Draw a region in bbox {x1:50,y1:50,x2:150,y2:150}
     I.pressKey(Shape.hotKey);
     drawShapeByBbox(Shape, 50, 50, 100, 100, AtImageView);
-    AtSidebar.seeRegions(1);
+    AtOutliner.seeRegions(1);
 
     // Select the shape
     AtImageView.clickAt(100, 100);
-    AtSidebar.seeSelectedRegion();
+    AtOutliner.seeSelectedRegion();
 
     // Switch to move tool to force appearance of transformer
     I.pressKey("v");
@@ -251,7 +251,7 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMoveToolTransfor
 
 Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMoveToolTransformer)).Scenario(
   "Resizing a single region with zoom",
-  async ({ I, LabelStudio, AtImageView, AtSidebar, current }) => {
+  async ({ I, LabelStudio, AtImageView, AtOutliner, current }) => {
     const { shapeName } = current;
     const Shape = shapes[shapeName];
 
@@ -264,7 +264,7 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMoveToolTransfor
 
     LabelStudio.init(getParamsWithShape(shapeName, Shape.params));
     AtImageView.waitForImage();
-    AtSidebar.seeRegions(0);
+    AtOutliner.seeRegions(0);
     await AtImageView.lookForStage();
     const naturalSize = await AtImageView.getNaturalSize();
     const canvasSize = await AtImageView.getCanvasSize();
@@ -275,11 +275,11 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMoveToolTransfor
     // Draw a region in bbox {x1:50,y1:50,x2:150,y2:150}
     I.pressKey(Shape.hotKey);
     drawShapeByBbox(Shape, 50, 50, 300, 300, AtImageView);
-    AtSidebar.seeRegions(1);
+    AtOutliner.seeRegions(1);
 
     // Select the shape
     AtImageView.clickAt(100, 100);
-    AtSidebar.seeSelectedRegion();
+    AtOutliner.seeSelectedRegion();
 
     // Switch to move tool to force appearance of transformer
     I.pressKey("v");
@@ -308,14 +308,14 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMoveToolTransfor
 
 Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionRotator)).Scenario(
   "Simple rotating",
-  async ({ I, LabelStudio, AtImageView, AtSidebar, current }) => {
+  async ({ I, LabelStudio, AtImageView, AtOutliner, current }) => {
     const { shapeName } = current;
     const Shape = shapes[shapeName];
 
     I.amOnPage("/");
     LabelStudio.init(getParamsWithShape(shapeName, Shape.params));
     AtImageView.waitForImage();
-    AtSidebar.seeRegions(0);
+    AtOutliner.seeRegions(0);
     await AtImageView.lookForStage();
     const canvasSize = await AtImageView.getCanvasSize();
 
@@ -333,11 +333,11 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionRo
 
     I.pressKey(Shape.hotKey);
     drawShapeByBbox(Shape, rectangle.x, rectangle.y, rectangle.width, rectangle.height, AtImageView);
-    AtSidebar.seeRegions(1);
+    AtOutliner.seeRegions(1);
 
     // Select the shape and check that transformer appears
     AtImageView.clickAt(rectangleCenter.x, rectangleCenter.y);
-    AtSidebar.seeSelectedRegion();
+    AtOutliner.seeSelectedRegion();
 
     // Switch to move tool to force appearance of transformer
     I.pressKey("v");
@@ -370,14 +370,14 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionRo
 
 Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionRotator)).Scenario(
   "Rotating of unrotatable region",
-  async ({ I, LabelStudio, AtImageView, AtSidebar, current }) => {
+  async ({ I, LabelStudio, AtImageView, AtOutliner, current }) => {
     const { shapeName } = current;
     const Shape = shapes[shapeName];
 
     I.amOnPage("/");
     LabelStudio.init(getParamsWithShape(shapeName, Shape.params));
     AtImageView.waitForImage();
-    AtSidebar.seeRegions(0);
+    AtOutliner.seeRegions(0);
     await AtImageView.lookForStage();
     const canvasSize = await AtImageView.getCanvasSize();
 
@@ -395,11 +395,11 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionRo
 
     I.pressKey(Shape.hotKey);
     drawShapeByBbox(Shape, rectangle.x, rectangle.y, rectangle.width, rectangle.height, AtImageView);
-    AtSidebar.seeRegions(1);
+    AtOutliner.seeRegions(1);
 
     // Select the shape and check that transformer appears
     AtImageView.clickAt(rectangleCenter.x, rectangleCenter.y);
-    AtSidebar.seeSelectedRegion();
+    AtOutliner.seeSelectedRegion();
 
     // Switch to move tool to force appearance of transformer
     I.pressKey("v");
@@ -425,14 +425,14 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionRo
 
 Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionRotator)).Scenario(
   "Broke the limits with rotation",
-  async ({ I, LabelStudio, AtImageView, AtSidebar, current }) => {
+  async ({ I, LabelStudio, AtImageView, AtOutliner, current }) => {
     const { shapeName } = current;
     const Shape = shapes[shapeName];
 
     I.amOnPage("/");
     LabelStudio.init(getParamsWithShape(shapeName, Shape.params));
     AtImageView.waitForImage();
-    AtSidebar.seeRegions(0);
+    AtOutliner.seeRegions(0);
     await AtImageView.lookForStage();
     const canvasSize = await AtImageView.getCanvasSize();
 
@@ -451,11 +451,11 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionRo
 
       I.pressKey(Shape.hotKey);
       drawShapeByBbox(Shape, rectangle.x, rectangle.y, rectangle.width, rectangle.height, AtImageView);
-      AtSidebar.seeRegions(1);
+      AtOutliner.seeRegions(1);
 
       // Select the shape and check that transformer appears
       AtImageView.clickAt(rectangleCenter.x, rectangleCenter.y);
-      AtSidebar.seeSelectedRegion();
+      AtOutliner.seeSelectedRegion();
 
       // Switch to move tool to force appearance of transformer
       I.pressKey("v");
@@ -524,11 +524,11 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionRo
 
       I.pressKey(Shape.hotKey);
       drawShapeByBbox(Shape, rectangle.x, rectangle.y, rectangle.width, rectangle.height, AtImageView);
-      AtSidebar.seeRegions(1);
+      AtOutliner.seeRegions(1);
 
       // Select the shape and check that transformer appears
       AtImageView.clickAt(rectangleCenter.x, rectangleCenter.y);
-      AtSidebar.seeSelectedRegion();
+      AtOutliner.seeSelectedRegion();
 
       // Switch to move tool to force appearance of transformer
       I.pressKey("v");
@@ -582,14 +582,14 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionRo
 
 Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionRotator)).Scenario(
   "Check the initial rotation of transformer for the single region",
-  async ({ I, LabelStudio, AtImageView, AtSidebar, current }) => {
+  async ({ I, LabelStudio, AtImageView, AtOutliner, current }) => {
     const { shapeName } = current;
     const Shape = shapes[shapeName];
 
     I.amOnPage("/");
     LabelStudio.init(getParamsWithShape(shapeName, Shape.params));
     AtImageView.waitForImage();
-    AtSidebar.seeRegions(0);
+    AtOutliner.seeRegions(0);
     await AtImageView.lookForStage();
 
     const bbox = {
@@ -606,11 +606,11 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionRo
     // Draw a region
     I.pressKey(Shape.hotKey);
     drawShapeByBbox(Shape, bbox.x, bbox.y, bbox.width, bbox.height, AtImageView);
-    AtSidebar.seeRegions(1);
+    AtOutliner.seeRegions(1);
 
     // Select it
     AtImageView.clickAt(bboxCenter.x, bboxCenter.y);
-    AtSidebar.seeSelectedRegion();
+    AtOutliner.seeSelectedRegion();
 
     // Switch to move tool to force appearance of transformer
     I.pressKey("v");
@@ -637,11 +637,11 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionRo
 
     // Unselect current region
     I.pressKey("u");
-    AtSidebar.dontSeeSelectedRegion();
+    AtOutliner.dontSeeSelectedRegion();
 
     // Select it again
     AtImageView.clickAt(bboxCenter.x, bboxCenter.y);
-    AtSidebar.seeSelectedRegion();
+    AtOutliner.seeSelectedRegion();
 
     // The trick is that we turn it further, based on the assumption that transformer appears in rotated state on region selection
     // So let's try to rotate it
@@ -672,14 +672,14 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionRo
 
 Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionRotator)).Scenario(
   "Check the initial rotation of transformer for the couple of regions",
-  async ({ I, LabelStudio, AtImageView, AtSidebar, current }) => {
+  async ({ I, LabelStudio, AtImageView, AtOutliner, current }) => {
     const { shapeName } = current;
     const Shape = shapes[shapeName];
 
     I.amOnPage("/");
     LabelStudio.init(getParamsWithShape(shapeName, Shape.params));
     AtImageView.waitForImage();
-    AtSidebar.seeRegions(0);
+    AtOutliner.seeRegions(0);
     await AtImageView.lookForStage();
 
     const bbox1 = {
@@ -710,12 +710,12 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionRo
     // Draw the first region
     I.pressKey(Shape.hotKey);
     drawShapeByBbox(Shape, bbox1.x, bbox1.y, bbox1.width, bbox1.height, AtImageView);
-    AtSidebar.seeRegions(1);
+    AtOutliner.seeRegions(1);
 
     // Draw the second region
     I.pressKey(Shape.hotKey);
     drawShapeByBbox(Shape, bbox2.x, bbox2.y, bbox2.width, bbox2.height, AtImageView);
-    AtSidebar.seeRegions(2);
+    AtOutliner.seeRegions(2);
 
     // Switch to move tool and select them
     I.pressKey("v");
@@ -723,7 +723,7 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionRo
       [transformerBbox.x - 20, transformerBbox.y - 20],
       [transformerBbox.x + transformerBbox.width + 20, transformerBbox.y + transformerBbox.height + 20],
     ]);
-    AtSidebar.seeSelectedRegion();
+    AtOutliner.seeSelectedRegion();
 
     // The rotator anchor must be above top anchor by 50 pixels
     const rotatorPosition = {
@@ -745,14 +745,14 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionRo
 
     // Unselect current regions
     I.pressKey("u");
-    AtSidebar.dontSeeSelectedRegion();
+    AtOutliner.dontSeeSelectedRegion();
 
     // Select them again
     AtImageView.drawThroughPoints([
       [transformerBbox.x - 20, transformerBbox.y - 20],
       [transformerBbox.x + transformerBbox.width + 20, transformerBbox.y + transformerBbox.height + 20],
     ]);
-    AtSidebar.seeSelectedRegion();
+    AtOutliner.seeSelectedRegion();
 
     // So we have couple of rotated regions, let's check if rotates still appears above the top anchor
 
@@ -777,14 +777,14 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionRo
 // KeyPoints are transformed unpredictable so for now just skip them
 Data(
   shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionTransformer && shapeName !== "KeyPoint"),
-).Scenario("Transforming of multiple regions", async ({ I, LabelStudio, AtImageView, AtSidebar, current }) => {
+).Scenario("Transforming of multiple regions", async ({ I, LabelStudio, AtImageView, AtOutliner, current }) => {
   const { shapeName } = current;
   const Shape = shapes[shapeName];
 
   I.amOnPage("/");
   LabelStudio.init(getParamsWithShape(shapeName, Shape.params));
   AtImageView.waitForImage();
-  AtSidebar.seeRegions(0);
+  AtOutliner.seeRegions(0);
   await AtImageView.lookForStage();
   const canvasSize = await AtImageView.getCanvasSize();
   const convertToImageSize = Helpers.getSizeConvertor(canvasSize.width, canvasSize.height);
@@ -821,14 +821,14 @@ Data(
   // Draw the first region
   I.pressKey(Shape.hotKey);
   drawShapeByBbox(Shape, bbox1.x, bbox1.y, bbox1.width, bbox1.height, AtImageView);
-  AtSidebar.seeRegions(1);
+  AtOutliner.seeRegions(1);
 
   // Draw the second region
   I.pressKey(Shape.hotKey);
   I.pressKeyDown("Control");
   drawShapeByBbox(Shape, bbox2.x, bbox2.y, bbox2.width, bbox2.height, AtImageView);
   I.pressKeyUp("Control");
-  AtSidebar.seeRegions(2);
+  AtOutliner.seeRegions(2);
 
   // Switch to move tool and select them
   I.pressKey("v");
@@ -836,20 +836,20 @@ Data(
     [transformerBbox.x - 20, transformerBbox.y - 20],
     [transformerBbox.x + transformerBbox.width + 20, transformerBbox.y + transformerBbox.height + 20],
   ]);
-  AtSidebar.seeSelectedRegion();
+  AtOutliner.seeSelectedRegion();
   // Scale the shapes vertically
   AtImageView.drawByDrag(transformerBboxCenter.x, transformerBbox.y + transformerBbox.height, 0, 50);
   transformerBbox.height += 50;
-  AtSidebar.seeSelectedRegion();
+  AtOutliner.seeSelectedRegion();
   // Scale the shapes horizontally
   AtImageView.drawByDrag(transformerBbox.x + transformerBbox.width, transformerBboxCenter.y, 50, 0);
   transformerBbox.width += 50;
-  AtSidebar.seeSelectedRegion();
+  AtOutliner.seeSelectedRegion();
   // Scale the shapes in both directions
   AtImageView.drawByDrag(transformerBbox.x + transformerBbox.width, transformerBbox.y + transformerBbox.height, 50, 50);
   transformerBbox.height += 50;
   transformerBbox.width += 50;
-  AtSidebar.seeSelectedRegion();
+  AtOutliner.seeSelectedRegion();
 
   // Check resulting sizes
   const rectangleResult = await LabelStudio.serialize();
@@ -862,14 +862,14 @@ Data(
 
 Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionTransformer)).Scenario(
   "Move regions by drag",
-  async ({ I, LabelStudio, AtImageView, AtSidebar, current }) => {
+  async ({ I, LabelStudio, AtImageView, AtOutliner, current }) => {
     const { shapeName } = current;
     const Shape = shapes[shapeName];
 
     I.amOnPage("/");
     LabelStudio.init(getParamsWithShape(shapeName, Shape.params));
     AtImageView.waitForImage();
-    AtSidebar.seeRegions(0);
+    AtOutliner.seeRegions(0);
     await AtImageView.lookForStage();
     const canvasSize = await AtImageView.getCanvasSize();
     const convertToImageSize = Helpers.getSizeConvertor(canvasSize.width, canvasSize.height);
@@ -910,22 +910,22 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionTr
     // Draw the first region
     I.pressKey(Shape.hotKey);
     drawShapeByBbox(Shape, bbox1.x, bbox1.y, bbox1.width, bbox1.height, AtImageView);
-    AtSidebar.seeRegions(1);
+    AtOutliner.seeRegions(1);
 
     // Draw the second region
     I.pressKey(Shape.hotKey);
     drawShapeByBbox(Shape, bbox2.x, bbox2.y, bbox2.width, bbox2.height, AtImageView);
-    AtSidebar.seeRegions(2);
+    AtOutliner.seeRegions(2);
 
     if (shapeName === "KeyPoint") {
       // Draw more points to get more space in transformer
       I.pressKey(Shape.hotKey);
       drawShapeByBbox(Shape, bbox1.x, bbox1.y, 0, 0, AtImageView);
-      AtSidebar.seeRegions(3);
+      AtOutliner.seeRegions(3);
 
       I.pressKey(Shape.hotKey);
       drawShapeByBbox(Shape, bbox2.x + bbox2.width, bbox2.y + bbox2.height, 0, 0, AtImageView);
-      AtSidebar.seeRegions(4);
+      AtOutliner.seeRegions(4);
     }
 
     // Switch to move tool and select them
@@ -934,7 +934,7 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionTr
       [transformerBbox.x - 20, transformerBbox.y - 20],
       [transformerBbox.x + transformerBbox.width + 20, transformerBbox.y + transformerBbox.height + 20],
     ]);
-    AtSidebar.seeSelectedRegion();
+    AtOutliner.seeSelectedRegion();
 
     const dragShapes = (startPoint, shift, rememberShift = true) => {
       AtImageView.drawThroughPoints(
@@ -946,7 +946,7 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionTr
         "steps",
         10,
       );
-      AtSidebar.seeSelectedRegion();
+      AtOutliner.seeSelectedRegion();
 
       if (rememberShift) {
         bbox1Center.x += shift.x;
@@ -981,14 +981,14 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionTr
 
 Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionRotator)).Scenario(
   "Limitation of dragging a single rotated region",
-  async ({ I, LabelStudio, AtImageView, AtSidebar, current }) => {
+  async ({ I, LabelStudio, AtImageView, AtOutliner, current }) => {
     const { shapeName } = current;
     const Shape = shapes[shapeName];
 
     I.amOnPage("/");
     LabelStudio.init(getParamsWithShape(shapeName, Shape.params));
     AtImageView.waitForImage();
-    AtSidebar.seeRegions(0);
+    AtOutliner.seeRegions(0);
     await AtImageView.lookForStage();
     const canvasSize = await AtImageView.getCanvasSize();
 
@@ -1006,11 +1006,11 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionRo
     // Draw a region
     I.pressKey(Shape.hotKey);
     drawShapeByBbox(Shape, bbox.x, bbox.y, bbox.width, bbox.height, AtImageView);
-    AtSidebar.seeRegions(1);
+    AtOutliner.seeRegions(1);
 
     // Select it
     AtImageView.clickAt(bboxCenter.x, bboxCenter.y);
-    AtSidebar.seeSelectedRegion();
+    AtOutliner.seeSelectedRegion();
 
     // Switch to move tool to force appearance of transformer
     I.pressKey("v");
@@ -1048,7 +1048,7 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionRo
       "steps",
       20,
     );
-    AtSidebar.seeSelectedRegion();
+    AtOutliner.seeSelectedRegion();
     // moving of the region should be constrained by borders
     rectangleResult = await LabelStudio.serialize();
     Asserts.deepEqualWithTolerance(
@@ -1067,7 +1067,7 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionRo
       "steps",
       20,
     );
-    AtSidebar.seeSelectedRegion();
+    AtOutliner.seeSelectedRegion();
     // moving of the region should be constrained by borders
     rectangleResult = await LabelStudio.serialize();
     Asserts.deepEqualWithTolerance(
@@ -1086,7 +1086,7 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionRo
       "steps",
       20,
     );
-    AtSidebar.seeSelectedRegion();
+    AtOutliner.seeSelectedRegion();
     // moving of the region should be constrained by borders
     rectangleResult = await LabelStudio.serialize();
 
@@ -1106,7 +1106,7 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionRo
       "steps",
       20,
     );
-    AtSidebar.seeSelectedRegion();
+    AtOutliner.seeSelectedRegion();
     // moving of the region should be constrained by borders
     rectangleResult = await LabelStudio.serialize();
     Asserts.deepEqualWithTolerance(
@@ -1118,14 +1118,14 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionRo
 
 Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionRotator)).Scenario(
   "Limitation of dragging a couple of rotated regions",
-  async ({ I, LabelStudio, AtImageView, AtSidebar, current }) => {
+  async ({ I, LabelStudio, AtImageView, AtOutliner, current }) => {
     const { shapeName } = current;
     const Shape = shapes[shapeName];
 
     I.amOnPage("/");
     LabelStudio.init(getParamsWithShape(shapeName, Shape.params));
     AtImageView.waitForImage();
-    AtSidebar.seeRegions(0);
+    AtOutliner.seeRegions(0);
     await AtImageView.lookForStage();
     const canvasSize = await AtImageView.getCanvasSize();
 
@@ -1161,14 +1161,14 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionRo
     // Draw the first region
     I.pressKey(Shape.hotKey);
     drawShapeByBbox(Shape, bbox1.x, bbox1.y, bbox1.width, bbox1.height, AtImageView);
-    AtSidebar.seeRegions(1);
+    AtOutliner.seeRegions(1);
 
     // Draw the second region
     I.pressKey(Shape.hotKey);
     I.pressKeyDown("Control");
     drawShapeByBbox(Shape, bbox2.x, bbox2.y, bbox2.width, bbox2.height, AtImageView);
     I.pressKeyUp("Control");
-    AtSidebar.seeRegions(2);
+    AtOutliner.seeRegions(2);
 
     // Select them by move tool
     I.pressKey("v");
@@ -1180,7 +1180,7 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionRo
       "steps",
       10,
     );
-    AtSidebar.seeSelectedRegion();
+    AtOutliner.seeSelectedRegion();
 
     // The rotator anchor must be above top anchor by 50 pixels
     const rotatorPosition = {
@@ -1212,7 +1212,7 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionRo
       "steps",
       20,
     );
-    AtSidebar.seeSelectedRegion();
+    AtOutliner.seeSelectedRegion();
     // moving of the region should be constrained by borders
     rectangleResult = await LabelStudio.serialize();
     Asserts.deepEqualWithTolerance(
@@ -1236,7 +1236,7 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionRo
       "steps",
       20,
     );
-    AtSidebar.seeSelectedRegion();
+    AtOutliner.seeSelectedRegion();
     // moving of the region should be constrained by borders
     rectangleResult = await LabelStudio.serialize();
     Asserts.deepEqualWithTolerance(
@@ -1260,7 +1260,7 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionRo
       "steps",
       20,
     );
-    AtSidebar.seeSelectedRegion();
+    AtOutliner.seeSelectedRegion();
     // moving of the region should be constrained by borders
     rectangleResult = await LabelStudio.serialize();
 
@@ -1289,7 +1289,7 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionRo
       "steps",
       20,
     );
-    AtSidebar.seeSelectedRegion();
+    AtOutliner.seeSelectedRegion();
     // moving of the region should be constrained by borders
     rectangleResult = await LabelStudio.serialize();
     Asserts.deepEqualWithTolerance(
@@ -1310,14 +1310,14 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionRo
 
 Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasRotator)).Scenario(
   "Rotating the region near the border",
-  async ({ I, LabelStudio, AtImageView, AtSidebar, current }) => {
+  async ({ I, LabelStudio, AtImageView, AtOutliner, current }) => {
     const { shapeName } = current;
     const Shape = shapes[shapeName];
 
     I.amOnPage("/");
     LabelStudio.init(getParamsWithShape(shapeName, Shape.params));
     AtImageView.waitForImage();
-    AtSidebar.seeRegions(0);
+    AtOutliner.seeRegions(0);
     await AtImageView.lookForStage();
     const canvasSize = await AtImageView.getCanvasSize();
 
@@ -1336,11 +1336,11 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasRotator)).Scenar
     // Draw the region
     I.pressKey(Shape.hotKey);
     drawShapeByBbox(Shape, bbox.x, bbox.y, bbox.width, bbox.height, AtImageView);
-    AtSidebar.seeRegions(1);
+    AtOutliner.seeRegions(1);
 
     // Select it
     AtImageView.clickAt(bboxCenter.x, bboxCenter.y);
-    AtSidebar.seeSelectedRegion();
+    AtOutliner.seeSelectedRegion();
 
     // The rotator anchor must be above top anchor by 50 pixels
     const rotatorPosition = {
@@ -1360,7 +1360,7 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasRotator)).Scenar
 
       // Rotate clockwise by 45 * i degrees
       AtImageView.drawThroughPoints(rotatorWayPoints, "steps", 10);
-      AtSidebar.seeSelectedRegion();
+      AtOutliner.seeSelectedRegion();
       // Check that rotating was successful
       const rectangleResult = await LabelStudio.serialize();
 

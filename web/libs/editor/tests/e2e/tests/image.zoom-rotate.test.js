@@ -107,7 +107,7 @@ shapes.forEach(({ shape, props = "", action, regions }) => {
   shapesTable.add([shape, props, action, regions]);
 });
 
-Data(shapesTable).Scenario("Simple rotation", async ({ I, LabelStudio, AtImageView, AtSidebar, current }) => {
+Data(shapesTable).Scenario("Simple rotation", async ({ I, LabelStudio, AtImageView, AtOutliner, current }) => {
   const config = getConfigWithShape(current.shape, current.props);
 
   const params = {
@@ -118,7 +118,7 @@ Data(shapesTable).Scenario("Simple rotation", async ({ I, LabelStudio, AtImageVi
   I.amOnPage("/");
   LabelStudio.init(params);
   AtImageView.waitForImage();
-  AtSidebar.seeRegions(0);
+  AtOutliner.seeRegions(0);
   const canvasSize = await AtImageView.getCanvasSize();
 
   for (const region of current.regions) {
@@ -148,7 +148,7 @@ Data(shapesTable).Scenario("Simple rotation", async ({ I, LabelStudio, AtImageVi
   }
 });
 
-Data(shapesTable).Scenario("Rotate zoomed", async ({ I, LabelStudio, AtImageView, AtSidebar, current }) => {
+Data(shapesTable).Scenario("Rotate zoomed", async ({ I, LabelStudio, AtImageView, AtOutliner, current }) => {
   const params = {
     config: getConfigWithShape(current.shape, current.props),
     data: { image: IMAGE },
@@ -157,7 +157,7 @@ Data(shapesTable).Scenario("Rotate zoomed", async ({ I, LabelStudio, AtImageView
   I.amOnPage("/");
   LabelStudio.init(params);
   AtImageView.waitForImage();
-  AtSidebar.seeRegions(0);
+  AtOutliner.seeRegions(0);
   const canvasSize = await AtImageView.getCanvasSize();
 
   for (const region of current.regions) {
@@ -194,7 +194,7 @@ windowSizesTable.add([1017, 970]);
 
 Data(windowSizesTable).Scenario(
   "Rotation with different window sizes",
-  async ({ I, LabelStudio, AtImageView, AtSidebar, current }) => {
+  async ({ I, LabelStudio, AtImageView, AtOutliner, current }) => {
     const config = getConfigWithShape("Rectangle");
 
     const params = {
@@ -206,7 +206,7 @@ Data(windowSizesTable).Scenario(
     I.resizeWindow(current.width, current.height);
     LabelStudio.init(params);
     AtImageView.waitForImage();
-    AtSidebar.seeRegions(0);
+    AtOutliner.seeRegions(0);
     const canvasSize = await AtImageView.getCanvasSize();
     const imageSize = await AtImageView.getImageFrameSize();
     const rotationQueue = ["right", "right", "right", "right", "left", "left", "left", "left"];
@@ -273,7 +273,7 @@ const compareSize = async (I, AtImageView, message1, message2) => {
 
 Data(layoutVariations).Scenario(
   "Rotation in the two columns template",
-  async ({ I, LabelStudio, AtImageView, AtSidebar, AtSettings, current }) => {
+  async ({ I, LabelStudio, AtImageView, AtOutliner, AtSettings, current }) => {
     I.amOnPage("/");
     let isVerticalLayout = false;
 
@@ -316,10 +316,10 @@ Data(layoutVariations).Scenario(
 
     LabelStudio.init(params);
     AtImageView.waitForImage();
-    AtSidebar.seeRegions(1);
+    AtOutliner.seeRegions(1);
 
     I.click(locate("[aria-label='rotate-right']"));
-    AtSidebar.seeRegions(1);
+    AtOutliner.seeRegions(1);
 
     await compareSize(I, AtImageView, "Dimensions must be equal in landscape", "landscape, rotated");
 
@@ -331,12 +331,12 @@ Data(layoutVariations).Scenario(
     });
     AtSettings.close();
 
-    AtSidebar.seeRegions(1);
+    AtOutliner.seeRegions(1);
     await compareSize(I, AtImageView, "Dimensions must be equal in portrait", "portrait");
 
     I.click(locate("[aria-label='rotate-right']"));
 
-    AtSidebar.seeRegions(1);
+    AtOutliner.seeRegions(1);
     await compareSize(I, AtImageView, "Dimensions must be equal after rotation in portrain", "portrait, rotated");
   },
 );

@@ -154,7 +154,7 @@ const params = { annotations: [{ id: "test", result: annotations }], config, dat
 FFlagMatrix(["fflag_feat_front_lsdv_e_278_contextual_scrolling_short"], (flags) => {
   FFlagScenario(
     "Audio clip is played when selecting the play button next to a paragraph segment",
-    async ({ I, LabelStudio, AtAudioView, AtSidebar }) => {
+    async ({ I, LabelStudio, AtAudioView, AtOutliner }) => {
       LabelStudio.setFeatureFlags({
         ff_front_dev_2715_audio_3_280722_short: true,
         ...flags,
@@ -167,7 +167,7 @@ FFlagMatrix(["fflag_feat_front_lsdv_e_278_contextual_scrolling_short"], (flags) 
       await AtAudioView.waitForAudio();
       await AtAudioView.lookForStage();
 
-      AtSidebar.seeRegions(2);
+      AtOutliner.seeRegions(2);
 
       const [{ currentTime: startingAudioTime }, { currentTime: startingParagraphAudioTime }] =
         await AtAudioView.getCurrentAudio();
@@ -196,7 +196,7 @@ FFlagMatrix(["fflag_feat_front_lsdv_e_278_contextual_scrolling_short"], (flags) 
   if (flags.fflag_feat_front_lsdv_e_278_contextual_scrolling_short) {
     FFlagScenario(
       "Playback button states continually change over time according to the paragraph segment which is being played",
-      async ({ I, LabelStudio, AtAudioView, AtSidebar }) => {
+      async ({ I, LabelStudio, AtAudioView, AtOutliner }) => {
         LabelStudio.setFeatureFlags({
           ff_front_dev_2715_audio_3_280722_short: true,
           ...flags,
@@ -209,7 +209,7 @@ FFlagMatrix(["fflag_feat_front_lsdv_e_278_contextual_scrolling_short"], (flags) 
         await AtAudioView.waitForAudio();
         await AtAudioView.lookForStage();
 
-        AtSidebar.seeRegions(2);
+        AtOutliner.seeRegions(2);
 
         const [{ currentTime: startingAudioTime }, { currentTime: startingParagraphAudioTime }] =
           await AtAudioView.getCurrentAudio();

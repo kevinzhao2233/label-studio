@@ -17,7 +17,10 @@ module.exports = {
   locateRegionList() {
     return this.locate(this._regionListSelector);
   },
-  locateRegionItemList() {
+  locateRegionItemList(text) {
+    if (text) {
+      return locate(this._regionListItemSelector).withText(text).inside(this.locateRegionList());
+    }
     return locate(this._regionListItemSelector).inside(this.locateRegionList());
   },
   locateRegionItemIndex(idx) {
@@ -33,27 +36,43 @@ module.exports = {
 
     return locator ? selectedLocator.find(locator) : selectedLocator;
   },
+  see(text) {
+    I.see(text, this._rootSelector);
+  },
+  dontSee(text) {
+    I.dontSee(text, this._rootSelector);
+  },
+  seeElement(locator) {
+    I.seeElement(this.locate(locator));
+  },
   seeRegions(count) {
     count && I.seeElement(this.locateRegionItemList().at(count));
     I.dontSeeElement(this.locateRegionItemList().at(count + 1));
   },
-  clickRegion(idx) {
-    I.click(this.locateRegionItemIndex(idx));
+  dontSeeRegions(count) {
+    count && I.dontSeeElement(this.locateRegionItemList().at(count));
+    count === +count && I.dontSeeElement(this.locateRegionItemIndex(count));
+    !count && I.see("Regions not added");
   },
-  hoverRegion(idx) {
-    I.moveCursorTo(this.locateRegionItemIndex(idx));
+  clickRegion(idxOrText) {
+    I.click(typeof idxOrText === "number" ? this.locateRegionItemIndex(idx) : this.locateRegionItemList(idxOrText));
   },
-  toggleRegionVisibility(idx) {
+  hoverRegion(idxOrText) {
+    I.moveCursorTo(
+      typeof idxOrText === "number" ? this.locateRegionItemIndex(idx) : this.locateRegionItemList(idxOrText),
+    );
+  },
+  toggleRegionVisibility(idxOrText) {
     // Hover to see action button
-    this.hoverRegion(idx);
+    this.hoverRegion(idxOrText);
     // This button exist only for hovered list item
     I.click(locate(this._regionVesibilityActionButton));
   },
-  seeSelectedRegion() {
-    I.seeElement(this.locateSelectedItem());
+  seeSelectedRegion(text = undefined) {
+    I.seeElement(text ? this.locateSelectedItem().withText(text) : this.locateSelectedItem());
   },
-  dontSeeSelectedRegion() {
-    I.dontSeeElement(this.locateSelectedItem());
+  dontSeeSelectedRegion(text = undefined) {
+    I.dontSeeElement(text ? this.locateSelectedItem().withText(text) : this.locateSelectedItem());
   },
   /**
    * Drag and drop region through the outliner's regions tree

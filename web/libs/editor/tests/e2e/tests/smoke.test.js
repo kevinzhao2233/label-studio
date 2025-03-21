@@ -36,7 +36,7 @@ Feature("Smoke test through all the examples");
 examples.slice(1).forEach((example) =>
   Scenario(
     example.title || "Noname smoke test",
-    async ({ I, LabelStudio, AtImageView, AtAudioView, AtSidebar, AtTopbar }) => {
+    async ({ I, LabelStudio, AtImageView, AtAudioView, AtOutliner, AtTopbar }) => {
       LabelStudio.setFeatureFlags({
         ff_front_dev_2715_audio_3_280722_short: true,
       });
@@ -56,7 +56,7 @@ examples.slice(1).forEach((example) =>
 
       LabelStudio.init(params);
 
-      AtSidebar.seeRegions(count);
+      AtOutliner.seeRegions(count);
 
       let restored;
 
@@ -82,9 +82,9 @@ examples.slice(1).forEach((example) =>
         // I.click('Delete Entity') - it founds something by tooltip, but not a button
         // so click the bin button in entity's info block
         I.click(".lsf-entity-buttons span[aria-label=delete]");
-        AtSidebar.seeRegions(count - 1);
+        AtOutliner.seeRegions(count - 1);
         I.click(".lsf-history-buttons__action[aria-label=Reset]");
-        AtSidebar.seeRegions(count);
+        AtOutliner.seeRegions(count);
         // Reset is undoable
         I.click(".lsf-history-buttons__action[aria-label=Undo]");
 
@@ -102,7 +102,7 @@ examples.slice(1).forEach((example) =>
       AtTopbar.seeAnnotationAt(2);
 
       // Check for regions count
-      AtSidebar.seeRegions(count);
+      AtOutliner.seeRegions(count);
 
       await I.executeScript(() => {
         window.LabelStudio.destroyAll();

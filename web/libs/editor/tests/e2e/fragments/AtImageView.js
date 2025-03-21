@@ -32,6 +32,11 @@ module.exports = {
     return locator ? paginationLocator.find(locator) : paginationLocator;
   },
 
+  locateToolByCode(toolCode) {
+    const toolBarLocator = this.locate(this._toolBarSelector);
+    return toolBarLocator.find(locate(`[aria-label=${toolCode}-tool]`));
+  },
+
   percToX(xPerc) {
     return (this._stageBBox.width * xPerc) / 100;
   },
@@ -332,6 +337,10 @@ module.exports = {
   selectMoveTool() {
     I.say("Select move tool");
     I.pressKey("V");
+  },
+
+  selectToolByCode(toolCode) {
+    I.click(this.locateToolByCode(toolCode));
   },
 
   async multiImageGoForwardWithHotkey() {

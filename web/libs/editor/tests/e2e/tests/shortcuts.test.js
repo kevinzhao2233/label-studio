@@ -29,7 +29,7 @@ const TEXT_SELECTOR = "[name='text']";
 
 Data(configParams).Scenario(
   "Should keep the focus and cursor position.",
-  async ({ I, LabelStudio, AtSidebar, current }) => {
+  async ({ I, LabelStudio, AtOutliner, current }) => {
     const { inline } = current;
     const config = createConfig({
       rows: inline ? "1" : "3",
@@ -42,7 +42,7 @@ Data(configParams).Scenario(
 
     I.amOnPage("/");
     LabelStudio.init(params);
-    AtSidebar.seeRegions(0);
+    AtOutliner.seeRegions(0);
 
     // Check if there is right input element
     I.seeElement((inline ? "input" : "textarea") + TEXT_SELECTOR);
@@ -84,12 +84,12 @@ Data(configParams).Scenario(
     I.pressKey(["Shift", "Enter"]);
 
     // If we got an expected result then we didn't lost focus.
-    AtSidebar.seeRegions(1);
-    AtSidebar.see("-A + B!");
+    AtOutliner.seeRegions(1);
+    AtOutliner.see("-A + B!");
   },
 );
 
-Data(configParams).Scenario("Should work with emoji.", async ({ I, LabelStudio, AtSidebar, current }) => {
+Data(configParams).Scenario("Should work with emoji.", async ({ I, LabelStudio, AtOutliner, current }) => {
   const { inline } = current;
   const config = createConfig({
     rows: inline ? "1" : "3",
@@ -102,7 +102,7 @@ Data(configParams).Scenario("Should work with emoji.", async ({ I, LabelStudio, 
 
   I.amOnPage("/");
   LabelStudio.init(params);
-  AtSidebar.seeRegions(0);
+  AtOutliner.seeRegions(0);
 
   // Check if there is right input element
   I.seeElement((inline ? "input" : "textarea") + TEXT_SELECTOR);
@@ -123,11 +123,11 @@ Data(configParams).Scenario("Should work with emoji.", async ({ I, LabelStudio, 
   I.pressKey(["Shift", "Enter"]);
 
   // If we got an expected result then we didn't lost focus.
-  AtSidebar.seeRegions(1);
-  AtSidebar.see("🐱🐱‍👤🐱");
+  AtOutliner.seeRegions(1);
+  AtOutliner.see("🐱🐱‍👤🐱");
 });
 
-Data(configParams).Scenario("Should work with existent regions.", async ({ I, LabelStudio, AtSidebar, current }) => {
+Data(configParams).Scenario("Should work with existent regions.", async ({ I, LabelStudio, AtOutliner, current }) => {
   const { inline } = current;
   const config = createConfig({
     rows: inline ? "1" : "3",
@@ -154,7 +154,7 @@ Data(configParams).Scenario("Should work with existent regions.", async ({ I, La
 
   I.amOnPage("/");
   LabelStudio.init(params);
-  AtSidebar.seeRegions(1);
+  AtOutliner.seeRegions(1);
 
   // Start editing
   I.click('[aria-label="Edit Region"]');
@@ -191,8 +191,8 @@ Data(configParams).Scenario("Should work with existent regions.", async ({ I, La
   I.pressKey(["Shift", "Enter"]);
 
   // If we got an expected result then we didn't lost focus.
-  AtSidebar.seeRegions(1);
-  AtSidebar.see("-A + B!");
+  AtOutliner.seeRegions(1);
+  AtOutliner.see("-A + B!");
 });
 
 {

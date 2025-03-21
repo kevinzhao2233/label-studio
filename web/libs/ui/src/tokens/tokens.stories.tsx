@@ -178,7 +178,7 @@ const TokenValue = ({ token, tokenName }: { token: string; tokenName: string }) 
             <div
               style={{
                 position: "relative",
-                width: "100%",
+                width: "60%",
                 height: "40px",
               }}
             >

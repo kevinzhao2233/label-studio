@@ -60,6 +60,8 @@ examples.forEach((example) => {
     }
   });
 
+  // For classifications that scenario does not make sense
+  if (title.includes("Classifications,")) return;
   Scenario(`Nonexistent from_name -> ${title}`, async ({ I, LabelStudio, AtTopbar, AtOutliner }) => {
     const params = { annotations: [{ id: "test", result }], data };
     const configTree = Utils.parseXml(config);

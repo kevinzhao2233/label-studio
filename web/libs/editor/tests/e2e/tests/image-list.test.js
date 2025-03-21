@@ -200,7 +200,6 @@ Scenario("View All disables MIG pagination", async ({ I, AtImageView, LabelStudi
 
   // FFs for a proper interface with View All button
   LabelStudio.setFeatureFlags({
-    ff_front_1170_outliner_030222_short: true,
     fflag_feat_front_dev_3873_labeling_ui_improvements_short: true,
   });
 

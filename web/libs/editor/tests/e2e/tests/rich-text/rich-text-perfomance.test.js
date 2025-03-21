@@ -3,12 +3,6 @@ const { createRandomIntWithSeed } = require("../helpers");
 
 Feature("Richtext perfomance");
 
-Before(({ LabelStudio }) => {
-  LabelStudio.setFeatureFlags({
-    ff_front_1170_outliner_030222_short: true,
-  });
-});
-
 // Generate text and results generator
 const SYMBOLS = "abcdefghijklmnopqrstuvwxyz";
 const NEWLINE = "/n";

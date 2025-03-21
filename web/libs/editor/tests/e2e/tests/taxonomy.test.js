@@ -1,12 +1,12 @@
 const assert = require("assert");
 
+// @TODO: Check why i do not see this `Feature` in tests in CI
 Feature("Taxonomy");
 
 Before(({ LabelStudio }) => {
   LabelStudio.setFeatureFlags({
     fflag_feat_front_lsdv_5451_async_taxonomy_110823_short: false,
     ff_front_dev_1536_taxonomy_user_labels_150222_long: true,
-    ff_front_1170_outliner_030222_short: true,
   });
 });
 
@@ -274,9 +274,6 @@ Scenario("Taxonomy read only in history", async ({ I, LabelStudio, AtTaxonomy })
     },
   ];
 
-  LabelStudio.setFeatureFlags({
-    ff_front_1170_outliner_030222_short: false,
-  });
   I.amOnPage("/");
   LabelStudio.init({
     config: `

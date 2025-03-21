@@ -825,9 +825,9 @@ Data(
 
   // Draw the second region
   I.pressKey(Shape.hotKey);
-  I.pressKeyDown("Control");
+  I.pressKeyDown("CommandOrControl");
   drawShapeByBbox(Shape, bbox2.x, bbox2.y, bbox2.width, bbox2.height, AtImageView);
-  I.pressKeyUp("Control");
+  I.pressKeyUp("CommandOrControl");
   AtOutliner.seeRegions(2);
 
   // Switch to move tool and select them
@@ -1165,9 +1165,9 @@ Data(shapesTable.filter(({ shapeName }) => shapes[shapeName].hasMultiSelectionRo
 
     // Draw the second region
     I.pressKey(Shape.hotKey);
-    I.pressKeyDown("Control");
+    I.pressKeyDown("CommandOrControl");
     drawShapeByBbox(Shape, bbox2.x, bbox2.y, bbox2.width, bbox2.height, AtImageView);
-    I.pressKeyUp("Control");
+    I.pressKeyUp("CommandOrControl");
     AtOutliner.seeRegions(2);
 
     // Select them by move tool

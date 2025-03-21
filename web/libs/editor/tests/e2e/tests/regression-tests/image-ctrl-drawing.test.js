@@ -106,16 +106,18 @@ const createShape = {
   // },
 };
 
-Scenario("Drawing with ctrl pressed", async ({ I, LabelStudio, AtOutliner, AtImageView }) => {
+Scenario("Drawing with ctrl pressed", async ({ I, LabelStudio, AtOutliner, AtImageView, AtPanels }) => {
   const params = {
     config: getConfigWithShapes(Object.keys(createShape), 'strokewidth="5"'),
     data: { image: IMAGE },
   };
+  const AtDetailsPanel = AtPanels.usePanel(AtPanels.PANEL.DETAILS);
 
   I.amOnPage("/");
   LabelStudio.init(params);
   AtImageView.waitForImage();
   AtOutliner.seeRegions(0);
+  AtDetailsPanel.collapsePanel();
   const canvasSize = await AtImageView.getCanvasSize();
   const size = Math.min(canvasSize.width, canvasSize.height);
   const convertToImageSize = Helpers.getSizeConvertor(canvasSize.width, canvasSize.height);
@@ -152,9 +154,9 @@ Scenario("Drawing with ctrl pressed", async ({ I, LabelStudio, AtOutliner, AtIma
     AtOutliner.seeRegions(1);
     I.pressKey(["u"]);
     I.pressKey(innerRegion.hotKey);
-    I.pressKeyDown("Control");
+    I.pressKeyDown("CommandOrControl");
     AtImageView[innerRegion.action](...innerRegion.params);
-    I.pressKeyUp("Control");
+    I.pressKeyUp("CommandOrControl");
     const result = await LabelStudio.serialize();
 
     AtOutliner.seeRegions(2);

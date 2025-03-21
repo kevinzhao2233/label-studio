@@ -37,17 +37,18 @@ module.exports = {
     return locator ? selectedLocator.find(locator) : selectedLocator;
   },
   see(text) {
-    I.see(text, this._rootSelector);
+    I.see(text, this._regionListSelector);
   },
   dontSee(text) {
-    I.dontSee(text, this._rootSelector);
+    I.dontSee(text, this._regionListSelector);
   },
   seeElement(locator) {
     I.seeElement(this.locate(locator));
   },
   seeRegions(count) {
-    count && I.seeElement(this.locateRegionItemList().at(count));
-    I.dontSeeElement(this.locateRegionItemList().at(count + 1));
+    // Avoid tries to find a region when there are 0 of them
+    count && I.seeElement(this.locateRegionItemIndex(count));
+    I.dontSeeElement(this.locateRegionItemIndex(count + 1));
   },
   dontSeeRegions(count) {
     count && I.dontSeeElement(this.locateRegionItemList().at(count));
@@ -55,11 +56,13 @@ module.exports = {
     !count && I.see("Regions not added");
   },
   clickRegion(idxOrText) {
-    I.click(typeof idxOrText === "number" ? this.locateRegionItemIndex(idx) : this.locateRegionItemList(idxOrText));
+    I.click(
+      typeof idxOrText === "number" ? this.locateRegionItemIndex(idxOrText) : this.locateRegionItemList(idxOrText),
+    );
   },
   hoverRegion(idxOrText) {
     I.moveCursorTo(
-      typeof idxOrText === "number" ? this.locateRegionItemIndex(idx) : this.locateRegionItemList(idxOrText),
+      typeof idxOrText === "number" ? this.locateRegionItemIndex(idxOrText) : this.locateRegionItemList(idxOrText),
     );
   },
   toggleRegionVisibility(idxOrText) {

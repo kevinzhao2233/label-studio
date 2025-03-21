@@ -1,6 +1,6 @@
 {
-  "message": "chore: OPTIC-1778: Unify and prettify icons (#7169)",
-  "commit": "b75cace00764a9ac34b6518e4879eadc8297da9b",
-  "date": "2025-03-21T14:21:21.000Z",
+  "message": "feat: DIA-1924: \"Import sample data\" ability in the Data Import page (#7206)",
+  "commit": "4075937f4b2bf286e8cad366fd46b39c8426c55a",
+  "date": "2025-03-21T18:39:51.000Z",
   "branch": "develop"
 }

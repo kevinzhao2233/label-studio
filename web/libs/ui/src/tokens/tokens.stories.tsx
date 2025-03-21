@@ -139,21 +139,7 @@ const TokenValue = ({ token, tokenName }: { token: string; tokenName: string }) 
               minWidth: "4px",
               position: "relative",
             }}
-          >
-            <div
-              style={{
-                position: "absolute",
-                top: "-18px",
-                left: "0",
-                right: "0",
-                textAlign: "center",
-                fontSize: "10px",
-                color: "#666",
-              }}
-            >
-              {computedValue || "..."}
-            </div>
-          </div>
+          />
         </div>
       )}
 
@@ -178,17 +164,6 @@ const TokenValue = ({ token, tokenName }: { token: string; tokenName: string }) 
               }}
             >
               Aa
-              <span
-                style={{
-                  fontSize: "10px",
-                  color: "#666",
-                  position: "absolute",
-                  top: "4px",
-                  right: "4px",
-                }}
-              >
-                {computedValue || "..."}
-              </span>
             </div>
           )}
 
@@ -214,17 +189,6 @@ const TokenValue = ({ token, tokenName }: { token: string; tokenName: string }) 
                 }}
               >
                 Line Height
-                <span
-                  style={{
-                    fontSize: "10px",
-                    color: "#6366F1",
-                    position: "absolute",
-                    top: "-16px",
-                    right: "4px",
-                  }}
-                >
-                  {computedValue || "..."}
-                </span>
               </div>
             </div>
           )}
@@ -239,17 +203,6 @@ const TokenValue = ({ token, tokenName }: { token: string; tokenName: string }) 
               }}
             >
               LETTER SPACING
-              <span
-                style={{
-                  fontSize: "10px",
-                  color: "#666",
-                  position: "absolute",
-                  top: "-16px",
-                  right: "4px",
-                }}
-              >
-                {computedValue || "..."}
-              </span>
             </div>
           )}
         </div>
@@ -276,17 +229,6 @@ const TokenValue = ({ token, tokenName }: { token: string; tokenName: string }) 
               border: "1px dashed #6366F1",
             }}
           />
-          <span
-            style={{
-              fontSize: "10px",
-              color: "#666",
-              position: "absolute",
-              top: "4px",
-              right: "4px",
-            }}
-          >
-            {computedValue || "..."}
-          </span>
         </div>
       )}
 
@@ -294,26 +236,39 @@ const TokenValue = ({ token, tokenName }: { token: string; tokenName: string }) 
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <div style={{ flex: "1", display: "flex", flexDirection: "column", gap: "4px" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <div
-              className="token-name"
-              style={{
-                color: "#000",
-                fontSize: "14px",
-                fontWeight: "bold",
-                wordBreak: "break-word",
-              }}
-            >
-              {tokenName.split(".").pop() || tokenName}
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <div
+                className="token-name"
+                style={{
+                  color: "#000",
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                  wordBreak: "break-word",
+                }}
+              >
+                {tokenName.split(".").pop() || tokenName}
+              </div>
+              <div
+                className="token-path"
+                style={{
+                  fontSize: "10px",
+                  color: "#aaa",
+                  marginTop: "-4px",
+                }}
+              >
+                {tokenName.split(".").slice(0, -1).join(".")}
+              </div>
             </div>
-            <div
-              className="token-path"
+
+            <span
               style={{
                 fontSize: "10px",
-                color: "#888",
+                color: "#000",
+                textAlign: "right",
               }}
             >
-              {tokenName.split(".").slice(0, -1).join(".")}
-            </div>
+              {computedValue || "..."}
+            </span>
           </div>
 
           <div
@@ -331,9 +286,6 @@ const TokenValue = ({ token, tokenName }: { token: string; tokenName: string }) 
             }}
           >
             {token.replace("var(", "").replace(")", "")}
-            {computedValue && token.includes("var(") && (
-              <span style={{ color: "#888", marginLeft: "4px" }}>→ {computedValue}</span>
-            )}
           </div>
         </div>
       </div>

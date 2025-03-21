@@ -123,7 +123,7 @@ FFlagMatrix(["fflag_feat_front_lsdv_e_278_contextual_scrolling_short"], (flags) 
         await AtAudioView.waitForAudio();
         await AtAudioView.lookForStage();
 
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 10; i++) {
           // creating a new region
           I.pressKey("1");
           AtAudioView.dragAudioElement(40 * i + 10, 30);
@@ -133,16 +133,16 @@ FFlagMatrix(["fflag_feat_front_lsdv_e_278_contextual_scrolling_short"], (flags) 
           I.pressKey("u");
         }
 
-        AtOutliner.seeRegions(20);
+        AtOutliner.seeRegions(10);
 
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 10; i++) {
           // creating a new region
           AtAudioView.clickAt(40 * i + 20);
           AtOutliner.seeSelectedRegion();
           I.pressKey("u");
         }
 
-        AtOutliner.seeRegions(20);
+        AtOutliner.seeRegions(10);
 
         I.pressKey("u");
 

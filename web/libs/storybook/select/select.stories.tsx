@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Select } from "@humansignal/ui";
 
 const meta: Meta<typeof Select> = {
+  title: "UI/Select",
   component: Select,
   render: ({ form, ...args }) => {
     return (

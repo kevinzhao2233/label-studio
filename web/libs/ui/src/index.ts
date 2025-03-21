@@ -8,6 +8,7 @@ export * from "./lib/toggle/toggle";
 export * from "./lib/select/select";
 export * from "./lib/Tooltip/Tooltip";
 export * from "./lib/Userpic/Userpic";
+export * from "./lib/code-block/code-block";
 
 export * from "./lib/spinner/spinner";
 export * from "./lib/space/space";

@@ -16,6 +16,7 @@ import {
 import type { SelectOption, SelectProps } from "./types.ts";
 import { Checkbox, Label } from "@humansignal/ui";
 import { IconCheck, IconChevron, IconChevronDown } from "@humansignal/icons";
+import clsx from "clsx";
 
 export const Select = forwardRef(
   <T, A extends SelectOption<T>[]>(
@@ -38,14 +39,14 @@ export const Select = forwardRef(
     ref: ForwardedRef<HTMLSelectElement>,
   ) => {
     const [query, setQuery] = useState<string>("");
-    let initialValue = defaultValue?.value ?? defaultValue ?? externalValue?.value ?? externalValue;
+    let initialValue = defaultValue?.value ?? defaultValue ?? externalValue?.value ?? externalValue ?? options?.[0]?.value ?? options?.[0];
     if (multiple) {
       initialValue = initialValue ?? [];
     } else if (Array.isArray(initialValue)) {
       initialValue = initialValue[0];
     }
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const [value, setValue] = useState<string>(initialValue ?? "");
+    const [value, setValue] = useState<any>(initialValue ?? "");
     useEffect(() => {
       let val = externalValue?.value ?? externalValue;
       if (multiple && !Array.isArray(val)) {
@@ -56,69 +57,130 @@ export const Select = forwardRef(
       setValue(val);
     }, [externalValue, multiple]);
     const _onChange = useCallback(
-      (val: string) => {
+      (val: string, isSelected: boolean) => {
         if (disabled) return;
-        setValue(val);
+
+        if(multiple) {
+          setValue((prev = []) => {
+            if (isSelected) {
+              return [...prev.filter((v) => v !== val)];
+            } else {
+              return [...prev, val];
+            }
+          })
+        } else {
+          setValue(val);
+        }
         props?.onChange?.(val);
+        setIsOpen(false);
       },
-      [props?.onChange, disabled],
+      [props?.onChange, multiple, disabled],
     );
+
+    const flatOptions = useMemo(() => {
+      return options.flatMap(option => option?.children ?? option);
+    }, [options])
+
     const _options = useMemo(() => {
       if (!searchable || !query.trim()) return options;
 
-      return options.filter((option: any) => {
+      const filterHandler = (option: any) => {
 
         const label = option?.label ?? option?.value ?? option;
 
         return label?.toString()?.toLowerCase().includes(query.toLowerCase());
-      });
-    }, [options, searchable, query]);
+      }
+      return flatOptions.filter(filterHandler);
+    }, [options, searchable, query, flatOptions]);
 
-    if (multiple) {
-      console.log("multiple not supported yet");
-    }
+    const isSelected = useCallback((val: any) => {
+      if (multiple) {
+        return value.includes(val?.value ?? val);
+      }
+      return (value?.value ?? value) === (val?.value ?? val);
+    }, [value, multiple]);
+
+    const selectedOptions = useMemo(() => {
+      return flatOptions.filter((option) => isSelected(option));
+    }, [flatOptions, isSelected, value, multiple]);
+
     return (
       <Popover open={isOpen} onOpenChange={setIsOpen}>
-        <PopoverTrigger asChild>
+        <PopoverTrigger asChild  disabled={disabled}>
           <button
             variant="outline"
             role="combobox"
             aria-expanded={isOpen}
-            className="w-[200px] justify-between"
+            className="flex justify-between p-2 items-center"
           >
             {value
-              ? options.find((option) => (option.value ?? option) === value)?.label
+              ? (<>
+              {selectedOptions?.map((option) => option?.label ?? option?.value ?? option)}
+              </>)
               : (props?.placeholder ?? "")}
             {isOpen ? <IconChevron className="ml-2 h-4 w-4 shrink-0 opacity-50" /> : <IconChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />}
           </button>
         </PopoverTrigger>
-        <PopoverContent className="w-[200px] p-0">
+        <PopoverContent className="z-99999" asChild={false} align="start">
           <Command>
-            {searchable && <CommandInput placeholder={searchPlaceholder ?? "Search"} />}
+            {searchable && <CommandInput placeholder={searchPlaceholder ?? "Search"} onChangeCapture={(e) => setQuery(e.currentTarget.value)} />}
             <CommandList>
               <CommandEmpty>{searchable ? "No results found." : ""}</CommandEmpty>
               <CommandGroup>
-                {options.map((option) => {
+                {_options.map((option, index) => {
                   const optionValue = option?.value ?? option;
                   const label = option?.label ?? optionValue;
+                  const children = option?.children;
+                  const isOptionSelected = isSelected(optionValue);
+
+                  if (children) {
+                    return (
+                      <CommandGroup key={index}>
+                        <div>{label}</div>
+                        {children.map((item, i) => {
+                          const val = item?.value ?? item;
+                          const lab = item?.label ?? val;
+                          const isChildOptionSelected = isSelected(val);
+                          console.log({isChildOptionSelected, value, val, lab, multiple})
+                          return (
+                            <CommandItem
+                              key={`${lab}_${i}`}
+                              value={val}
+                              onSelect={() => {_onChange(val, isChildOptionSelected)}}
+                              {...(item?.disabled ? { "data-disabled": true } : {})}
+                              {...(item?.style ? { style: item.style } : {})}
+                            >
+                              {multiple ? (
+                                <Checkbox
+                                  className={clsx(
+                                    "mr-2 h-4 w-4",
+                                    isChildOptionSelected ? "opacity-100" : "opacity-0"
+                                  )}
+                                  checked={isChildOptionSelected}
+                                />
+                              ) : (isChildOptionSelected ? <IconCheck className="mr-2 h-4 w-4" /> : null)}
+                              {lab}
+                            </CommandItem>
+                          );
+                        })}
+                      </CommandGroup>
+                    );
+                  }
                   return (
                     <CommandItem
-                      key={optionValue}
+                      key={`${optionValue}_${index}`}
                       value={optionValue}
-                      onSelect={(currentValue) => {
-                        setValue(currentValue === value ? "" : currentValue)
-                        setIsOpen(false)
-                      }}
+                      onSelect={() => {_onChange(optionValue, isOptionSelected)}}
                     >
                       {multiple ? (
                         <Checkbox
                           className={clsx(
                             "mr-2 h-4 w-4",
-                            value === optionValue ? "opacity-100" : "opacity-0"
+                            isOptionSelected ? "opacity-100" : "opacity-0"
                           )}
-                          checked={value === optionValue}
+                          checked={isOptionSelected}
                         />
-                      ) : (value === optionValue ? <IconCheck className="mr-2 h-4 w-4" /> : null)}
+                      ) : (isOptionSelected ? <IconCheck className="mr-2 h-4 w-4" /> : null)}
                       {label}
                     </CommandItem>
                   );
